@@ -82,8 +82,8 @@ namespace katzerle
 		
 		public RareAlerter()
         {
-// Automatic Update Function is deaktivated
-			//UpdatePlugin();
+
+			UpdatePlugin();
 			Logging.Write(Colors.MediumPurple, "Rare Alerter loaded");
         }
 
