@@ -57,6 +57,7 @@ namespace ProfileChanger
 
         public ProfileChanger()
         {
+			UpdatePlugin();
 			Logging.Write(Colors.LightSkyBlue, "Profile Changer loaded");
         }
 
