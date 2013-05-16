@@ -10,8 +10,6 @@
   * [Collector]
   * [Tamer The Tamer] 
   * [CustomizePullspell customize Pullspell]
-  
-http://pluginrarekiller.googlecode.com/svn/wiki/Tap1.JPG
 
 ===Tap Two - Slowfall and other Behavior===
   * [SlowfallBehavior Slowfall Behavior]
@@ -20,12 +18,8 @@ http://pluginrarekiller.googlecode.com/svn/wiki/Tap1.JPG
   * [BlackList Blacklist]
   * [TaggedMobs Mobs tagged by others]
 
-http://pluginrarekiller.googlecode.com/svn/wiki/Tap2.JPG
-
 ===Tap Three - Security Settings===
 
   * [Alert]
   * [LogOff Log me off]
   * [HeartMe If Player follows ...]
-
-http://pluginrarekiller.googlecode.com/svn/wiki/Tap3.JPG
