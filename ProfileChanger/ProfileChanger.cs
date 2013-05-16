@@ -559,7 +559,7 @@ namespace ProfileChanger
 		static public void UpdatePlugin()
 		{
 			//Here you have to insert your Internetlocation for the SVN
-			string Website = "http://KatzerlsPlugins.googlecode.com/svn/trunk";
+			string Website = "http://katzerls-plugins.googlecode.com/svn/trunk";
 
             try
             {
