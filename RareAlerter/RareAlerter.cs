@@ -68,6 +68,7 @@ namespace katzerle
 		public static bool GuildAlert;
 		public static BlacklistFlags Flags = BlacklistFlags.All;
 		
+		
 		// X and Y are inverted
         private static float x_start = -1002.084f;
         private static float y_start = -5531.25f;
@@ -141,13 +142,6 @@ namespace katzerle
 		{
 			try
 			{
-// ------------ Deactivate if Rarekiller is Enabled			
-				List<PluginContainer> _pluginList = PluginManager.Plugins;
-				foreach (PluginContainer _plugin in _pluginList)
-				{
-					if (_plugin.Enabled && _plugin.Plugin.Name == "RareKiller")
-					return;
-				}
 // ------------ Deactivate if not in Game etc
                 if (Me == null || !StyxWoW.IsInGame)
                     return;
@@ -222,20 +216,6 @@ namespace katzerle
 					Logging.Write(Colors.MediumPurple, "RareAlerter: Find a hunted Mob " + o.Name);
 					WoWMovement.MoveStop();
 					o.Face();
-					Logging.WriteDiagnostic(Colors.MediumPurple, "RareAlerter: Face Mob");
-					if(FlyThere)
-					{
-						while (o.Location.Distance(Me.Location) > 10)
-						{
-							if (GroundMountMode)
-								Navigator.MoveTo(o.Location);
-							else
-								Flightor.MoveTo(o.Location);
-							Thread.Sleep(100);
-							Logging.WriteDiagnostic(Colors.MediumPurple, "RareAlerter: Fly");
-						}
-					}
-					WoWMovement.MoveStop();
 					
 					if (!((o.Entry == 50410) || (o.Entry == 50409)))
 					{
@@ -246,28 +226,25 @@ namespace katzerle
 					if(StopBot)
 					{
 						Logging.Write(Colors.MediumPurple, "RareAlerter: Stop Bot");
-						Logging.Write(Colors.MediumPurple, "RareAlerter: Blacklist Mob 2 Minutes");
-						Blacklist.Add(o.Guid, Flags, TimeSpan.FromSeconds(120));
 						Styx.CommonBot.TreeRoot.Stop();
 					}
-					else if (WaitBot)
+					else if (WaitBot && !o.IsDead)
 					{
-						Logging.Write(Colors.MediumPurple, "RareAlerter: Waiting 1 Minute");
-						Thread.Sleep(60000);
-						Logging.Write(Colors.MediumPurple, "RareAlerter: Blacklist Mob 2 Minutes");
-						Blacklist.Add(o.Guid, Flags, TimeSpan.FromSeconds(120));
+						while (!o.IsDead)
+						{
+							Logging.Write(Colors.MediumPurple, "RareAlerter: Waiting");
+							o.Face();
+							Thread.Sleep(1000);
+						}
 					}
-					else
+					else if (!WaitBot && !o.IsDead)
 					{
 						Logging.Write(Colors.MediumPurple, "RareAlerter: Blacklist Mob 2 Minutes");
 						Blacklist.Add(o.Guid, Flags, TimeSpan.FromSeconds(120));
 					}
 				}
 				else if(o.IsDead)
-				{
-					Logging.Write(Colors.MediumPurple, "RareAlerter: Find " + o.Name + ", but sadly he's dead");
-					Blacklist.Add(o.Guid, Flags, TimeSpan.FromSeconds(3600));
-				}
+					return;
 				else if(o.IsPet)
 					Blacklist.Add(o.Guid, Flags, TimeSpan.FromSeconds(3600));
 			}
@@ -289,17 +266,35 @@ namespace katzerle
 				if (!Blacklist.Contains(o.Guid, Flags))
 				{
 					if ((o.Entry == 214945) && !OnyxEgg)
+					{
+						Blacklist.Add(o.Guid, Flags, TimeSpan.FromSeconds(3600));
 						return;
+					}
 					if ((o.Entry == 210565) && !DarkSoil)
+					{
+						Blacklist.Add(o.Guid, Flags, TimeSpan.FromSeconds(3600));
 						return;
+					}
 					if ((o.Entry == 202080) && !Raptornest)
+					{
+						Blacklist.Add(o.Guid, Flags, TimeSpan.FromSeconds(3600));
 						return;
+					}
 					if ((o.Entry == 202081) && !Raptornest)
+					{
+						Blacklist.Add(o.Guid, Flags, TimeSpan.FromSeconds(3600));
 						return;
+					}
 					if ((o.Entry == 202082) && !Raptornest)
+					{
+						Blacklist.Add(o.Guid, Flags, TimeSpan.FromSeconds(3600));
 						return;
+					}
 					if ((o.Entry == 202083) && !Raptornest)
+					{
+						Blacklist.Add(o.Guid, Flags, TimeSpan.FromSeconds(3600));
 						return;
+					}
 						
 					if (File.Exists(RareAlerter.Soundfile))
 						new SoundPlayer(RareAlerter.Soundfile).Play();
@@ -315,33 +310,19 @@ namespace katzerle
 
 						Lua.DoString("TomTom:AddWaypoint("+x+", "+y+", \"Object!\")");
 					}
-					
-					if(FlyThere)
-					{
-						while (o.Location.Distance(Me.Location) > 40)
-						{
-							if (GroundMountMode)
-								Navigator.MoveTo(o.Location);
-							else
-								Flightor.MoveTo(o.Location);
-							Thread.Sleep(100);
-						}
-					}
-					WoWMovement.MoveStop();
 
 					if(StopBot)
 					{
 						Logging.Write(Colors.MediumPurple, "RareAlerter: Stop Bot");
-						Logging.Write(Colors.MediumPurple, "RareAlerter: Blacklist Object 2 Minutes");
-						Blacklist.Add(o.Guid, Flags, TimeSpan.FromSeconds(120));
 						Styx.CommonBot.TreeRoot.Stop();
 					}
-					else if (WaitBot)
+					else if (WaitBot && !o.CanLoot)
 					{
-						Logging.Write(Colors.MediumPurple, "RareAlerter: Waiting 1 Minute");
-						Thread.Sleep(60000);
-						Logging.Write(Colors.MediumPurple, "RareAlerter: Blacklist Object 2 Minutes");
-						Blacklist.Add(o.Guid, Flags, TimeSpan.FromSeconds(120));
+						while (!o.CanLoot)
+						{
+							Logging.Write(Colors.MediumPurple, "RareAlerter: Waiting");
+							Thread.Sleep(1000);
+						}
 					}
 					else
 					{
