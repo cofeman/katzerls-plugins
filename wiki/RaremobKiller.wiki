@@ -23,3 +23,5 @@ Here you can insert a Mob Id and the Bot will pull this Mob if he found him. You
 For example Poseidus:
   * ID: 50005
   * WOWHead Site: http://www.wowhead.com/npc=50005
+
+http://katzerls-plugins.googlecode.com/svn/wiki/Tab1Rarekiller.jpg
