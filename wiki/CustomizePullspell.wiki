@@ -23,3 +23,6 @@ Sometimes you can't use one of the Above Spells because of your Charlevel or you
 With this option you could config your own Pullspell.
   * check *"Customized Pullspell"*
   * write your own Pullspell in *english* to the Textfield.
+
+
+http://katzerls-plugins.googlecode.com/svn/wiki/Tab2Rarekiller.jpg
