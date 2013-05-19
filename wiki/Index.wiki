@@ -24,8 +24,5 @@ If running this Plugin with Botbase GB2 you also need a Profile.
   * [DescriptionConfigWindow Description of the Config Window]
   * [BotSave Bot Save]
 
-===Easy Setups===
-  * [TLPD Timelost Protodrake]
-
 ===Special Thanks ===
   * [SpecialThanks Special Thanks]
