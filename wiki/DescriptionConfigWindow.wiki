@@ -9,6 +9,8 @@
   * [Tamer The Tamer] 
   * [BlackList Blacklist]
 
+http://katzerls-plugins.googlecode.com/svn/wiki/Tab1 Rarekiller.jpg
+
 ===Tap Two - Slowfall and other Behavior===
   * [SlowfallBehavior Slowfall Behavior]
   * [CustomizePullspell customize Pullspell]
