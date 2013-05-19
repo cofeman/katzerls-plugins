@@ -12,5 +12,5 @@
   * SMcCloud (... for the original Slowfall-Plugin)
   * Zapman for his Zapsound 
   * Erenion and his eSafe
-and thanks to all the brave Tester of the early Versions of these Plugin
   * Badwolf for the Support of the Plugin last Year
+and thanks to all the brave Tester of the early Versions of these Plugin
