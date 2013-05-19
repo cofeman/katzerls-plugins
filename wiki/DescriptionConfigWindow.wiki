@@ -4,22 +4,14 @@
 
 ===Tap One - Rarekiller===
   * [RaremobKiller Raremob Killer]
-  * [HuntByID Hunt by ID]
-  * [Mounts]
   * [ProblemMobs Mobs with Problems]
   * [Collector]
   * [Tamer The Tamer] 
-  * [CustomizePullspell customize Pullspell]
+  * [BlackList Blacklist]
+
 
 ===Tap Two - Slowfall and other Behavior===
   * [SlowfallBehavior Slowfall Behavior]
-  * [Screenshots]
-  * [Miscelaneous]
-  * [BlackList Blacklist]
-  * [TaggedMobs Mobs tagged by others]
-
-===Tap Three - Security Settings===
-
+  * [CustomizePullspell customize Pullspell]
   * [Alert]
-  * [LogOff Log me off]
-  * [HeartMe If Player follows ...]
+  * [Miscelaneous]
