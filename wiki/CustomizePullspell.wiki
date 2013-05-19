@@ -19,7 +19,7 @@ Per Default the Rarekiller will use this Spells to Pull the Mobs:
 Sometimes you can't use one of the Above Spells because of your Charlevel or you don't want the Bot to use the Default Pullspells.
 
 With this option you could config your own Pullspell.
-  * uncheck *"Use Default Pullspell"*
+  * check *"Customized Pullspell"*
   * write your own Pullspell in *english* to the Textfield.
 
 === Config your Own Spell ===
