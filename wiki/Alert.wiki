@@ -12,6 +12,3 @@ This soundfile is played if he founds a hunted Mob, Figurine or Nest
 This soundfile is played if somebody wispers you (it also alerts on Battlenet Wispers and GM Wispers)
 === Guild ===
 This soundfile is played if you received a Guildmessage or Officersmessage 
-=== Attention ===
-  * He will always play siren.wav if you found Aeonaxx, to alert you.
-  * He will also use siren.wav if your Toon gets an Unautorized Continent Change or another security concealment
