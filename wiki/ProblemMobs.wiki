@@ -10,3 +10,5 @@ Blazewing is a very very fast flying Rare Mob. Often the Bot has no chance to re
 Only Check "kill Blazewing" if you belief your Bot could kill him.
 
 Bloodseeker is also a flying Mob, your Toon only can kill him with valid Slowfall. Otherwise he will fall to Death. You could also activate, that the Bot will only catch him without killing him.
+
+http://katzerls-plugins.googlecode.com/svn/wiki/Tab1Rarekiller.jpg
