@@ -2,7 +2,7 @@
 
 = Easy Setup Timelost Protodrake for Livetime User and Paid Plugin=
 
-  # [Installation Install] and Enable the Plugin in your HB
+  # Install and Enable the Plugin in your HB
   # Buy some [http://www.wowhead.com/item=43472 Snowfall Lager] (If you don't play on a english client you have ot replace _Snowfall Lager_ on the Config Window in your Client Language)
   # Open the [DescriptionConfigWindow Configwindow]. Take a look at the Settings for Slowfall on Tap Two and the Security Settings on Tap Three
   # Check *"Keypresser"* on Tap Two and then press Save.
