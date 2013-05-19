@@ -12,3 +12,6 @@ This soundfile is played if he founds a hunted Mob, Figurine or Nest
 This soundfile is played if somebody wispers you (it also alerts on Battlenet Wispers and GM Wispers)
 === Guild ===
 This soundfile is played if you received a Guildmessage or Officersmessage 
+
+
+http://katzerls-plugins.googlecode.com/svn/wiki/Tab2Rarekiller.jpg
