@@ -14,4 +14,4 @@
   * [SlowfallBehavior Slowfall Behavior]
   * [CustomizePullspell customize Pullspell]
   * [Alert]
-  * [Miscelaneous]
+  * [Miscelaneous ANTI AFK]
