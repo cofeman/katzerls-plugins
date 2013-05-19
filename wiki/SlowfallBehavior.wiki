@@ -22,3 +22,5 @@ You could choose more then one Bahavior. The Bot will try to use the ones which 
 You could also set change a Timer in mms. This is the Time how long the Char will fall before the Bot uses Slowfall. If you set him to 0 the Char will use Slowfall even if dismounting. If you set it to 1000 he will wait 1 sec, for example.
 
 Try which Time works for you the Best. If you meet TLPD your Toon will use a special Quick Slowfall to make sure your Toon will not die.
+
+http://katzerls-plugins.googlecode.com/svn/wiki/Tab2Rarekiller.jpg
