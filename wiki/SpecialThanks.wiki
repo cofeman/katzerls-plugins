@@ -2,7 +2,7 @@
 
 = Special Thanks to =
 
-  * highvoltz (I was using his NetherwingCollector as basement to write this Plugin)
+  * highvoltz (I was using his Netherwing Collector as basement to write this Plugin)
   * CodenameG (His Tips and Plugins helped with the GUI)
   * Bobby (... for his really amazing CC ShamWOW. It helped me with the Config save and load)
   * Tony (... for his Timelost Protodrake-Profile)
@@ -13,3 +13,4 @@
   * Zapman for his Zapsound 
   * Erenion and his eSafe
 and thanks to all the brave Tester of the early Versions of these Plugin
+  * Badwolf for the Support of the Plugin last Year
