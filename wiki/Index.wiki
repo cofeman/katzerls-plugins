@@ -4,10 +4,7 @@
 *First:* Botting is against the Rules, so bot carefull and don't get slaphappy if you use this Plugin with your Main Account. Circle around 24/7 is very risky.  Good Luck in Hunting everybody 
 
 *This Plugin will help you hunt Rare Mobs like TLPD
-It can also hunt a Mob by ID or tame your Hunter his favourite Pet.*
-
-And Now also implemented in Test Stage: 
-*--> Aeonaxx and Camel Figurine Interactor*
+It can also hunt a Mob by ID or tame your Hunter his favourite Pet or interact with Objects.*
 
 If your WOW notices a hunted Mob, this Plugin will take control over your toon and flys or walks to the Mob and aggro him with an instant spell.
 
@@ -16,9 +13,7 @@ If falling down from the Mount (while hunting flying Mobs) the implemented Slowf
 For your Security and to look more human while camping I also implemented
   * a Wisper-Alert inkl Battle Net Wispers
   * a Guildmessage-Alert inkl Officers Channel
-  * a Keypresser which presses a Key every 3 - 14 Minutes to avoid AFK like a Human
-  * a Logout which logs you out if your Toon gets portet (notices if the Continent changes)
-  * use Heartstone if someone follows you
+  * a ANTI AFK which presses a Key every 3 - 14 Minutes to avoid AFK like a Human
 
 You could use this Plugin beside Gathering, Arching and Leveling.
 If running this Plugin with Botbase GB2 you also need a Profile.
@@ -26,19 +21,11 @@ If running this Plugin with Botbase GB2 you also need a Profile.
 = Index =
 
 ===How to Use===
-  * [Installation]
   * [DescriptionConfigWindow Description of the Config Window]
-  * [Profiles].
   * [BotSave Bot Save]
-  * [UsefullHints Usefull Hints]
 
 ===Easy Setups===
   * [TLPD Timelost Protodrake]
-  * [Aeonaxx]
-  * [Poseidus]
-  * [GreyRidingCamel Grey Riding Camel]
 
-===Miscelaneous===
+===Special Thanks ===
   * [SpecialThanks Special Thanks]
-  * [Versions]
-  * [NextFeatures Next planned Features]
