@@ -18,8 +18,6 @@ For your Security and to look more human while camping I also implemented
 You could use this Plugin beside Gathering, Arching and Leveling.
 If running this Plugin with Botbase GB2 you also need a Profile.
 
-http://katzerls-plugins.googlecode.com/svn/wiki/autodismount.JPG
-
 = Index =
 
 ===How to Use===
@@ -28,3 +26,7 @@ http://katzerls-plugins.googlecode.com/svn/wiki/autodismount.JPG
 
 ===Special Thanks ===
   * [SpecialThanks Special Thanks]
+
+
+Note: you have to Activate Autodismount in flight in your WOW !!!
+http://katzerls-plugins.googlecode.com/svn/wiki/autodismount.JPG
