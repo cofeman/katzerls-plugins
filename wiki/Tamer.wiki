@@ -8,8 +8,8 @@ Hint: Just use this Plugin-Part if you are sure, your Toon has enough free Slots
 
 ===don't kill tameable Mobs===
 If you check *"don't kill tameable Mobs"* Rarekiller is not allowed to kill Raremobs he found which are tameable. Anyhow: If you don't set this and you meet a Mob which is hunted also to kill and to tame the Bot will in 90% first try to tame the Mob.
-===Tame Default Pets===
-... means: The Tamer Part wil try to tame the Mobs of the List Tameablemobs.xml in the Configfolder of your Rarekiller, if he founds them. You could edit this List and add your own favourite Mobs to the List if you want.
+===Tame Pets from XML===
+... means: The Tamer Part will try to tame the Mobs of the List Tameablemobs.xml in the Configfolder of your Rarekiller, if he founds them. You could edit this List and add your own favourite Mobs to the List if you want.
 
 *Per Default in the List:*
   * Entry="49822" Name="Jadefang"
