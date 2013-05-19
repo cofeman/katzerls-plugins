@@ -38,3 +38,5 @@ You found the Mob-Id if you search the Mob on [http://www.wowhead.com wowhead] a
 For example Ghostcrawler:
   * ID: 50051
   * WOWHead Site: http://www.wowhead.com/npc=50051
+
+http://katzerls-plugins.googlecode.com/svn/wiki/Tab1Rarekiller.jpg
