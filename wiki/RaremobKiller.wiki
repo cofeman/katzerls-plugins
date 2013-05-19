@@ -10,7 +10,7 @@ There you can choose which Mobs you want the Plugin to pull.
   * *Burning Crusade:* BC-Rares for Archievement Bloodlust
   * *Classic Rare Mobs:* Classic Rare Mobs <= Level 60
 
-  * *Hunt by ID: see below*
+  * *Hunt by ID:* see below
   * *Timelost Protodrake:* kill Timelost Protodrake for Mount (including killing Vyragosa because of respawn timer, if checked in Part Mobs with Problems)
   * *Poseidus:* kill Poseidus for Mount
 
