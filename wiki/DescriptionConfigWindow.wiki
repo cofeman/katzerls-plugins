@@ -9,7 +9,7 @@
   * [Tamer The Tamer] 
   * [BlackList Blacklist]
 
-http://code.google.com/p/katzerls-plugins/source/browse/wiki/Tab1%20Rarekiller.jpg
+[img]http://code.google.com/p/katzerls-plugins/source/browse/wiki/Tab1%20Rarekiller.jpg[/img]
 
 
 ===Tap Two - Slowfall and other Behavior===
