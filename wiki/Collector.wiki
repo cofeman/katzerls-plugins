@@ -1,6 +1,6 @@
 #summary Camel Figurine Config.
 
 = Collector =
-  * *Collect Objects from XML:* The Collector will try to collect the Objects of the List CollectObjects.xml in the Configfolder of your Rarekiller, if he founds them. You could edit this List and add your own favourite Mobs to the List if you want. Per Default Member of the Lists ar the Raptor Nests, Onyx Eggs and Dark Soils.
+  * *Collect Objects from XML:* The Collector will try to collect the Objects of the List CollectObjects in the Configfolder of your Rarekiller, if he founds them. You could edit this List and add your own favourite Mobs to the List if you want. Per Default Member of the Lists ar the Raptor Nests, Onyx Eggs and Dark Soils.
   * *Collect Camel Figurines*: He will collect Camel Figurines in Uldum if he founds one
   * *Collect Raptor Nest:* Collect Raptor Nests for little Raptor Pets
