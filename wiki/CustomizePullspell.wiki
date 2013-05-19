@@ -3,17 +3,17 @@
 = Customize Pullspell =
 === Default Settings ===
 Per Default the Rarekiller will use this Spells to Pull the Mobs:
-	<Spell Class = "Priest" Name="Shadow Word: Pain" />
-	<Spell Class = "Mage" Name="Fire Blast" />
-	<Spell Class = "Warrior" Name="Heroic Throw" />
-	<Spell Class = "Hunter" Name="Arcane Shot" />
-	<Spell Class = "Rogue" Name="Sinister Strike" />
-	<Spell Class = "Death Knight" Name="Icy Touch" />
-	<Spell Class = "Paladin" Name="Crusader Strike" />
-	<Spell Class = "Shaman" Name="Earth Shock"/>				
-	<Spell Class = "Warlock" Name="Corruption" />
-	<Spell Class = "Druid" Name="Moonfire" />
-	<Spell Class = "Monk" Name="Jab" />
+Class = "Priest" Name="Shadow Word: Pain" 
+Class = "Mage" Name="Fire Blast" 
+Class = "Warrior" Name="Heroic Throw" 
+Class = "Hunter" Name="Arcane Shot" 
+Class = "Rogue" Name="Sinister Strike" 
+Class = "Death Knight" Name="Icy Touch" 
+Class = "Paladin" Name="Crusader Strike" 
+Class = "Shaman" Name="Earth Shock"				
+Class = "Warlock" Name="Corruption" 
+Class = "Druid" Name="Moonfire" 
+Class = "Monk" Name="Jab" 
 
 === Config the Pull Range ===
 Sometimes you can't use one of the Above Spells because of your Charlevel or you don't want the Bot to use the Default Pullspells.
