@@ -1,9 +1,3 @@
 #summary Miscelaneous Settings
-
-= Miscelaneous Settings =
-
-=== Groundmountmode ===
-You can enable Ground Mount Mode if your Bot is not able to use Flying Mounts
-
 === ANTI AFK===
 Also Implemented a Keypresser for humanlike Camping on one Place. If doing nothing the Keypresser will press a Key every 3 - 14 Minutes to prevent a Logout because of AFK.
