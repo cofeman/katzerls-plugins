@@ -3,7 +3,6 @@
 = Description Raremob Killer =
 
 There you can choose which Mobs you want the Plugin to pull.
-You also could select to collect the Raptor Nests for little Pet Raptors.
 
 ===If checked these - he will hunt:===
   * *Cataclysm:* all lootable Cataclysm-Rares for some nice Items - including *Poseidus*
