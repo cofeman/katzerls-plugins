@@ -797,7 +797,7 @@ namespace ProfileChanger
             this.Controls.Add(this.TBProfile2);
             this.Controls.Add(this.TBProfile1);
             this.Name = "ProfileChangerUI";
-            this.Text = "Profile Changer - Config Version 2.0";
+            this.Text = "Profile Changer";
             this.ResumeLayout(false);
             this.PerformLayout();
 
