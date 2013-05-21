@@ -395,9 +395,9 @@ namespace katzerle
             XmlDocument xml = new XmlDocument();
             XmlNode xvar;
 			
-            string sPath = SettingsPath;
+            string sPath = FolderPath;
 
-            sPath = Path.Combine(sPath, "RareAlerter_", StyxWoW.Me.Name, ".config");
+            sPath = Path.Combine(sPath, "RareAlerter.config");
 			
 			if (!File.Exists(sPath))
             {
