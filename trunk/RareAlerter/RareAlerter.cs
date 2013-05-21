@@ -191,7 +191,7 @@ namespace katzerle
 		{
 			ObjectManager.Update();
 			List<WoWUnit> objList = ObjectManager.GetObjectsOfType<WoWUnit>()
-                .Where(o => ((o.Entry == 50005)  		//Poseidus Vashijr
+                .Where(o => (!Blacklist.Contains(o.Guid, Flags) && ((o.Entry == 50005)  		//Poseidus Vashijr
 					|| (o.Entry == 3868)				//Bloodseeker
 					|| (o.Entry == 50062)				//Aeonaxx friendly					
 					|| (o.Entry == 50410)				//Camel Dust					
@@ -203,7 +203,7 @@ namespace katzerle
 					|| (WOTLK && o.Level > 69 && o.Level < 81) 	//WOTLK Rares
 					|| (BC && o.Level > 59 && o.Level < 71)		//BC Rares
 					|| (LowLevel && o.Level < 61))				//LowLevel Rares
-					))).OrderBy(o => o.Distance).ToList();			
+					)))).OrderBy(o => o.Distance).ToList();			
 
 			foreach (WoWUnit o in objList)
 			{
