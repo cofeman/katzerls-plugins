@@ -215,7 +215,7 @@ namespace ProfileChanger
                 string fileName8 = loadProfile8.FileName;
                 if (!string.IsNullOrEmpty(fileName8))
                 {
-                    TBProfile6.Text = fileName8;
+                    TBProfile8.Text = fileName8;
                 }
             }
         }
@@ -233,7 +233,7 @@ namespace ProfileChanger
                 string fileName9 = loadProfile9.FileName;
                 if (!string.IsNullOrEmpty(fileName9))
                 {
-                    TBProfile6.Text = fileName9;
+                    TBProfile9.Text = fileName9;
                 }
             }
         }
@@ -251,7 +251,7 @@ namespace ProfileChanger
                 string fileName10 = loadProfile10.FileName;
                 if (!string.IsNullOrEmpty(fileName10))
                 {
-                    TBProfile6.Text = fileName10;
+                    TBProfile10.Text = fileName10;
                 }
             }
         }
@@ -269,7 +269,7 @@ namespace ProfileChanger
                 string fileName11 = loadProfile11.FileName;
                 if (!string.IsNullOrEmpty(fileName11))
                 {
-                    TBProfile6.Text = fileName11;
+                    TBProfile11.Text = fileName11;
                 }
             }
         }
@@ -287,7 +287,7 @@ namespace ProfileChanger
                 string fileName12 = loadProfile12.FileName;
                 if (!string.IsNullOrEmpty(fileName12))
                 {
-                    TBProfile6.Text = fileName12;
+                    TBProfile12.Text = fileName12;
                 }
             }
         }
