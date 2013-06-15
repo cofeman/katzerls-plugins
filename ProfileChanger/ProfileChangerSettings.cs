@@ -85,18 +85,18 @@ namespace ProfileChanger
         public string Minutes11 = "0";
         public string Minutes12 = "0";
 
-        public string MinutesMax1 = "";
-        public string MinutesMax2 = "";
-        public string MinutesMax3 = "";
-        public string MinutesMax4 = "";
-        public string MinutesMax5 = "";
-        public string MinutesMax6 = "";
-        public string MinutesMax7 = "";
-        public string MinutesMax8 = "";
-        public string MinutesMax9 = "";
-        public string MinutesMax10 = "";
-        public string MinutesMax11 = "";
-        public string MinutesMax12 = "";
+        public string MinutesMax1 = "0";
+        public string MinutesMax2 = "0";
+        public string MinutesMax3 = "0";
+        public string MinutesMax4 = "0";
+        public string MinutesMax5 = "0";
+        public string MinutesMax6 = "0";
+        public string MinutesMax7 = "0";
+        public string MinutesMax8 = "0";
+        public string MinutesMax9 = "0";
+        public string MinutesMax10 = "0";
+        public string MinutesMax11 = "0";
+        public string MinutesMax12 = "0";
 
         public bool StopBot = false;
         public bool RandomProfile = false;
