@@ -120,6 +120,23 @@ namespace ProfileChanger
             this.CB12 = new System.Windows.Forms.CheckBox();
             this.TBMinutes1 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.TBMinutesMax1 = new System.Windows.Forms.TextBox();
+            this.TBMinutesMax7 = new System.Windows.Forms.TextBox();
+            this.TBMinutesMax2 = new System.Windows.Forms.TextBox();
+            this.TBMinutesMax8 = new System.Windows.Forms.TextBox();
+            this.TBMinutesMax3 = new System.Windows.Forms.TextBox();
+            this.TBMinutesMax9 = new System.Windows.Forms.TextBox();
+            this.TBMinutesMax4 = new System.Windows.Forms.TextBox();
+            this.TBMinutesMax10 = new System.Windows.Forms.TextBox();
+            this.TBMinutesMax5 = new System.Windows.Forms.TextBox();
+            this.TBMinutesMax11 = new System.Windows.Forms.TextBox();
+            this.TBMinutesMax6 = new System.Windows.Forms.TextBox();
+            this.TBMinutesMax12 = new System.Windows.Forms.TextBox();
+            this.CBRandomTime = new System.Windows.Forms.CheckBox();
+            this.CBRandomProfile = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // TBProfile1
@@ -333,7 +350,7 @@ namespace ProfileChanger
             // BSave
             // 
             this.BSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BSave.Location = new System.Drawing.Point(381, 350);
+            this.BSave.Location = new System.Drawing.Point(536, 380);
             this.BSave.Name = "BSave";
             this.BSave.Size = new System.Drawing.Size(149, 34);
             this.BSave.TabIndex = 5;
@@ -400,7 +417,7 @@ namespace ProfileChanger
             // 
             this.CBStopBot.AutoSize = true;
             this.CBStopBot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CBStopBot.Location = new System.Drawing.Point(12, 350);
+            this.CBStopBot.Location = new System.Drawing.Point(12, 398);
             this.CBStopBot.Name = "CBStopBot";
             this.CBStopBot.Size = new System.Drawing.Size(169, 17);
             this.CBStopBot.TabIndex = 7;
@@ -721,17 +738,170 @@ namespace ProfileChanger
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(465, 9);
+            this.label8.Location = new System.Drawing.Point(450, 9);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(51, 13);
             this.label8.TabIndex = 3;
             this.label8.Text = "Minutes";
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(506, 9);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(27, 13);
+            this.label9.TabIndex = 27;
+            this.label9.Text = "Min";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(574, 9);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(51, 13);
+            this.label16.TabIndex = 3;
+            this.label16.Text = "Minutes";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(630, 9);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(30, 13);
+            this.label17.TabIndex = 27;
+            this.label17.Text = "Max";
+            // 
+            // TBMinutesMax1
+            // 
+            this.TBMinutesMax1.Enabled = false;
+            this.TBMinutesMax1.Location = new System.Drawing.Point(564, 25);
+            this.TBMinutesMax1.Name = "TBMinutesMax1";
+            this.TBMinutesMax1.Size = new System.Drawing.Size(110, 20);
+            this.TBMinutesMax1.TabIndex = 4;
+            // 
+            // TBMinutesMax7
+            // 
+            this.TBMinutesMax7.Enabled = false;
+            this.TBMinutesMax7.Location = new System.Drawing.Point(564, 181);
+            this.TBMinutesMax7.Name = "TBMinutesMax7";
+            this.TBMinutesMax7.Size = new System.Drawing.Size(110, 20);
+            this.TBMinutesMax7.TabIndex = 4;
+            // 
+            // TBMinutesMax2
+            // 
+            this.TBMinutesMax2.Enabled = false;
+            this.TBMinutesMax2.Location = new System.Drawing.Point(564, 51);
+            this.TBMinutesMax2.Name = "TBMinutesMax2";
+            this.TBMinutesMax2.Size = new System.Drawing.Size(110, 20);
+            this.TBMinutesMax2.TabIndex = 4;
+            // 
+            // TBMinutesMax8
+            // 
+            this.TBMinutesMax8.Enabled = false;
+            this.TBMinutesMax8.Location = new System.Drawing.Point(564, 207);
+            this.TBMinutesMax8.Name = "TBMinutesMax8";
+            this.TBMinutesMax8.Size = new System.Drawing.Size(110, 20);
+            this.TBMinutesMax8.TabIndex = 4;
+            // 
+            // TBMinutesMax3
+            // 
+            this.TBMinutesMax3.Enabled = false;
+            this.TBMinutesMax3.Location = new System.Drawing.Point(564, 77);
+            this.TBMinutesMax3.Name = "TBMinutesMax3";
+            this.TBMinutesMax3.Size = new System.Drawing.Size(110, 20);
+            this.TBMinutesMax3.TabIndex = 4;
+            // 
+            // TBMinutesMax9
+            // 
+            this.TBMinutesMax9.Enabled = false;
+            this.TBMinutesMax9.Location = new System.Drawing.Point(564, 233);
+            this.TBMinutesMax9.Name = "TBMinutesMax9";
+            this.TBMinutesMax9.Size = new System.Drawing.Size(110, 20);
+            this.TBMinutesMax9.TabIndex = 4;
+            // 
+            // TBMinutesMax4
+            // 
+            this.TBMinutesMax4.Enabled = false;
+            this.TBMinutesMax4.Location = new System.Drawing.Point(564, 103);
+            this.TBMinutesMax4.Name = "TBMinutesMax4";
+            this.TBMinutesMax4.Size = new System.Drawing.Size(110, 20);
+            this.TBMinutesMax4.TabIndex = 4;
+            // 
+            // TBMinutesMax10
+            // 
+            this.TBMinutesMax10.Enabled = false;
+            this.TBMinutesMax10.Location = new System.Drawing.Point(564, 259);
+            this.TBMinutesMax10.Name = "TBMinutesMax10";
+            this.TBMinutesMax10.Size = new System.Drawing.Size(110, 20);
+            this.TBMinutesMax10.TabIndex = 4;
+            // 
+            // TBMinutesMax5
+            // 
+            this.TBMinutesMax5.Enabled = false;
+            this.TBMinutesMax5.Location = new System.Drawing.Point(564, 129);
+            this.TBMinutesMax5.Name = "TBMinutesMax5";
+            this.TBMinutesMax5.Size = new System.Drawing.Size(110, 20);
+            this.TBMinutesMax5.TabIndex = 4;
+            // 
+            // TBMinutesMax11
+            // 
+            this.TBMinutesMax11.Enabled = false;
+            this.TBMinutesMax11.Location = new System.Drawing.Point(564, 285);
+            this.TBMinutesMax11.Name = "TBMinutesMax11";
+            this.TBMinutesMax11.Size = new System.Drawing.Size(110, 20);
+            this.TBMinutesMax11.TabIndex = 4;
+            // 
+            // TBMinutesMax6
+            // 
+            this.TBMinutesMax6.Enabled = false;
+            this.TBMinutesMax6.Location = new System.Drawing.Point(564, 155);
+            this.TBMinutesMax6.Name = "TBMinutesMax6";
+            this.TBMinutesMax6.Size = new System.Drawing.Size(110, 20);
+            this.TBMinutesMax6.TabIndex = 4;
+            // 
+            // TBMinutesMax12
+            // 
+            this.TBMinutesMax12.Enabled = false;
+            this.TBMinutesMax12.Location = new System.Drawing.Point(564, 311);
+            this.TBMinutesMax12.Name = "TBMinutesMax12";
+            this.TBMinutesMax12.Size = new System.Drawing.Size(110, 20);
+            this.TBMinutesMax12.TabIndex = 4;
+            // 
+            // CBRandomTime
+            // 
+            this.CBRandomTime.AutoSize = true;
+            this.CBRandomTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CBRandomTime.Location = new System.Drawing.Point(12, 375);
+            this.CBRandomTime.Name = "CBRandomTime";
+            this.CBRandomTime.Size = new System.Drawing.Size(119, 17);
+            this.CBRandomTime.TabIndex = 28;
+            this.CBRandomTime.Text = "Randomize Time";
+            this.CBRandomTime.UseVisualStyleBackColor = true;
+            this.CBRandomTime.CheckedChanged += new System.EventHandler(this.CBRandomTime_CheckedChanged);
+            // 
+            // CBRandomProfile
+            // 
+            this.CBRandomProfile.AutoSize = true;
+            this.CBRandomProfile.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CBRandomProfile.Location = new System.Drawing.Point(12, 350);
+            this.CBRandomProfile.Name = "CBRandomProfile";
+            this.CBRandomProfile.Size = new System.Drawing.Size(128, 17);
+            this.CBRandomProfile.TabIndex = 29;
+            this.CBRandomProfile.Text = "Randomixe Profile";
+            this.CBRandomProfile.UseVisualStyleBackColor = true;
+            // 
             // ProfileChangerUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(567, 396);
+            this.ClientSize = new System.Drawing.Size(697, 426);
+            this.Controls.Add(this.CBRandomProfile);
+            this.Controls.Add(this.CBRandomTime);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.CB12);
             this.Controls.Add(this.CB11);
             this.Controls.Add(this.CB10);
@@ -753,17 +923,30 @@ namespace ProfileChanger
             this.Controls.Add(this.CB3);
             this.Controls.Add(this.CB2);
             this.Controls.Add(this.BSave);
+            this.Controls.Add(this.TBMinutesMax12);
             this.Controls.Add(this.TBMinutes12);
+            this.Controls.Add(this.TBMinutesMax6);
             this.Controls.Add(this.TBMinutes6);
+            this.Controls.Add(this.TBMinutesMax11);
             this.Controls.Add(this.TBMinutes11);
+            this.Controls.Add(this.TBMinutesMax5);
             this.Controls.Add(this.TBMinutes5);
+            this.Controls.Add(this.TBMinutesMax10);
             this.Controls.Add(this.TBMinutes10);
+            this.Controls.Add(this.TBMinutesMax4);
+            this.Controls.Add(this.TBMinutesMax9);
             this.Controls.Add(this.TBMinutes4);
+            this.Controls.Add(this.TBMinutesMax3);
             this.Controls.Add(this.TBMinutes9);
+            this.Controls.Add(this.TBMinutesMax8);
             this.Controls.Add(this.TBMinutes3);
+            this.Controls.Add(this.TBMinutesMax2);
             this.Controls.Add(this.TBMinutes8);
+            this.Controls.Add(this.TBMinutesMax7);
             this.Controls.Add(this.TBMinutes2);
             this.Controls.Add(this.TBMinutes7);
+            this.Controls.Add(this.TBMinutesMax1);
+            this.Controls.Add(this.label16);
             this.Controls.Add(this.TBMinutes1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -869,6 +1052,23 @@ namespace ProfileChanger
         private CheckBox CB12;
         private TextBox TBMinutes1;
         private Label label8;
+        private Label label9;
+        private Label label16;
+        private Label label17;
+        private TextBox TBMinutesMax1;
+        private TextBox TBMinutesMax7;
+        private TextBox TBMinutesMax2;
+        private TextBox TBMinutesMax8;
+        private TextBox TBMinutesMax3;
+        private TextBox TBMinutesMax9;
+        private TextBox TBMinutesMax4;
+        private TextBox TBMinutesMax10;
+        private TextBox TBMinutesMax5;
+        private TextBox TBMinutesMax11;
+        private TextBox TBMinutesMax6;
+        private TextBox TBMinutesMax12;
+        private CheckBox CBRandomTime;
+        private CheckBox CBRandomProfile;
     }
 }
 

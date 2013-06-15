@@ -71,8 +71,22 @@ namespace ProfileChanger
             TBProfile11.Text = ProfileChanger.Settings.Profile11;
             TBProfile12.Text = ProfileChanger.Settings.Profile12;
 
-            CBStopBot.Checked = ProfileChanger.Settings.StopBot;
+            TBMinutesMax1.Text = ProfileChanger.Settings.MinutesMax1;
+            TBMinutesMax2.Text = ProfileChanger.Settings.MinutesMax2;
+            TBMinutesMax3.Text = ProfileChanger.Settings.MinutesMax3;
+            TBMinutesMax4.Text = ProfileChanger.Settings.MinutesMax4;
+            TBMinutesMax5.Text = ProfileChanger.Settings.MinutesMax5;
+            TBMinutesMax6.Text = ProfileChanger.Settings.MinutesMax6;
+            TBMinutesMax7.Text = ProfileChanger.Settings.MinutesMax7;
+            TBMinutesMax8.Text = ProfileChanger.Settings.MinutesMax8;
+            TBMinutesMax9.Text = ProfileChanger.Settings.MinutesMax9;
+            TBMinutesMax10.Text = ProfileChanger.Settings.MinutesMax10;
+            TBMinutesMax11.Text = ProfileChanger.Settings.MinutesMax11;
+            TBMinutesMax12.Text = ProfileChanger.Settings.MinutesMax12;
 
+            CBStopBot.Checked = ProfileChanger.Settings.StopBot;
+            CBRandomProfile.Checked = ProfileChanger.Settings.RandomProfile;
+            CBRandomTime.Checked = ProfileChanger.Settings.RandomTime;
         }
 
         private void BSearchFile1_Click(object sender, EventArgs e)
@@ -619,6 +633,69 @@ namespace ProfileChanger
                 CB12.Checked = false;
             }
 
+            if (CBRandomTime.Checked && (TBMinutes1.Text != "0" || TBMinutes1.Text != "") && (TBMinutesMax1.Text == "" || (TBMinutesMax1.Text.ToInt32() < TBMinutes1.Text.ToInt32())))
+            {
+                Logging.Write(Colors.LightSkyBlue, "Profile Changer: Line 1 invalid Settings. Please correct them");
+                TBMinutesMax1.Text = TBMinutes1.Text;
+            }
+            if (CBRandomTime.Checked && (TBMinutes2.Text != "0" || TBMinutes2.Text != "") && (TBMinutesMax2.Text == "" || (TBMinutesMax2.Text.ToInt32() < TBMinutes2.Text.ToInt32())))
+            {
+                Logging.Write(Colors.LightSkyBlue, "Profile Changer: Line 2 invalid Settings. Please correct them");
+                TBMinutesMax2.Text = TBMinutes2.Text;
+            }
+
+            if (CBRandomTime.Checked && (TBMinutes3.Text != "0" || TBMinutes3.Text != "") && (TBMinutesMax3.Text == "" || (TBMinutesMax3.Text.ToInt32() < TBMinutes3.Text.ToInt32())))
+            {
+                Logging.Write(Colors.LightSkyBlue, "Profile Changer: Line 3 invalid Settings. Please correct them");
+                TBMinutesMax3.Text = TBMinutes3.Text;
+            }
+            if (CBRandomTime.Checked && (TBMinutes4.Text != "0" || TBMinutes4.Text != "") && (TBMinutesMax4.Text == "" || (TBMinutesMax4.Text.ToInt32() < TBMinutes4.Text.ToInt32())))
+            {
+                Logging.Write(Colors.LightSkyBlue, "Profile Changer: Line 4 invalid Settings. Please correct them");
+                TBMinutesMax4.Text = TBMinutes4.Text;
+            }
+            if (CBRandomTime.Checked && (TBMinutes5.Text != "0" || TBMinutes5.Text != "") && (TBMinutesMax5.Text == "" || (TBMinutesMax5.Text.ToInt32() < TBMinutes5.Text.ToInt32())))
+            {
+                Logging.Write(Colors.LightSkyBlue, "Profile Changer: Line 5 invalid Settings. Please correct them");
+                TBMinutesMax5.Text = TBMinutes5.Text;
+            }
+            if (CBRandomTime.Checked && (TBMinutes6.Text != "0" || TBMinutes6.Text != "") && (TBMinutesMax6.Text == "" || (TBMinutesMax6.Text.ToInt32() < TBMinutes6.Text.ToInt32())))
+            {
+                Logging.Write(Colors.LightSkyBlue, "Profile Changer: Line 6 invalid Settings. Please correct them");
+                TBMinutesMax6.Text = TBMinutes6.Text;
+            }
+            if (CBRandomTime.Checked && (TBMinutes7.Text != "0" || TBMinutes7.Text != "") && (TBMinutesMax7.Text == "" || (TBMinutesMax7.Text.ToInt32() < TBMinutes7.Text.ToInt32())))
+            {
+                Logging.Write(Colors.LightSkyBlue, "Profile Changer: Line 7 invalid Settings. Please correct them");
+                TBMinutesMax7.Text = TBMinutes7.Text;
+            }
+            if (CBRandomTime.Checked && (TBMinutes8.Text != "0" || TBMinutes8.Text != "") && (TBMinutesMax8.Text == "" || (TBMinutesMax8.Text.ToInt32() < TBMinutes8.Text.ToInt32())))
+            {
+                Logging.Write(Colors.LightSkyBlue, "Profile Changer: Line 8 invalid Settings. Please correct them");
+                TBMinutesMax8.Text = TBMinutes8.Text;
+            }
+            if (CBRandomTime.Checked && (TBMinutes9.Text != "0" || TBMinutes9.Text != "") && (TBMinutesMax9.Text == "" || (TBMinutesMax9.Text.ToInt32() < TBMinutes9.Text.ToInt32())))
+            {
+                Logging.Write(Colors.LightSkyBlue, "Profile Changer: Line 9 invalid Settings. Please correct them");
+                TBMinutesMax9.Text = TBMinutes9.Text;
+            }
+            if (CBRandomTime.Checked && (TBMinutes10.Text != "0" || TBMinutes10.Text != "") && (TBMinutesMax10.Text == "" || (TBMinutesMax10.Text.ToInt32() < TBMinutes10.Text.ToInt32())))
+            {
+                Logging.Write(Colors.LightSkyBlue, "Profile Changer: Line 10 invalid Settings. Please correct them");
+                TBMinutesMax10.Text = TBMinutes10.Text;
+            }
+            if (CBRandomTime.Checked && (TBMinutes11.Text != "0" || TBMinutes11.Text != "") && (TBMinutesMax11.Text == "" || (TBMinutesMax11.Text.ToInt32() < TBMinutes11.Text.ToInt32())))
+            {
+                Logging.Write(Colors.LightSkyBlue, "Profile Changer: Line 11 invalid Settings. Please correct them");
+                TBMinutesMax11.Text = TBMinutes11.Text;
+            }
+            if (CBRandomTime.Checked && (TBMinutes12.Text != "0" || TBMinutes12.Text != "") && (TBMinutesMax12.Text == "" || (TBMinutesMax12.Text.ToInt32() < TBMinutes12.Text.ToInt32())))
+            {
+                Logging.Write(Colors.LightSkyBlue, "Profile Changer: Line 12 invalid Settings. Please correct them");
+                TBMinutesMax12.Text = TBMinutes12.Text;
+            }
+
+
 
             ProfileChanger.Settings.Active1 = CB1.Checked;
             ProfileChanger.Settings.Active2 = CB2.Checked;
@@ -658,7 +735,22 @@ namespace ProfileChanger
             ProfileChanger.Settings.Profile11 = TBProfile11.Text;
             ProfileChanger.Settings.Profile12 = TBProfile12.Text;
 
+            ProfileChanger.Settings.MinutesMax1 = TBMinutesMax1.Text;
+            ProfileChanger.Settings.MinutesMax2 = TBMinutesMax2.Text;
+            ProfileChanger.Settings.MinutesMax3 = TBMinutesMax3.Text;
+            ProfileChanger.Settings.MinutesMax4 = TBMinutesMax4.Text;
+            ProfileChanger.Settings.MinutesMax5 = TBMinutesMax5.Text;
+            ProfileChanger.Settings.MinutesMax6 = TBMinutesMax6.Text;
+            ProfileChanger.Settings.MinutesMax7 = TBMinutesMax7.Text;
+            ProfileChanger.Settings.MinutesMax8 = TBMinutesMax8.Text;
+            ProfileChanger.Settings.MinutesMax9 = TBMinutesMax9.Text;
+            ProfileChanger.Settings.MinutesMax10 = TBMinutesMax10.Text;
+            ProfileChanger.Settings.MinutesMax11 = TBMinutesMax11.Text;
+            ProfileChanger.Settings.MinutesMax12 = TBMinutesMax12.Text;
+
             ProfileChanger.Settings.StopBot = CBStopBot.Checked;
+            ProfileChanger.Settings.RandomProfile = CBRandomProfile.Checked;
+            ProfileChanger.Settings.RandomTime = CBRandomTime.Checked;
 
             // ---------- Save XML-Config-File ---------------------------- 
             sPath = Path.Combine(sPath, Folder);
@@ -703,6 +795,11 @@ namespace ProfileChanger
             text = xml.CreateTextNode(TBMinutes1.Text.ToString());
             element.AppendChild(text);
             root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("MinutesMax1");
+            text = xml.CreateTextNode(TBMinutesMax1.Text.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
 
             //let's add another element (child of the root)
             element = xml.CreateElement("Active2");
@@ -717,6 +814,11 @@ namespace ProfileChanger
             //let's add another element (child of the root)
             element = xml.CreateElement("Minutes2");
             text = xml.CreateTextNode(TBMinutes2.Text.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("MinutesMax2");
+            text = xml.CreateTextNode(TBMinutesMax2.Text.ToString());
             element.AppendChild(text);
             root.AppendChild(element);
 
@@ -735,6 +837,11 @@ namespace ProfileChanger
             text = xml.CreateTextNode(TBMinutes3.Text.ToString());
             element.AppendChild(text);
             root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("MinutesMax3");
+            text = xml.CreateTextNode(TBMinutesMax3.Text.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
 
             //let's add another element (child of the root)
             element = xml.CreateElement("Active4");
@@ -749,6 +856,11 @@ namespace ProfileChanger
             //let's add another element (child of the root)
             element = xml.CreateElement("Minutes4");
             text = xml.CreateTextNode(TBMinutes4.Text.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("MinutesMax4");
+            text = xml.CreateTextNode(TBMinutesMax4.Text.ToString());
             element.AppendChild(text);
             root.AppendChild(element);
 
@@ -767,6 +879,11 @@ namespace ProfileChanger
             text = xml.CreateTextNode(TBMinutes5.Text.ToString());
             element.AppendChild(text);
             root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("MinutesMax5");
+            text = xml.CreateTextNode(TBMinutesMax5.Text.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
 
             //let's add another element (child of the root)
             element = xml.CreateElement("Active6");
@@ -781,6 +898,11 @@ namespace ProfileChanger
             //let's add another element (child of the root)
             element = xml.CreateElement("Minutes6");
             text = xml.CreateTextNode(TBMinutes6.Text.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("MinutesMax6");
+            text = xml.CreateTextNode(TBMinutesMax6.Text.ToString());
             element.AppendChild(text);
             root.AppendChild(element);
 
@@ -799,6 +921,11 @@ namespace ProfileChanger
             text = xml.CreateTextNode(TBMinutes7.Text.ToString());
             element.AppendChild(text);
             root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("MinutesMax7");
+            text = xml.CreateTextNode(TBMinutesMax7.Text.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
 
             //let's add another element (child of the root)
             element = xml.CreateElement("Active8");
@@ -813,6 +940,11 @@ namespace ProfileChanger
             //let's add another element (child of the root)
             element = xml.CreateElement("Minutes8");
             text = xml.CreateTextNode(TBMinutes8.Text.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("MinutesMax8");
+            text = xml.CreateTextNode(TBMinutesMax8.Text.ToString());
             element.AppendChild(text);
             root.AppendChild(element);
 
@@ -831,6 +963,11 @@ namespace ProfileChanger
             text = xml.CreateTextNode(TBMinutes9.Text.ToString());
             element.AppendChild(text);
             root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("MinutesMax9");
+            text = xml.CreateTextNode(TBMinutesMax9.Text.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
 
             //let's add another element (child of the root)
             element = xml.CreateElement("Active10");
@@ -845,6 +982,11 @@ namespace ProfileChanger
             //let's add another element (child of the root)
             element = xml.CreateElement("Minutes10");
             text = xml.CreateTextNode(TBMinutes10.Text.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("MinutesMax10");
+            text = xml.CreateTextNode(TBMinutesMax10.Text.ToString());
             element.AppendChild(text);
             root.AppendChild(element);
 
@@ -863,6 +1005,11 @@ namespace ProfileChanger
             text = xml.CreateTextNode(TBMinutes11.Text.ToString());
             element.AppendChild(text);
             root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("MinutesMax11");
+            text = xml.CreateTextNode(TBMinutesMax11.Text.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
 
             //let's add another element (child of the root)
             element = xml.CreateElement("Active12");
@@ -879,10 +1026,25 @@ namespace ProfileChanger
             text = xml.CreateTextNode(TBMinutes12.Text.ToString());
             element.AppendChild(text);
             root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("MinutesMax12");
+            text = xml.CreateTextNode(TBMinutesMax12.Text.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
 
             //let's add another element (child of the root)
             element = xml.CreateElement("StopBot");
             text = xml.CreateTextNode(CBStopBot.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("RandomProfile");
+            text = xml.CreateTextNode(CBRandomProfile.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("RandomTime");
+            text = xml.CreateTextNode(CBRandomTime.Checked.ToString());
             element.AppendChild(text);
             root.AppendChild(element);
 
@@ -898,6 +1060,65 @@ namespace ProfileChanger
             catch (Exception np)
             {
                 Logging.WriteDiagnostic(Colors.Red, np.Message);
+            }
+
+        }
+
+        private void CBRandomTime_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CBRandomTime.Checked == true)
+            {
+                TBMinutesMax1.Text = ProfileChanger.Settings.MinutesMax1;
+                TBMinutesMax1.Enabled = true;
+                TBMinutesMax2.Text = ProfileChanger.Settings.MinutesMax2;
+                TBMinutesMax2.Enabled = true;
+                TBMinutesMax3.Text = ProfileChanger.Settings.MinutesMax3;
+                TBMinutesMax3.Enabled = true;
+                TBMinutesMax4.Text = ProfileChanger.Settings.MinutesMax4;
+                TBMinutesMax4.Enabled = true;
+                TBMinutesMax5.Text = ProfileChanger.Settings.MinutesMax5;
+                TBMinutesMax5.Enabled = true;
+                TBMinutesMax6.Text = ProfileChanger.Settings.MinutesMax6;
+                TBMinutesMax6.Enabled = true;
+                TBMinutesMax7.Text = ProfileChanger.Settings.MinutesMax7;
+                TBMinutesMax7.Enabled = true;
+                TBMinutesMax8.Text = ProfileChanger.Settings.MinutesMax8;
+                TBMinutesMax8.Enabled = true;
+                TBMinutesMax9.Text = ProfileChanger.Settings.MinutesMax9;
+                TBMinutesMax9.Enabled = true;
+                TBMinutesMax10.Text = ProfileChanger.Settings.MinutesMax10;
+                TBMinutesMax10.Enabled = true;
+                TBMinutesMax11.Text = ProfileChanger.Settings.MinutesMax11;
+                TBMinutesMax11.Enabled = true;
+                TBMinutesMax12.Text = ProfileChanger.Settings.MinutesMax12;
+                TBMinutesMax12.Enabled = true;
+            }
+            else
+            {
+                TBMinutesMax1.Text = "";
+                TBMinutesMax1.Enabled = false;
+                TBMinutesMax2.Text = "";
+                TBMinutesMax2.Enabled = false;
+                TBMinutesMax3.Text = "";
+                TBMinutesMax3.Enabled = false;
+                TBMinutesMax4.Text = "";
+                TBMinutesMax4.Enabled = false;
+                TBMinutesMax5.Text = "";
+                TBMinutesMax5.Enabled = false;
+                TBMinutesMax6.Text = "";
+                TBMinutesMax6.Enabled = false;
+                TBMinutesMax7.Text = "";
+                TBMinutesMax7.Enabled = false;
+                TBMinutesMax8.Text = "";
+                TBMinutesMax8.Enabled = false;
+                TBMinutesMax9.Text = "";
+                TBMinutesMax9.Enabled = false;
+                TBMinutesMax10.Text = "";
+                TBMinutesMax10.Enabled = false;
+                TBMinutesMax11.Text = "";
+                TBMinutesMax11.Enabled = false;
+                TBMinutesMax12.Text = "";
+                TBMinutesMax12.Enabled = false;
             }
 
         }
