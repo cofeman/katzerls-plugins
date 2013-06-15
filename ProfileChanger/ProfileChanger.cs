@@ -33,14 +33,16 @@ namespace ProfileChanger
     {
         public override string Name { get { return "Profile Changer"; } }
         public override string Author { get { return "katzerle"; } }
-        private readonly Version _version = new Version(2, 1);
+        private readonly Version _version = new Version(2, 2);
         public override Version Version { get { return _version; } }
         public override string ButtonText { get { return "Settings"; } }
         public override bool WantButton { get { return true; } }
 
         public static ProfileChangerSettings Settings = new ProfileChangerSettings();
         public static LocalPlayer Me = StyxWoW.Me;
-        bool hasItBeenInitialized = false;
+        public static bool hasItBeenInitialized = false;
+        public static Int32 NextActive = 1;
+        public static Int32 NextRandomTime = 1;
 
         static Stopwatch SWProfile1 = new Stopwatch();
         static Stopwatch SWProfile2 = new Stopwatch();
@@ -54,6 +56,8 @@ namespace ProfileChanger
         static Stopwatch SWProfile10 = new Stopwatch();
         static Stopwatch SWProfile11 = new Stopwatch();
         static Stopwatch SWProfile12 = new Stopwatch();
+
+        public static Random rnd = new Random();
 
         public ProfileChanger()
         {
@@ -113,12 +117,23 @@ namespace ProfileChanger
 				Logging.WriteDiagnostic(Colors.LightSkyBlue, "Profile Changer: Init Done");
             }
 
+            if (!SWProfile1.IsRunning && !SWProfile2.IsRunning && !SWProfile3.IsRunning && !SWProfile4.IsRunning && !SWProfile5.IsRunning && !SWProfile6.IsRunning
+                && !SWProfile7.IsRunning && !SWProfile8.IsRunning && !SWProfile9.IsRunning && !SWProfile10.IsRunning && !SWProfile11.IsRunning && !SWProfile12.IsRunning)
+            {
+                Logging.Write(Colors.LightSkyBlue, "Profile Changer: A failure occured. Init and then switch to Profile 1 and restart Timer1");
+                hasItBeenInitialized = false;
+            }
+
             if (Settings.Active1)
             {
-                if (SWProfile1.Elapsed.TotalMinutes > Convert.ToInt16(Settings.Minutes1))
+                if ((SWProfile1.Elapsed.TotalMinutes > Convert.ToInt16(Settings.Minutes1) && !Settings.RandomTime) || (SWProfile1.Elapsed.TotalMinutes > NextRandomTime && Settings.RandomTime))
                 {						
 					Logging.Write(Colors.LightSkyBlue, "Profile Changer: Change Profile");
-					if (Settings.Active2)
+                    if (Settings.RandomProfile)
+                    {
+                        ChangeRandomProfile();
+                    }
+                    else if (Settings.Active2)
                     {
                         ChangeProfile(Settings.Profile2);
                     }
@@ -139,7 +154,11 @@ namespace ProfileChanger
 						
 					Logging.WriteDiagnostic(Colors.LightSkyBlue, "Profile Changer: Reset Timer");
 					SWProfile1.Reset();
-					if (Settings.Active2)
+					if (Settings.RandomProfile)
+                    {
+                        StartRandomProfileTimer();
+                    }
+                    else if (Settings.Active2)
                     {
 						SWProfile2.Start();
 					}
@@ -151,10 +170,14 @@ namespace ProfileChanger
             }
             if (Settings.Active2)
             {
-                if (SWProfile2.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes2))
+                if ((SWProfile2.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes2) && !Settings.RandomTime) || (SWProfile2.Elapsed.TotalMinutes > NextRandomTime && Settings.RandomTime))
                 {
                     Logging.Write(Colors.LightSkyBlue, "Profile Changer: Change Profile");
-                    if (Settings.Active3)
+                    if (Settings.RandomProfile)
+                    {
+                        ChangeRandomProfile();
+                    }
+                    else if (Settings.Active3)
                     {
                         ChangeProfile(Settings.Profile3);
                     }
@@ -175,7 +198,11 @@ namespace ProfileChanger
 						
 					Logging.WriteDiagnostic(Colors.LightSkyBlue, "Profile Changer: Reset Timer");
 					SWProfile2.Reset();
-					if (Settings.Active3)
+                    if (Settings.RandomProfile)
+                    {
+                        StartRandomProfileTimer();
+                    }
+                    else if (Settings.Active3)
                     {
 						SWProfile3.Start();
 					}
@@ -187,10 +214,14 @@ namespace ProfileChanger
             }
             if (Settings.Active3)
             {
-                if (SWProfile3.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes3))
+                if ((SWProfile3.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes3) && !Settings.RandomTime) || (SWProfile3.Elapsed.TotalMinutes > NextRandomTime && Settings.RandomTime))
                 {
                     Logging.Write(Colors.LightSkyBlue, "Profile Changer: Change Profile");
-                    if (Settings.Active4)
+                    if (Settings.RandomProfile)
+                    {
+                        ChangeRandomProfile();
+                    }
+                    else if (Settings.Active4)
                     {
                         ChangeProfile(Settings.Profile4);
                     }
@@ -211,7 +242,11 @@ namespace ProfileChanger
 						
 					Logging.WriteDiagnostic(Colors.LightSkyBlue, "Profile Changer: Reset Timer");
 					SWProfile3.Reset();
-					if (Settings.Active4)
+                    if (Settings.RandomProfile)
+                    {
+                        StartRandomProfileTimer();
+                    }
+                    else if (Settings.Active4)
                     {
 						SWProfile4.Start();
 					}
@@ -223,10 +258,14 @@ namespace ProfileChanger
             }
             if (Settings.Active4)
             {
-                if (SWProfile4.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes4))
+                if ((SWProfile4.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes4) && !Settings.RandomTime) || (SWProfile4.Elapsed.TotalMinutes > NextRandomTime && Settings.RandomTime))
                 {                        
                     Logging.Write(Colors.LightSkyBlue, "Profile Changer: Change Profile");
-                    if (Settings.Active5)
+                    if (Settings.RandomProfile)
+                    {
+                        ChangeRandomProfile();
+                    }
+                    else if (Settings.Active5)
                     {
                         ChangeProfile(Settings.Profile5);
                     }
@@ -247,7 +286,11 @@ namespace ProfileChanger
 						
 					Logging.WriteDiagnostic(Colors.LightSkyBlue, "Profile Changer: Reset Timer");
 					SWProfile4.Reset();
-					if (Settings.Active5)
+                    if (Settings.RandomProfile)
+                    {
+                        StartRandomProfileTimer();
+                    }
+                    else if (Settings.Active5)
                     {
 						SWProfile5.Start();
 					}
@@ -259,10 +302,14 @@ namespace ProfileChanger
             }
             if (Settings.Active5)
             {
-                if (SWProfile5.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes5))
+                if ((SWProfile5.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes5) && !Settings.RandomTime) || (SWProfile5.Elapsed.TotalMinutes > NextRandomTime && Settings.RandomTime))
                 {    
                     Logging.Write(Colors.LightSkyBlue, "Profile Changer: Change Profile");
-                    if (Settings.Active6)
+                    if (Settings.RandomProfile)
+                    {
+                        ChangeRandomProfile();
+                    }
+                    else if (Settings.Active6)
                     {
                         ChangeProfile(Settings.Profile6);
                     }
@@ -283,7 +330,11 @@ namespace ProfileChanger
 						
 					Logging.WriteDiagnostic(Colors.LightSkyBlue, "Profile Changer: Reset Timer");
 					SWProfile5.Reset();
-					if (Settings.Active6)
+                    if (Settings.RandomProfile)
+                    {
+                        StartRandomProfileTimer();
+                    }
+                    else if (Settings.Active6)
                     {
 						SWProfile6.Start();
 					}
@@ -295,10 +346,14 @@ namespace ProfileChanger
             }
             if (Settings.Active6)
             {
-                if (SWProfile6.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes6))
+                if ((SWProfile6.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes6) && !Settings.RandomTime) || (SWProfile6.Elapsed.TotalMinutes > NextRandomTime && Settings.RandomTime))
                 {
                     Logging.Write(Colors.LightSkyBlue, "Profile Changer: Change Profile");
-                    if (Settings.Active7)
+                    if (Settings.RandomProfile)
+                    {
+                        ChangeRandomProfile();
+                    }
+                    else if (Settings.Active7)
                     {
                         ChangeProfile(Settings.Profile7);
                     }
@@ -319,7 +374,11 @@ namespace ProfileChanger
 
                     Logging.WriteDiagnostic(Colors.LightSkyBlue, "Profile Changer: Reset Timer");
                     SWProfile6.Reset();
-                    if (Settings.Active7)
+                    if (Settings.RandomProfile)
+                    {
+                        StartRandomProfileTimer();
+                    }
+                    else if (Settings.Active7)
                     {
                         SWProfile7.Start();
                     }
@@ -331,10 +390,14 @@ namespace ProfileChanger
             }
             if (Settings.Active7)
             {
-                if (SWProfile7.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes7))
+                if ((SWProfile7.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes7) && !Settings.RandomTime) || (SWProfile7.Elapsed.TotalMinutes > NextRandomTime && Settings.RandomTime))
                 {
                     Logging.Write(Colors.LightSkyBlue, "Profile Changer: Change Profile");
-                    if (Settings.Active8)
+                    if (Settings.RandomProfile)
+                    {
+                        ChangeRandomProfile();
+                    }
+                    else if (Settings.Active8)
                     {
                         ChangeProfile(Settings.Profile8);
                     }
@@ -355,7 +418,11 @@ namespace ProfileChanger
 
                     Logging.WriteDiagnostic(Colors.LightSkyBlue, "Profile Changer: Reset Timer");
                     SWProfile7.Reset();
-                    if (Settings.Active8)
+                    if (Settings.RandomProfile)
+                    {
+                        StartRandomProfileTimer();
+                    }
+                    else if (Settings.Active8)
                     {
                         SWProfile8.Start();
                     }
@@ -367,10 +434,14 @@ namespace ProfileChanger
             }
             if (Settings.Active8)
             {
-                if (SWProfile8.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes8))
+                if ((SWProfile8.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes8) && !Settings.RandomTime) || (SWProfile8.Elapsed.TotalMinutes > NextRandomTime && Settings.RandomTime))
                 {
                     Logging.Write(Colors.LightSkyBlue, "Profile Changer: Change Profile");
-                    if (Settings.Active9)
+                    if (Settings.RandomProfile)
+                    {
+                        ChangeRandomProfile();
+                    }
+                    else if (Settings.Active9)
                     {
                         ChangeProfile(Settings.Profile9);
                     }
@@ -391,7 +462,11 @@ namespace ProfileChanger
 
                     Logging.WriteDiagnostic(Colors.LightSkyBlue, "Profile Changer: Reset Timer");
                     SWProfile8.Reset();
-                    if (Settings.Active9)
+                    if (Settings.RandomProfile)
+                    {
+                        StartRandomProfileTimer();
+                    }
+                    else if (Settings.Active9)
                     {
                         SWProfile9.Start();
                     }
@@ -403,10 +478,14 @@ namespace ProfileChanger
             }
             if (Settings.Active9)
             {
-                if (SWProfile9.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes9))
+                if ((SWProfile9.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes9) && !Settings.RandomTime) || (SWProfile9.Elapsed.TotalMinutes > NextRandomTime && Settings.RandomTime))
                 {
                     Logging.Write(Colors.LightSkyBlue, "Profile Changer: Change Profile");
-                    if (Settings.Active10)
+                    if (Settings.RandomProfile)
+                    {
+                        ChangeRandomProfile();
+                    }
+                    else if (Settings.Active10)
                     {
                         ChangeProfile(Settings.Profile10);
                     }
@@ -427,7 +506,11 @@ namespace ProfileChanger
 
                     Logging.WriteDiagnostic(Colors.LightSkyBlue, "Profile Changer: Reset Timer");
                     SWProfile9.Reset();
-                    if (Settings.Active10)
+                    if (Settings.RandomProfile)
+                    {
+                        StartRandomProfileTimer();
+                    }
+                    else if (Settings.Active10)
                     {
                         SWProfile10.Start();
                     }
@@ -439,10 +522,14 @@ namespace ProfileChanger
             }
             if (Settings.Active10)
             {
-                if (SWProfile10.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes10))
+                if ((SWProfile10.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes10) && !Settings.RandomTime) || (SWProfile10.Elapsed.TotalMinutes > NextRandomTime && Settings.RandomTime))
                 {
                     Logging.Write(Colors.LightSkyBlue, "Profile Changer: Change Profile");
-                    if (Settings.Active11)
+                    if (Settings.RandomProfile)
+                    {
+                        ChangeRandomProfile();
+                    }
+                    else if (Settings.Active11)
                     {
                         ChangeProfile(Settings.Profile11);
                     }
@@ -463,7 +550,11 @@ namespace ProfileChanger
 
                     Logging.WriteDiagnostic(Colors.LightSkyBlue, "Profile Changer: Reset Timer");
                     SWProfile10.Reset();
-                    if (Settings.Active11)
+                    if (Settings.RandomProfile)
+                    {
+                        StartRandomProfileTimer();
+                    }
+                    else if (Settings.Active11)
                     {
                         SWProfile11.Start();
                     }
@@ -475,10 +566,14 @@ namespace ProfileChanger
             }
             if (Settings.Active11)
             {
-                if (SWProfile11.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes11))
+                if ((SWProfile11.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes11) && !Settings.RandomTime) || (SWProfile11.Elapsed.TotalMinutes > NextRandomTime && Settings.RandomTime))
                 {
                     Logging.Write(Colors.LightSkyBlue, "Profile Changer: Change Profile");
-                    if (Settings.Active12)
+                    if (Settings.RandomProfile)
+                    {
+                        ChangeRandomProfile();
+                    }
+                    else if (Settings.Active12)
                     {
                         ChangeProfile(Settings.Profile12);
                     }
@@ -499,7 +594,11 @@ namespace ProfileChanger
 
                     Logging.WriteDiagnostic(Colors.LightSkyBlue, "Profile Changer: Reset Timer");
                     SWProfile11.Reset();
-                    if (Settings.Active12)
+                    if (Settings.RandomProfile)
+                    {
+                        StartRandomProfileTimer();
+                    }
+                    else if (Settings.Active12)
                     {
                         SWProfile12.Start();
                     }
@@ -512,10 +611,14 @@ namespace ProfileChanger
 
             if (Settings.Active12)
             {
-                if (SWProfile12.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes12))
+                if ((SWProfile12.Elapsed.TotalMinutes > Convert.ToInt32(Settings.Minutes12) && !Settings.RandomTime) || (SWProfile12.Elapsed.TotalMinutes > NextRandomTime && Settings.RandomTime))
                 {
                     Logging.Write(Colors.LightSkyBlue, "Profile Changer: Change Profile");
-					if (Settings.StopBot)
+                    if (Settings.RandomProfile)
+                    {
+                        ChangeRandomProfile();
+                    }
+                    else if (Settings.StopBot)
 					{
 						WoWMovement.MoveStop();
 						Logging.Write(Colors.LightSkyBlue, "Profile Changer: Log Out Now, bb");
@@ -528,12 +631,103 @@ namespace ProfileChanger
 					}
 						
 					Logging.WriteDiagnostic(Colors.LightSkyBlue, "Profile Changer: Reset Timer");
-					SWProfile12.Reset();
-					SWProfile1.Start();
+                    SWProfile12.Reset();
+                    if (Settings.RandomProfile)
+                    {
+                        StartRandomProfileTimer();
+                    }
+                    else 
+					    SWProfile1.Start();
                 }
             }
         }
-		
+
+        static public void ChangeRandomProfile()
+        {
+            if (Settings.Active12)
+                NextActive = rnd.Next(1, 12);
+            else if (Settings.Active11)
+                NextActive = rnd.Next(1, 11);
+            else if (Settings.Active10)
+                NextActive = rnd.Next(1, 10);
+            else if (Settings.Active9)
+                NextActive = rnd.Next(1, 9);
+            else if (Settings.Active8)
+                NextActive = rnd.Next(1, 8);
+            else if (Settings.Active7)
+                NextActive = rnd.Next(1, 7);
+            else if (Settings.Active6)
+                NextActive = rnd.Next(1, 6);
+            else if (Settings.Active5)
+                NextActive = rnd.Next(1, 5);
+            else if (Settings.Active4)
+                NextActive = rnd.Next(1, 4);
+            else if (Settings.Active3)
+                NextActive = rnd.Next(1, 3);
+            else if (Settings.Active2)
+                NextActive = rnd.Next(1, 2);
+            else
+                NextActive = 1;
+
+            Logging.WriteDiagnostic(Colors.LightSkyBlue, "Profile Changer: Next Random Profile: {0}", NextActive);
+
+            if (NextActive == 12)
+                ChangeProfile(Settings.Profile12);
+            if (NextActive == 11)
+                ChangeProfile(Settings.Profile11);
+            if (NextActive == 10)
+                ChangeProfile(Settings.Profile10);
+            if (NextActive == 9)
+                ChangeProfile(Settings.Profile9);
+            if (NextActive == 8)
+                ChangeProfile(Settings.Profile8);
+            if (NextActive == 7)
+                ChangeProfile(Settings.Profile8);
+            if (NextActive == 6)
+                ChangeProfile(Settings.Profile6);
+            if (NextActive == 5)
+                ChangeProfile(Settings.Profile5);
+            if (NextActive == 4)
+                ChangeProfile(Settings.Profile4);
+            if (NextActive == 3)
+                ChangeProfile(Settings.Profile3);
+            if (NextActive == 2)
+                ChangeProfile(Settings.Profile2);
+            if (NextActive == 1)
+                ChangeProfile(Settings.Profile1);
+        }
+
+        static public void StartRandomProfileTimer()
+        {
+            Logging.WriteDiagnostic(Colors.LightSkyBlue, "Profile Changer: Next Random Profile Timer Startet: {0}", NextActive);
+            
+            if (NextActive == 12)
+                SWProfile12.Start();
+            if (NextActive == 11)
+                SWProfile11.Start();
+            if (NextActive == 10)
+                SWProfile10.Start();
+            if (NextActive == 9)
+                SWProfile9.Start();
+            if (NextActive == 8)
+                SWProfile8.Start();
+            if (NextActive == 7)
+                SWProfile7.Start();
+            if (NextActive == 6)
+                SWProfile6.Start();
+            if (NextActive == 5)
+                SWProfile5.Start();
+            if (NextActive == 4)
+                SWProfile4.Start();
+            if (NextActive == 3)
+                SWProfile3.Start();
+            if (NextActive == 2)
+                SWProfile2.Start();
+            if (NextActive == 1)
+                SWProfile1.Start();
+        }
+
+
         static public void ChangeProfile(string Profile)
         {
             Logging.WriteDiagnostic(Colors.LightSkyBlue, "Profile Changer: Load Profile: {0}", Profile);
@@ -542,6 +736,35 @@ namespace ProfileChanger
             ProfileManager.LoadNew(Profile);
             Thread.Sleep(1000);
 			Logging.WriteDiagnostic(Colors.LightSkyBlue, "Profile Changer: Load Profile: {0} done", Profile);
+
+            if (Settings.RandomTime)
+            {
+                if (Profile == Settings.Profile1)
+                    NextRandomTime = rnd.Next(Settings.Minutes1.ToInt32(), Settings.MinutesMax1.ToInt32());
+                if (Profile == Settings.Profile2)
+                    NextRandomTime = rnd.Next(Settings.Minutes2.ToInt32(), Settings.MinutesMax2.ToInt32());
+                if (Profile == Settings.Profile3)
+                    NextRandomTime = rnd.Next(Settings.Minutes3.ToInt32(), Settings.MinutesMax3.ToInt32());
+                if (Profile == Settings.Profile4)
+                    NextRandomTime = rnd.Next(Settings.Minutes4.ToInt32(), Settings.MinutesMax4.ToInt32());
+                if (Profile == Settings.Profile5)
+                    NextRandomTime = rnd.Next(Settings.Minutes5.ToInt32(), Settings.MinutesMax5.ToInt32());
+                if (Profile == Settings.Profile6)
+                    NextRandomTime = rnd.Next(Settings.Minutes6.ToInt32(), Settings.MinutesMax6.ToInt32());
+                if (Profile == Settings.Profile7)
+                    NextRandomTime = rnd.Next(Settings.Minutes7.ToInt32(), Settings.MinutesMax7.ToInt32());
+                if (Profile == Settings.Profile8)
+                    NextRandomTime = rnd.Next(Settings.Minutes8.ToInt32(), Settings.MinutesMax8.ToInt32());
+                if (Profile == Settings.Profile9)
+                    NextRandomTime = rnd.Next(Settings.Minutes9.ToInt32(), Settings.MinutesMax9.ToInt32());
+                if (Profile == Settings.Profile10)
+                    NextRandomTime = rnd.Next(Settings.Minutes10.ToInt32(), Settings.MinutesMax10.ToInt32());
+                if (Profile == Settings.Profile11)
+                    NextRandomTime = rnd.Next(Settings.Minutes11.ToInt32(), Settings.MinutesMax11.ToInt32());
+                if (Profile == Settings.Profile12)
+                    NextRandomTime = rnd.Next(Settings.Minutes12.ToInt32(), Settings.MinutesMax12.ToInt32());
+                Logging.WriteDiagnostic(Colors.LightSkyBlue, "Profile Changer: Next Random Time: {0}", NextRandomTime);
+            }
         }
 		
 		static public string FolderPath

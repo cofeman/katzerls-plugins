@@ -85,8 +85,23 @@ namespace ProfileChanger
         public string Minutes11 = "0";
         public string Minutes12 = "0";
 
+        public string MinutesMax1 = "";
+        public string MinutesMax2 = "";
+        public string MinutesMax3 = "";
+        public string MinutesMax4 = "";
+        public string MinutesMax5 = "";
+        public string MinutesMax6 = "";
+        public string MinutesMax7 = "";
+        public string MinutesMax8 = "";
+        public string MinutesMax9 = "";
+        public string MinutesMax10 = "";
+        public string MinutesMax11 = "";
+        public string MinutesMax12 = "";
+
         public bool StopBot = false;
-		
+        public bool RandomProfile = false;
+        public bool RandomTime = false;
+
 		// -------------- Load ConfigFile ---------------
         public void Load()
         {
@@ -367,6 +382,93 @@ namespace ProfileChanger
                 {
                     StopBot = Convert.ToBoolean(xvar.InnerText);
                     Logging.WriteDiagnostic("Profile Changer Load: " + xvar.Name + "=" + StopBot.ToString());
+                }
+
+                xvar = xml.SelectSingleNode("//ProfileChanger/RandomProfile");
+                if (xvar != null)
+                {
+                    RandomProfile = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Profile Changer Load: " + xvar.Name + "=" + RandomProfile.ToString());
+                }
+
+                xvar = xml.SelectSingleNode("//ProfileChanger/RandomTime");
+                if (xvar != null)
+                {
+                    RandomTime = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Profile Changer Load: " + xvar.Name + "=" + RandomTime.ToString());
+                }
+
+                xvar = xml.SelectSingleNode("//ProfileChanger/MinutesMax1");
+                if (xvar != null)
+                {
+                    MinutesMax1 = Convert.ToString(xvar.InnerText);
+                    Logging.WriteDiagnostic("Profile Changer Load: " + xvar.Name + "=" + MinutesMax1.ToString());
+                }
+                xvar = xml.SelectSingleNode("//ProfileChanger/MinutesMax2");
+                if (xvar != null)
+                {
+                    MinutesMax2 = Convert.ToString(xvar.InnerText);
+                    Logging.WriteDiagnostic("Profile Changer Load: " + xvar.Name + "=" + MinutesMax2.ToString());
+                }
+                xvar = xml.SelectSingleNode("//ProfileChanger/MinutesMax3");
+                if (xvar != null)
+                {
+                    MinutesMax3 = Convert.ToString(xvar.InnerText);
+                    Logging.WriteDiagnostic("Profile Changer Load: " + xvar.Name + "=" + MinutesMax3.ToString());
+                }
+                xvar = xml.SelectSingleNode("//ProfileChanger/MinutesMax4");
+                if (xvar != null)
+                {
+                    MinutesMax4 = Convert.ToString(xvar.InnerText);
+                    Logging.WriteDiagnostic("Profile Changer Load: " + xvar.Name + "=" + MinutesMax4.ToString());
+                }
+                xvar = xml.SelectSingleNode("//ProfileChanger/MinutesMax5");
+                if (xvar != null)
+                {
+                    MinutesMax5 = Convert.ToString(xvar.InnerText);
+                    Logging.WriteDiagnostic("Profile Changer Load: " + xvar.Name + "=" + MinutesMax5.ToString());
+                }
+                xvar = xml.SelectSingleNode("//ProfileChanger/MinutesMax6");
+                if (xvar != null)
+                {
+                    MinutesMax6 = Convert.ToString(xvar.InnerText);
+                    Logging.WriteDiagnostic("Profile Changer Load: " + xvar.Name + "=" + MinutesMax6.ToString());
+                }
+                xvar = xml.SelectSingleNode("//ProfileChanger/MinutesMax7");
+                if (xvar != null)
+                {
+                    MinutesMax7 = Convert.ToString(xvar.InnerText);
+                    Logging.WriteDiagnostic("Profile Changer Load: " + xvar.Name + "=" + MinutesMax7.ToString());
+                }
+                xvar = xml.SelectSingleNode("//ProfileChanger/MinutesMax8");
+                if (xvar != null)
+                {
+                    MinutesMax8 = Convert.ToString(xvar.InnerText);
+                    Logging.WriteDiagnostic("Profile Changer Load: " + xvar.Name + "=" + MinutesMax8.ToString());
+                }
+                xvar = xml.SelectSingleNode("//ProfileChanger/MinutesMax9");
+                if (xvar != null)
+                {
+                    MinutesMax9 = Convert.ToString(xvar.InnerText);
+                    Logging.WriteDiagnostic("Profile Changer Load: " + xvar.Name + "=" + MinutesMax9.ToString());
+                }
+                xvar = xml.SelectSingleNode("//ProfileChanger/MinutesMax10");
+                if (xvar != null)
+                {
+                    MinutesMax10 = Convert.ToString(xvar.InnerText);
+                    Logging.WriteDiagnostic("Profile Changer Load: " + xvar.Name + "=" + MinutesMax10.ToString());
+                }
+                xvar = xml.SelectSingleNode("//ProfileChanger/MinutesMax11");
+                if (xvar != null)
+                {
+                    MinutesMax11 = Convert.ToString(xvar.InnerText);
+                    Logging.WriteDiagnostic("Profile Changer Load: " + xvar.Name + "=" + MinutesMax11.ToString());
+                }
+                xvar = xml.SelectSingleNode("//ProfileChanger/MinutesMax12");
+                if (xvar != null)
+                {
+                    MinutesMax12 = Convert.ToString(xvar.InnerText);
+                    Logging.WriteDiagnostic("Profile Changer Load: " + xvar.Name + "=" + MinutesMax12.ToString());
                 }
 			}
             catch (Exception e)
