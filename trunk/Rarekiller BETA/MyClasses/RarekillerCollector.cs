@@ -91,17 +91,17 @@ namespace katzerle
 				
 // ----------------- Underground Object ----------
                 //ToDo IDs of Underground NPCs
-                if (!(o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999
-                    || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999
-                    || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999))
-                {
+                //if (!(o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999
+                //    || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999
+                //    || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999))
+                //{
                     if (o.IsIndoors && Me.IsFlying && Me.IsOutdoors && (o.Location.Distance(Me.Location) > 30))
                     {
                         Logging.Write(Colors.MediumPurple, "Rarekiller Part Collector: Can't reach Object because it is Indoors and I fly Outdoors {0}, Blacklist and Move on", o.Name);
                         Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
                         return;
                     }
-                }
+                //}
 // ----------------- don't collect if Rare Pandaria Elite Around
                 if (RareList != null)
                 {
