@@ -34,10 +34,6 @@ namespace katzerle
         public static WoWPoint ProblemCamel2 = new WoWPoint(-9900.116, 461.3653, 45.62226);
         public static WoWPoint ProblemCamel3 = new WoWPoint(-10697.69, 1045.757, 24.125);
         public static WoWPoint ProblemCamel4 = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint ProblemCamel1LandingPoint = new WoWPoint(-8906.634, 312.6967, 349.2024);
-        public static WoWPoint ProblemCamel2LandingPoint = new WoWPoint(-9900.116, 461.3653, 45.62226);
-        public static WoWPoint ProblemCamel3LandingPoint = new WoWPoint(-10697.69, 1045.757, 24.125);
-        public static WoWPoint ProblemCamel4LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
 
         //ToDo Landing Points for of Underground NPCs
         public static WoWPoint IndoorNPC1LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
@@ -69,7 +65,6 @@ namespace katzerle
             foreach (WoWUnit o in objList)
             {
                 Logging.Write(Colors.MediumPurple, "Rarekiller Part NPC: Find {0} ID {1}", o.Name, o.Entry);
-
 				
                 if (Rarekiller.Settings.Alert)
                 {
@@ -80,7 +75,6 @@ namespace katzerle
                     else
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Camel: playing Soundfile failes");
                 }
-				
 				
 // ----------------- Underground ----------
                 //ToDo IDs of Underground NPCs
