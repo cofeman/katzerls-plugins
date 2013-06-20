@@ -33,7 +33,7 @@ namespace ProfileChanger
     {
         public override string Name { get { return "Profile Changer"; } }
         public override string Author { get { return "katzerle"; } }
-        private readonly Version _version = new Version(2, 2);
+        private readonly Version _version = new Version(2, 3);
         public override Version Version { get { return _version; } }
         public override string ButtonText { get { return "Settings"; } }
         public override bool WantButton { get { return true; } }
@@ -56,6 +56,8 @@ namespace ProfileChanger
         static Stopwatch SWProfile10 = new Stopwatch();
         static Stopwatch SWProfile11 = new Stopwatch();
         static Stopwatch SWProfile12 = new Stopwatch();
+
+        static PluginContainer PluginMe;
 
         public static Random rnd = new Random();
 
@@ -95,9 +97,38 @@ namespace ProfileChanger
 // ------------ Deactivate Plugin if in Combat, Dead or Ghost			
 			if (inCombat)
 				return;
-			
+
             if (!hasItBeenInitialized && Settings.Active1)
             {
+                // ------------ Deactivate ProfileChanger if Profile Swapper is enabled or Questbot etc is choosen		
+                List<PluginContainer> _pluginList = PluginManager.Plugins;
+                foreach (PluginContainer _pluginMe in _pluginList)
+                {
+                    if (_pluginMe.Plugin.Name == "Profile Changer")
+                        PluginMe = _pluginMe;
+                }
+
+                BotBase bot = TreeRoot.Current;
+                if (bot.Name == "Questing" || bot.Name == "PartyBot" || bot.Name == "Multibox Follower" || bot.Name == "Multibox Leader"
+                    || bot.Name == "Mixed Mode" || bot.Name == "DungeonBuddy" || bot.Name == "BGBuddy" || bot.Name == "ArchaeologieBuddy"
+                    || bot.Name == "Tyrael" || bot.Name == "LazyRaider" || bot.Name == "Combat Bot" || bot.Name == "Fpsware's LazyBoxer"
+                    || bot.Name == "ProfessionBuddy" || bot.Name == "Raid Bot")
+                {
+                    Logging.Write(Colors.LightSkyBlue, "{0} is choosen, so deactivate Profile Changer", bot.Name);
+                    PluginMe.Enabled = false;
+                    return;
+                }
+
+                foreach (PluginContainer _plugin in _pluginList)
+                {
+                    if (_plugin.Enabled && _plugin.Plugin.Name == "Brodieman's Profile Swapper")
+                    {
+                        Logging.Write(Colors.LightSkyBlue, "Brodieman's Profile Swapper is activated, so deactivate Profile Changer");
+                        PluginMe.Enabled = false;
+                        return;
+                    }
+                }
+
                 SWProfile1.Reset();
                 SWProfile2.Reset();
                 SWProfile3.Reset();
@@ -118,7 +149,8 @@ namespace ProfileChanger
             }
 
             if (!SWProfile1.IsRunning && !SWProfile2.IsRunning && !SWProfile3.IsRunning && !SWProfile4.IsRunning && !SWProfile5.IsRunning && !SWProfile6.IsRunning
-                && !SWProfile7.IsRunning && !SWProfile8.IsRunning && !SWProfile9.IsRunning && !SWProfile10.IsRunning && !SWProfile11.IsRunning && !SWProfile12.IsRunning)
+                && !SWProfile7.IsRunning && !SWProfile8.IsRunning && !SWProfile9.IsRunning && !SWProfile10.IsRunning && !SWProfile11.IsRunning && !SWProfile12.IsRunning
+                && Settings.Active1)
             {
                 Logging.Write(Colors.LightSkyBlue, "Profile Changer: A failure occured. Init and then switch to Profile 1 and restart Timer1");
                 hasItBeenInitialized = false;
