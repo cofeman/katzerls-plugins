@@ -30,24 +30,26 @@ namespace katzerle
         private static Stopwatch BlacklistTimer = new Stopwatch();
 
         //ToDo Landing Points for of Underground Objects
-        public static WoWPoint IndoorNPC1LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC2LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC3LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC4LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC5LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC6LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC7LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC8LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC9LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC10LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC11LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC12LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC13LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC14LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC15LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC16LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC17LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC18LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
+        public static WoWPoint LandingPoint213364 = new WoWPoint(2288.31, -1772.671, 238.9393);
+        public static WoWPoint LandingPoint214337 = new WoWPoint(2417.861, -2929.056, 8.610151);
+        public static WoWPoint LandingPoint213649 = new WoWPoint(178.477, 949.426, 171.0682);
+        public static WoWPoint LandingPoint213650 = new WoWPoint(291.5115, 1772.154, 310.9289);
+        public static WoWPoint LandingPoint214340 = new WoWPoint(49.96476, -950.9753, 24.16642);
+        public static WoWPoint LandingPoint213651 = new WoWPoint(-2998.009, 952.5232, 16.09599);
+        public static WoWPoint LandingPoint213750 = new WoWPoint(-421.5852, -366.7636, 108.9386);
+        public static WoWPoint LandingPoint214325 = new WoWPoint(805.1631, -193.6357, 407.6493);
+        public static WoWPoint LandingPoint213768 = new WoWPoint(2677.461, 1532.559, 644.4728);
+        public static WoWPoint LandingPoint213751 = new WoWPoint(2559.742, 275.2169, 496.4695);
+        public static WoWPoint LandingPoint213770 = new WoWPoint(3386.12, 1135.976, 665.71);
+        public static WoWPoint LandingPoint213793 = new WoWPoint(3501.53, 1570.532, 872.9788);
+        public static WoWPoint LandingPoint213769 = new WoWPoint(3029.445, 1674.854, 649.7944);
+        public static WoWPoint LandingPoint214438 = new WoWPoint(3525.092, 841.6902, 493.3049);
+        public static WoWPoint LandingPoint214407 = new WoWPoint(2581.199, 1817.027, 670.2189);
+        public static WoWPoint LandingPoint213956 = new WoWPoint(2188.075, 5209.729, 93.06538);
+        public static WoWPoint LandingPoint213956_2 = new WoWPoint(2171.203, 5051.739, 73.98229);
+        public static WoWPoint LandingPoint213970 = new WoWPoint(-536.6893, 4760.024, 1.222435);
+        public static WoWPoint LandingPoint213970_2 = new WoWPoint(-463.5745, 4761.513, -32.32083);
+        public static WoWPoint LandingPoint213362 = new WoWPoint(-986.6257, -2095.295, 4.935998);
 
         public void findAndPickupObject()
         {
@@ -75,6 +77,8 @@ namespace katzerle
             foreach (WoWGameObject o in objList)
             {
                 Logging.Write(Colors.MediumPurple, "Rarekiller: Find A Object to collect {0} ID {1}", o.Name, o.Entry);
+                if (Rarekiller.Settings.LUAoutput)
+                    Lua.DoString("print('NPCScan: Find {0} ID {1}')", o.Name, o.Entry);
 				
 				
 // ----------------- Alert ---------------------
@@ -88,20 +92,21 @@ namespace katzerle
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Collector: playing Soundfile failes");
                 }
 
-				
 // ----------------- Underground Object ----------
-                //ToDo IDs of Underground NPCs
-                //if (!(o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999
-                //    || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999
-                //    || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999))
-                //{
+                //if not ID of Underground Object of Another Mans Treasure --> don't collect
+                if (!(o.Entry == 213364 || o.Entry == 214337 || o.Entry == 213649 || o.Entry == 213650 || o.Entry == 214340 || o.Entry == 213651
+                    || o.Entry == 213750 || o.Entry == 214325 || o.Entry == 213768 || o.Entry == 213751 || o.Entry == 213770 || o.Entry == 213793
+                    || o.Entry == 213769 || o.Entry == 214438 || o.Entry == 214407 || o.Entry == 213956 || o.Entry == 213970 || o.Entry == 213362))
+                {
                     if (o.IsIndoors && Me.IsFlying && Me.IsOutdoors && (o.Location.Distance(Me.Location) > 30))
                     {
                         Logging.Write(Colors.MediumPurple, "Rarekiller Part Collector: Can't reach Object because it is Indoors and I fly Outdoors {0}, Blacklist and Move on", o.Name);
+                        if (Rarekiller.Settings.LUAoutput)
+                            Lua.DoString("print('NPCScan: Can't reach NPC {0} because it is Indoors and I fly Outdoors')", o.Name);
                         Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
                         return;
                     }
-                //}
+                }
 // ----------------- don't collect if Rare Pandaria Elite Around
                 if (RareList != null)
                 {
@@ -110,20 +115,35 @@ namespace katzerle
                         if (r.Location.Distance(o.Location) < 30)
                         {
                             Logging.Write(Colors.MediumPurple, "Rarekiller Part Collector: Can't reach Object because there's a Rare Elite around, Blacklist and move on", o.Name);
+                            if (Rarekiller.Settings.LUAoutput)
+                                Lua.DoString("print('NPCScan: Can't reach NPC {0} because there is also a Elite Rare around')", o.Name);
                             Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
                             return;
                         }
                     }
                 }
 
+                if (Rarekiller.Settings.PlayerScan && RarekillerSecurity.PlayerAround(o))
+                {
+                    Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Collector: There are other Players around, so move on");
+                    if (Rarekiller.Settings.LUAoutput)
+                        Lua.DoString("print('NPCScan: There are other Players around')");
+                    Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
+                    return;
+                }
+
                 if (Me.Combat)
                 {
                     Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Collector: ... but first I have to finish fighting another Mob.");
+                    if (Rarekiller.Settings.LUAoutput)
+                        Lua.DoString("print('NPCScan: First finish combat')");
                     return;
                 }
                 if (Me.IsOnTransport)
                 {
                     Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Collector: ... but I'm on a Transport.");
+                    if (Rarekiller.Settings.LUAoutput)
+                        Lua.DoString("print('NPCScan: I'm on Transport')");
                     return;
                 }
 				
@@ -133,61 +153,56 @@ namespace katzerle
                 }
 
                 //ToDo IDs of Underground NPCs
-                if (!(o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999
-                    || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999
-                    || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999))
+                if (!ForceGround && (o.Entry == 213364 || o.Entry == 214337 || o.Entry == 213649 || o.Entry == 213650 || o.Entry == 214340 || o.Entry == 213651
+                    || o.Entry == 213750 || o.Entry == 214325 || o.Entry == 213768 || o.Entry == 213751 || o.Entry == 213770 || o.Entry == 213793
+                    || o.Entry == 213769 || o.Entry == 214438 || o.Entry == 214407 || o.Entry == 213956 || o.Entry == 213970 || o.Entry == 213362))
                 {
                     WoWPoint Helperpoint = null;
                     Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part MoveTo: Found a Underground NPC {0} so dismount and walk", o.Entry);
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC1LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC2LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC3LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC4LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC5LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC6LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC7LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC8LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC9LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC10LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC11LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC12LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC13LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC14LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC15LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC16LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC17LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC18LandingPoint;
+                    if (o.Entry == 213364)
+                        Helperpoint = LandingPoint213364;
+                    if (o.Entry == 214337)
+                        Helperpoint = LandingPoint214337;
+                    if (o.Entry == 213649)
+                        Helperpoint = LandingPoint213649;
+                    if (o.Entry == 213650)
+                        Helperpoint = LandingPoint213650;
+                    if (o.Entry == 214340)
+                        Helperpoint = LandingPoint214340;
+                    if (o.Entry == 213651)
+                        Helperpoint = LandingPoint213651;
+                    if (o.Entry == 213750)
+                        Helperpoint = LandingPoint213750;
+                    if (o.Entry == 214325)
+                        Helperpoint = LandingPoint214325;
+                    if (o.Entry == 213768)
+                        Helperpoint = LandingPoint213768;
+                    if (o.Entry == 213751)
+                        Helperpoint = LandingPoint213751;
+                    if (o.Entry == 213770)
+                        Helperpoint = LandingPoint213770;
+                    if (o.Entry == 213793)
+                        Helperpoint = LandingPoint213793;
+                    if (o.Entry == 213769)
+                        Helperpoint = LandingPoint213769;
+                    if (o.Entry == 214438)
+                        Helperpoint = LandingPoint214438;
+                    if (o.Entry == 214407)
+                        Helperpoint = LandingPoint214407;
+                    if (o.Entry == 213956)
+                        Helperpoint = LandingPoint213956;
+                    if (o.Entry == 213970)
+                        Helperpoint = LandingPoint213970;
+                    if (o.Entry == 213362)
+                        Helperpoint = LandingPoint213362;
 
-                    while (o.Location.Distance(Helperpoint) > 5)
+                    while (o.Location.Distance(Helperpoint) > 3)
                     {
                         Flightor.MoveTo(Helperpoint);
                         Thread.Sleep(100);
-                        if (Rarekiller.inCombat) return;
                     }
                     WoWMovement.MoveStop();
-                    Thread.Sleep(1000);
-                    //Descend to Land
-                    WoWMovement.Move(WoWMovement.MovementDirection.Descend);
-                    Thread.Sleep(2000);
-                    WoWMovement.MoveStop();
+                    
                     //Dismount
                     if (Me.Auras.ContainsKey("Flight Form"))
                         Lua.DoString("CancelShapeshiftForm()");
@@ -195,10 +210,9 @@ namespace katzerle
                         Lua.DoString("Dismount()");
 
                     Thread.Sleep(300);
-                    ForceGround = true;
+                    if ((o.Entry != 213362) && (o.Entry != 213970))
+                        ForceGround = true;
                 }
-
-
 
 // ----------------- Move to Object Part ---------------------
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part MoveTo: Move to Object");
@@ -227,9 +241,9 @@ namespace katzerle
 				}
                 BlacklistTimer.Reset();
 				Thread.Sleep(300);
-				WoWMovement.MoveStop();	
-// Collect Nest
-                Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Collector: Nest Location: {0} / {1} / {2}", Convert.ToString(o.X), Convert.ToString(o.Y), Convert.ToString(o.Z));
+				WoWMovement.MoveStop();
+// Collect Object
+                Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Collector: Object Location: {0} / {1} / {2}", Convert.ToString(o.X), Convert.ToString(o.Y), Convert.ToString(o.Z));
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Collector: My Location: {0} / {1} / {2}", Convert.ToString(Me.X), Convert.ToString(Me.Y), Convert.ToString(Me.Z));
                 if (Me.Auras.ContainsKey("Flight Form"))
                     Lua.DoString("CancelShapeshiftForm()");
