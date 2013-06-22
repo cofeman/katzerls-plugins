@@ -36,12 +36,7 @@ namespace katzerle
         public static WoWPoint ProblemCamel4 = new WoWPoint(-11066.67, -2100.342, 175.2816);
 
         //ToDo Landing Points for of Underground NPCs
-        public static WoWPoint IndoorNPC1LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC2LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC3LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC4LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC5LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint IndoorNPC6LandingPoint = new WoWPoint(-11066.67, -2100.342, 175.2816);
+        public static WoWPoint LandingPoint64227 = new WoWPoint(2359.229, 2484.88, 686.5128);
 
         public void findAndPickupObject()
         {
@@ -65,6 +60,9 @@ namespace katzerle
             foreach (WoWUnit o in objList)
             {
                 Logging.Write(Colors.MediumPurple, "Rarekiller Part NPC: Find {0} ID {1}", o.Name, o.Entry);
+                if (Rarekiller.Settings.LUAoutput)
+                    Lua.DoString("print('NPCScan: Find {0} ID {1}')", o.Name, o.Entry);
+
 				
                 if (Rarekiller.Settings.Alert)
                 {
@@ -73,20 +71,22 @@ namespace katzerle
                     else if (File.Exists(Rarekiller.Soundfile))
                         new SoundPlayer(Rarekiller.Soundfile).Play();
                     else
-                        Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Camel: playing Soundfile failes");
+                        Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part NPC: playing Soundfile failes");
                 }
 				
 // ----------------- Underground ----------
-                //ToDo IDs of Underground NPCs
-                //if (!(o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999))
-                //{
+                //if not ID of Underground NPCs of Another Mans Treasure --> don't collect
+                if (!(o.Entry == 64227))
+                {
                     if (o.IsIndoors && Me.IsFlying && Me.IsOutdoors && (o.Location.Distance(Me.Location) > 30))
                     {
                         Logging.Write(Colors.MediumPurple, "Rarekiller Part NPC: Can't reach NPC because it is Indoors and I fly Outdoors {0}, Blacklist and Move on", o.Name);
+                        if (Rarekiller.Settings.LUAoutput)
+                            Lua.DoString("print('NPCScan: Can't reach NPC {0} because it is Indoors and I fly Outdoors')", o.Name);
                         Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
                         return;
                     }
-                //}
+                }
 
 // -----------------  don't collect if Rare Pandaria Elite Around
                 if (RareList != null)
@@ -95,21 +95,34 @@ namespace katzerle
                     {
                         if (r.Location.Distance(o.Location) < 30)
                         {
-                            Logging.Write(Colors.MediumPurple, "Rarekiller Part Collector: Can't reach Object because there's a Rare Elite around, Blacklist and move on", o.Name);
+                            Logging.Write(Colors.MediumPurple, "Rarekiller Part NPC: Can't reach Object because there's a Rare Elite around, Blacklist and move on", o.Name);
                             Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
                             return;
                         }
                     }
                 }
+
+                if (Rarekiller.Settings.PlayerScan && RarekillerSecurity.PlayerAround(o))
+                {
+                    Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part NPC: There are other Players around, so move on");
+                    if (Rarekiller.Settings.LUAoutput)
+                        Lua.DoString("print('NPCScan: There are other Players around')");
+                    Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
+                    return;
+                }
 				
                 if (Me.Combat)
                 {
                     Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part NPC: ... but first I have to finish fighting another Mob.");
+                    if (Rarekiller.Settings.LUAoutput)
+                        Lua.DoString("print('NPCScan: First finish combat')");
                     return;
                 }
                 if (Me.IsOnTransport)
                 {
                     Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part NPC: ... but I'm on a Transport.");
+                    if (Rarekiller.Settings.LUAoutput)
+                        Lua.DoString("print('NPCScan: I'm on Transport')");
                     return;
                 }
                 if (Me.IsCasting)
@@ -117,8 +130,8 @@ namespace katzerle
                     SpellManager.StopCasting();
                     Thread.Sleep(100);
                 }
-					
-				if (Me.IsFlying && ((o.Location.Distance(ProblemCamel1) < 10) || (o.Location.Distance(ProblemCamel2) < 10) || 
+
+                if (!ForceGround && ((o.Location.Distance(ProblemCamel1) < 10) || (o.Location.Distance(ProblemCamel2) < 10) || 
 						(o.Location.Distance(ProblemCamel3) < 10) || (o.Location.Distance(ProblemCamel4) < 20)))
 				{
                     Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part MoveTo: Found a Problem Figurine {0} so dismount and walk", o.Entry);
@@ -129,10 +142,10 @@ namespace katzerle
 						if (Rarekiller.inCombat) return;
 					}
 					WoWMovement.MoveStop();
-					Thread.Sleep(1000);
+					Thread.Sleep(500);
 					//Descend to Land
 					WoWMovement.Move(WoWMovement.MovementDirection.Descend);
-					Thread.Sleep(2000);
+					Thread.Sleep(1000);
 					WoWMovement.MoveStop();
 					//Dismount
                     if (Me.Auras.ContainsKey("Flight Form"))
@@ -145,34 +158,17 @@ namespace katzerle
 				}
 
                 //ToDo IDs of Underground NPCs
-                if (o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999 || o.Entry == 99999)
+                if (!ForceGround && o.Entry == 64227)
                 {
-                    WoWPoint Helperpoint = null;
                     Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part MoveTo: Found a Underground NPC {0} so dismount and walk", o.Entry);
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC1LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC2LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC3LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC4LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC5LandingPoint;
-                    if (o.Entry == 99999)
-                        Helperpoint = IndoorNPC6LandingPoint;
 
-                    while (o.Location.Distance(Helperpoint) > 5)
+                    while (o.Location.Distance(LandingPoint64227) > 5)
                     {
-                        Flightor.MoveTo(Helperpoint);
+                        Flightor.MoveTo(LandingPoint64227);
                         Thread.Sleep(100);
                         if (Rarekiller.inCombat) return;
                     }
-                    WoWMovement.MoveStop();
-                    Thread.Sleep(1000);
-                    //Descend to Land
-                    WoWMovement.Move(WoWMovement.MovementDirection.Descend);
-                    Thread.Sleep(2000);
+
                     WoWMovement.MoveStop();
                     //Dismount
                     if (Me.Auras.ContainsKey("Flight Form"))
