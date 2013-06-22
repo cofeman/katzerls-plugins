@@ -109,7 +109,7 @@ namespace ProfileChanger
                 }
 
                 BotBase bot = TreeRoot.Current;
-                if (bot.Name == "Questing" || bot.Name == "PartyBot" || bot.Name == "Multibox Follower" || bot.Name == "Multibox Leader"
+                if (bot.Name == "PartyBot" || bot.Name == "Multibox Follower" || bot.Name == "Multibox Leader"
                     || bot.Name == "Mixed Mode" || bot.Name == "DungeonBuddy" || bot.Name == "BGBuddy" || bot.Name == "ArchaeologieBuddy"
                     || bot.Name == "Tyrael" || bot.Name == "LazyRaider" || bot.Name == "Combat Bot" || bot.Name == "Fpsware's LazyBoxer"
                     || bot.Name == "ProfessionBuddy" || bot.Name == "Raid Bot")
