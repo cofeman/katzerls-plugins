@@ -102,7 +102,7 @@ namespace katzerle
                     {
                         Logging.Write(Colors.MediumPurple, "Rarekiller Part Collector: Can't reach Object because it is Indoors and I fly Outdoors {0}, Blacklist and Move on", o.Name);
                         if (Rarekiller.Settings.LUAoutput)
-                            Lua.DoString("print('NPCScan: Can't reach NPC {0} because it is Indoors and I fly Outdoors')", o.Name);
+                            Lua.DoString("print('NPCScan: Object {0} is Indoors')", o.Name);
                         Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
                         return;
                     }
@@ -116,7 +116,7 @@ namespace katzerle
                         {
                             Logging.Write(Colors.MediumPurple, "Rarekiller Part Collector: Can't reach Object because there's a Rare Elite around, Blacklist and move on", o.Name);
                             if (Rarekiller.Settings.LUAoutput)
-                                Lua.DoString("print('NPCScan: Can't reach NPC {0} because there is also a Elite Rare around')", o.Name);
+                                Lua.DoString("print('NPCScan: Object {0} Elite Rare around')", o.Name);
                             Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
                             return;
                         }
@@ -127,7 +127,7 @@ namespace katzerle
                 {
                     Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Collector: There are other Players around, so move on");
                     if (Rarekiller.Settings.LUAoutput)
-                        Lua.DoString("print('NPCScan: There are other Players around')");
+                        Lua.DoString("print('NPCScan: Other Players around')");
                     Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
                     return;
                 }

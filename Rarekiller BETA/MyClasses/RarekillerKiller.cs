@@ -79,7 +79,7 @@ namespace katzerle
 					{
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Pulse Tamer");
                         if (Rarekiller.Settings.LUAoutput)
-                            Lua.DoString("print('NPCScan: {0} is tameable, don't kill him')", o.Name);
+                            Lua.DoString("print('NPCScan: {0} is tameable, don't kill')", o.Name);
                         Rarekiller.Tamer.findAndTameMob();
 					}
 
@@ -95,7 +95,7 @@ namespace katzerle
                         Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
                         Logging.Write(Colors.MediumPurple, "Rarekiller: Blacklist Mob for 5 Minutes.");
                         if (Rarekiller.Settings.LUAoutput)
-                            Lua.DoString("print('NPCScan: Can't reach NPC {0} because it is Indoors and I fly Outdoors')", o.Name);
+                            Lua.DoString("print('NPCScan: NPC {0} is Indoors')", o.Name);
                         return;
                     }
                     
@@ -104,8 +104,6 @@ namespace katzerle
                         Logging.Write(Colors.MediumPurple, "Rarekiller: His Level is 5 over mine, better not to kill him.");
                         Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist60));
                         Logging.Write(Colors.MediumPurple, "Rarekiller: Blacklist Mob for 60 Minutes.");
-                        if (Rarekiller.Settings.LUAoutput)
-                            Lua.DoString("print('NPCScan: NPC {0} is more then 4 Level higher then me')", o.Name);
 						return;
 					}
 					if (o.IsFriendly) // ... is Friendly

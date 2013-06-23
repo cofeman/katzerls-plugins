@@ -68,7 +68,7 @@ namespace katzerle
                         Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
                         Logging.Write(Colors.MediumPurple, " Part TamerRarekiller: Blacklist Mob for 5 Minutes.");
                         if (Rarekiller.Settings.LUAoutput)
-                            Lua.DoString("print('NPCScan: Can't reach NPC {0} because it is Indoors and I fly Outdoors')", o.Name);
+                            Lua.DoString("print('NPCScan: NPC {0} is Indoors')", o.Name);
                         return;
                     }
 
