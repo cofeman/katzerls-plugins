@@ -196,7 +196,7 @@ namespace katzerle
                     if (o.Entry == 213362)
                         Helperpoint = LandingPoint213362;
 
-                    while (o.Location.Distance(Helperpoint) > 3)
+                    while (o.Location.Distance(Helperpoint) > 5)
                     {
                         Flightor.MoveTo(Helperpoint);
                         Thread.Sleep(100);
@@ -207,7 +207,7 @@ namespace katzerle
                     if (Me.Auras.ContainsKey("Flight Form"))
                         Lua.DoString("CancelShapeshiftForm()");
                     else if (Me.Mounted)
-                        Lua.DoString("Dismount()");
+                        Mount.Dismount();
 
                     Thread.Sleep(300);
                     if ((o.Entry != 213362) && (o.Entry != 213970))
