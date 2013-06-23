@@ -157,7 +157,7 @@ namespace katzerle
                     || o.Entry == 213750 || o.Entry == 214325 || o.Entry == 213768 || o.Entry == 213751 || o.Entry == 213770 || o.Entry == 213793
                     || o.Entry == 213769 || o.Entry == 214438 || o.Entry == 214407 || o.Entry == 213956 || o.Entry == 213970 || o.Entry == 213362))
                 {
-                    WoWPoint Helperpoint;
+                    WoWPoint Helperpoint = o.Location;
                     Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part MoveTo: Found a Underground NPC {0} so dismount and walk", o.Entry);
                     if (o.Entry == 213364)
                         Helperpoint = LandingPoint213364;
