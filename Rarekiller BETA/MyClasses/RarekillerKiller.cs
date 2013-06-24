@@ -70,7 +70,7 @@ namespace katzerle
                         Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Blacklist Mob for 5 Minutes.");
                         if (Rarekiller.Settings.LUAoutput)
-                            Lua.DoString("print('NPCScan: NPC {0} is tagged')", o.Name);
+                            Lua.DoString("print('NPCScan: NPC is tagged')", o.Name);
                         return;
                     }
 
@@ -79,7 +79,7 @@ namespace katzerle
 					{
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Pulse Tamer");
                         if (Rarekiller.Settings.LUAoutput)
-                            Lua.DoString("print('NPCScan: {0} is tameable, don't kill')", o.Name);
+                            Lua.DoString("print('NPCScan: NPC is tameable, don't kill')", o.Name);
                         Rarekiller.Tamer.findAndTameMob();
 					}
 
@@ -95,7 +95,7 @@ namespace katzerle
                         Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
                         Logging.Write(Colors.MediumPurple, "Rarekiller: Blacklist Mob for 5 Minutes.");
                         if (Rarekiller.Settings.LUAoutput)
-                            Lua.DoString("print('NPCScan: NPC {0} is Indoors')", o.Name);
+                            Lua.DoString("print('NPCScan: NPC is Indoors')", o.Name);
                         return;
                     }
                     
@@ -112,7 +112,7 @@ namespace katzerle
                         Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist60));
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Blacklist Mob for 60 Minutes.");
                         if (Rarekiller.Settings.LUAoutput)
-                            Lua.DoString("print('NPCScan: NPC {0} is friendly')", o.Name);
+                            Lua.DoString("print('NPCScan: NPC is friendly')", o.Name);
 						return;
 					}
 					if ((o.Entry == 32630) && !Rarekiller.Settings.Vyragosa) // ... my Settings say don't kill Vyragosa
@@ -121,7 +121,7 @@ namespace katzerle
                         Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Blacklist Mob for 5 Minutes.");
                         if (Rarekiller.Settings.LUAoutput)
-                            Lua.DoString("print('NPCScan: don't kill {0}')", o.Name);
+                            Lua.DoString("print('NPCScan: don't kill NPC')", o.Name);
 						return;
 					}
 					if ((o.Entry == 50057) && !Rarekiller.Settings.Blazewing) // ... my Settings say don't kill Blazewing
@@ -130,7 +130,7 @@ namespace katzerle
                         Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Blacklist Mob for 5 Minutes.");
                         if (Rarekiller.Settings.LUAoutput)
-                            Lua.DoString("print('NPCScan: don't kill {0}')", o.Name);
+                            Lua.DoString("print('NPCScan: don't kill NPC')", o.Name);
 						return;
 					}
 					if ((o.Entry == 596) || (o.Entry == 599) || Me.IsInInstance)
@@ -207,7 +207,7 @@ namespace katzerle
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Set Range to {0} because of Low-Ranged Customized Spell", Rarekiller.Spells.RangeCheck(Rarekiller.Settings.Pull));
                     }
 
-                    while ((o.Location.Distance(Me.Location) > Convert.ToInt64(Rarekiller.Settings.Range)) && !o.TaggedByOther && !o.IsDead)
+                    while ((o.Location.Distance(Me.Location) > Convert.ToInt64(Rarekiller.Settings.Range)) && !o.IsDead)
 					{
                         if (o.Entry == 49822 || Me.IsIndoors)
 							Navigator.MoveTo(o.Location);
@@ -239,13 +239,7 @@ namespace katzerle
 						}
 					}
 					BlacklistTimer.Reset();
-                    if (o.TaggedByOther && !Rarekiller.TaggedMobsList.ContainsKey(Convert.ToInt32(o.Entry)))
-                    {
-                        Logging.Write(Colors.MediumPurple, "Rarekiller: Mob is Tagged by another Player");
-                        Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
-                        Logging.Write(Colors.MediumPurple, "Rarekiller: Blacklist Mob for 5 Minutes.");
-                        return;
-                    }
+                    
                     if (o.IsDead && !o.CanLoot)
                     {
                         Logging.Write(Colors.MediumPurple, "Rarekiller: Mob was killed by another Player");

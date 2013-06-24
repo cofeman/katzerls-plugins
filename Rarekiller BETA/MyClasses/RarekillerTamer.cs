@@ -68,7 +68,7 @@ namespace katzerle
                         Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
                         Logging.Write(Colors.MediumPurple, " Part TamerRarekiller: Blacklist Mob for 5 Minutes.");
                         if (Rarekiller.Settings.LUAoutput)
-                            Lua.DoString("print('NPCScan: NPC {0} is Indoors')", o.Name);
+                            Lua.DoString("print('NPCScan: NPC is Indoors')", o.Name);
                         return;
                     }
 
@@ -78,7 +78,7 @@ namespace katzerle
                         Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist60));
                         Logging.Write(Colors.MediumPurple, "Rarekiller Part Tamer: Blacklist Mob for 60 Minutes.");
                         if (Rarekiller.Settings.LUAoutput)
-                            Lua.DoString("print('NPCScan: NPC {0} Level is to high to tame')", o.Name);
+                            Lua.DoString("print('NPCScan: NPC Level is to high to tame')", o.Name);
                         return;
                     }
                     if (Me.IsOnTransport)
