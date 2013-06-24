@@ -73,7 +73,7 @@ namespace katzerle
 			UpdatePlugin();
 
             Settings.Load();
-            Logging.Write(Colors.MediumPurple, "Rarekiller 3.4 BETA loaded");
+            Logging.Write(Colors.MediumPurple, "Rarekiller 3.4 loaded");
             if (Me.Class != WoWClass.Hunter)
             {
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Tamer: I'm no Hunter. Deactivate the Tamer Part");

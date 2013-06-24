@@ -38,6 +38,7 @@ namespace katzerle
             CBInteractNPC.Checked = Rarekiller.Settings.InteractNPC;
 			CBPoseidus.Checked = Rarekiller.Settings.Poseidus;
             CBRaptorNest.Checked = Rarekiller.Settings.RaptorNest;
+            CBDarkSoil.Checked = Rarekiller.Settings.DarkSoil;
             CBObjects.Checked = Rarekiller.Settings.ObjectsCollector;
             CBCamel.Checked = Rarekiller.Settings.Camel;
             CBAeonaxx.Checked = Rarekiller.Settings.Aeonaxx;
@@ -296,6 +297,7 @@ namespace katzerle
             Rarekiller.Settings.InteractNPC = CBInteractNPC.Checked;
 			Rarekiller.Settings.Poseidus = CBPoseidus.Checked;
             Rarekiller.Settings.RaptorNest = CBRaptorNest.Checked;
+            Rarekiller.Settings.DarkSoil = CBDarkSoil.Checked;
             Rarekiller.Settings.ObjectsCollector = CBObjects.Checked;
             Rarekiller.Settings.Aeonaxx = CBAeonaxx.Checked;
 
@@ -354,6 +356,7 @@ namespace katzerle
             // Collector
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Camel = {0}", CBCamel.Checked.ToString());
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: RaptorNest = {0}", CBRaptorNest.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: DarkSoil = {0}", CBDarkSoil.Checked.ToString());
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: ObjectsCollect = {0}", CBObjects.Checked.ToString());
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: AnotherMansTreasure = {0}", CBAnotherMansTreasure.Checked.ToString());
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: InteractNPC = {0}", CBInteractNPC.Checked.ToString());
@@ -489,6 +492,11 @@ namespace katzerle
             //let's add another element (child of the root)
             element = xml.CreateElement("RaptorNest");
             text = xml.CreateTextNode(CBRaptorNest.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("DarkSoil");
+            text = xml.CreateTextNode(CBDarkSoil.Checked.ToString());
             element.AppendChild(text);
             root.AppendChild(element);
             //let's add another element (child of the root)
@@ -771,6 +779,7 @@ namespace katzerle
             CBPoseidus.Checked = true;
             CBAeonaxx.Checked = false;
             CBRaptorNest.Checked = true;
+            CBDarkSoil.Checked = false;
             CBAnotherMansTreasure.Checked = false;
             CBInteractNPC.Checked = false;
             CBObjects.Checked = true;
@@ -834,6 +843,7 @@ namespace katzerle
 			Rarekiller.Settings.Poseidus = CBPoseidus.Checked;
             Rarekiller.Settings.Aeonaxx = CBAeonaxx.Checked;
             Rarekiller.Settings.RaptorNest = CBRaptorNest.Checked;
+            Rarekiller.Settings.DarkSoil = CBDarkSoil.Checked;
             Rarekiller.Settings.InteractNPC = CBInteractNPC.Checked;
             Rarekiller.Settings.AnotherMansTreasure = CBAnotherMansTreasure.Checked;
             Rarekiller.Settings.ObjectsCollector = CBObjects.Checked;

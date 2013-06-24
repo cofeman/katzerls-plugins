@@ -47,6 +47,7 @@ namespace katzerle
         public bool TLPD = true;
         public bool KillList = false;
         public bool RaptorNest = true;
+        public bool DarkSoil = false;
         public bool ObjectsCollector = true;
         public bool AnotherMansTreasure = false;
         public bool InteractNPC = false;
@@ -107,6 +108,7 @@ namespace katzerle
 //Developer Testcases
         public bool TestRaptorNest = false;
         public bool TestFigurineInteract = false;
+        public bool Forceground = false;
 
         // -------------- Load ConfigFile ---------------
         public void Load()
@@ -217,6 +219,12 @@ namespace katzerle
                 {
                     RaptorNest = Convert.ToBoolean(xvar.InnerText);
                     Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + RaptorNest.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/DarkSoil");
+                if (xvar != null)
+                {
+                    DarkSoil = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + DarkSoil.ToString());
                 }
                 xvar = xml.SelectSingleNode("//Rarekiller/ObjectsCollector");
                 if (xvar != null)
