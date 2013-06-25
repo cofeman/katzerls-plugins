@@ -23,6 +23,7 @@ If running this Plugin with Botbase GB2 you also need a Profile.
 ===How to Use===
   * [DescriptionConfigWindow Description of the Config Window]
   * [BotSave Bot Save]
+  * ConfigFiles
 
 ===Special Thanks ===
   * [SpecialThanks Special Thanks]
