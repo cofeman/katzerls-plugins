@@ -4,6 +4,7 @@
 First:
 To use this Lists unzip the ConfigFiles.zip in Folder Rarekiller/config
 Without these Lists Rarekiller will only hunt Dark Soils, TLPD, Poseidus and Raptornests
+http://katzerls-plugins.googlecode.com/svn/wiki/ConfigFiles1.JPG
 
 
   * BlacklistedMobs.xml = here you can insert all Mobs you don't want Rarekiller to kill
@@ -29,7 +30,7 @@ Code:
  <NPC Entry="32630" Name="Vyragosa" />
 You find the ID in WOWHead (Adressline of the Homepage) or simply ask me 
 
-
+http://katzerls-plugins.googlecode.com/svn/wiki/ConfigFiles2.JPG
 
 Quite simple:
 First Step: insert the Mob you want to hunt in the XML.
