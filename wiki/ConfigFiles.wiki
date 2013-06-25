@@ -6,20 +6,20 @@ To use this Lists unzip the ConfigFiles.zip in Folder Rarekiller/config
 Without these Lists Rarekiller will only hunt Dark Soils, TLPD, Poseidus and Raptornests
 
 
-•BlacklistedMobs.xml = here you can insert all Mobs you don't want Rarekiller to kill
-•CollectObjects.xml = here you can insert all Objects you wanted to collect - 
+  * BlacklistedMobs.xml = here you can insert all Mobs you don't want Rarekiller to kill
+  * CollectObjects.xml = here you can insert all Objects you wanted to collect - 
 Attentione: You have to check "Collect Objects from XML" additionally in the Settings Window of Rarekiller !!!
-•InteractNPC.xml = here you can insert every NPC with wich Rarekiller should interact - 
+  * InteractNPC.xml = here you can insert every NPC with wich Rarekiller should interact - 
 Attentione: You have to check "Interact NPCs from XML" additionally in the Settings Window of Rarekiller !!!
-•KillMobs.xml = Rarekiller will kill these Mobs if he found them (only untagged Mobs) - 
+  * KillMobs.xml = Rarekiller will kill these Mobs if he found them (only untagged Mobs) - 
 Attentione: You have to check "Kill Mobs from XML" additionally in the Settings Window of Rarekiller !!!
-•TaggedMobs.xml = Rarekiller will kill these Mobs if he found them (only Mobs tagged by other Players) - 
+  * TaggedMobs.xml = Rarekiller will kill these Mobs if he found them (only Mobs tagged by other Players) - 
 Attentione: You have to check "Kill Mobs from XML" additionally in the Settings Window of Rarekiller !!!
-•TameableMobs.xml = Rarekiller will tame these Mobs if he found them - 
+  * TameableMobs.xml = Rarekiller will tame these Mobs if he found them - 
 Attentione: You have to check "Tame Pets from XML" additionally in the Settings Window of Rarekiller !!!
-•AnotherMansTreasure.xml, BloodyRare.xml, Frostbitten.xml = Rarekiller will kill the Mobs for the special Archivement
+  * AnotherMansTreasure.xml, BloodyRare.xml, Frostbitten.xml = Rarekiller will kill the Mobs for the special Archivement
 Attentione: You have to check "Frostbitten WOTLK / Bloody Rare BC / Another Mans Treasure" additionally in the Settings Window of Rarekiller to collect/kill these!!!
-•CataRares.xml= Rarekiller will kill these Cata Mobs if he found them (only untagged Mobs) -
+  * CataRares.xml= Rarekiller will kill these Cata Mobs if he found them (only untagged Mobs) -
 Attentione: You have to check "Cataclysm Rares" additionally in the Settings Window of Rarekiller !!!
 
 
