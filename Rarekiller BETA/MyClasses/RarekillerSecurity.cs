@@ -84,7 +84,7 @@ namespace katzerle
 
         public void newWhisper(Chat.ChatWhisperEventArgs arg)
         {
-            bool IsGM = Lua.GetReturnVal<bool>("if(_G.GMChatFrame_IsGM and _G.GMChatFrame_IsGM("+ arg.Author + ")) then return true; else return false; end", 0); // from WIM Addon; WIM.lua Z:449 - Needs some Work !!
+            //bool IsGM = Lua.GetReturnVal<bool>("if(_G.GMChatFrame_IsGM and _G.GMChatFrame_IsGM("+ arg.Author + ")) then return true; else return false; end", 0); // from WIM Addon; WIM.lua Z:449 - Needs some Work !!
 			if (Rarekiller.Settings.Wisper)
             {
 				if (File.Exists(Rarekiller.Settings.SoundfileWisper))
@@ -93,9 +93,9 @@ namespace katzerle
                     new SoundPlayer(Rarekiller.Soundfile).Play();
                 else
                     Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Alert: playing Soundfile failes");
-				if(IsGM) //doesn't work !!! 
-                    Logging.Write(Colors.DarkOrange, "Rarekiller Part Alert: You got a GM Wisper: {0}: {1} - Timestamp: {2}: {3}", arg.Author, arg.Message, DateTime.Now.ToShortDateString(), DateTime.Now.ToShortTimeString());
-				else
+				//if(IsGM) //doesn't work !!! 
+                //    Logging.Write(Colors.DarkOrange, "Rarekiller Part Alert: You got a GM Wisper: {0}: {1} - Timestamp: {2}: {3}", arg.Author, arg.Message, DateTime.Now.ToShortDateString(), DateTime.Now.ToShortTimeString());
+				//else
                     Logging.Write(Colors.Pink, "Rarekiller Part Alert: You got a Wisper: {0}: {1} - Timestamp: {2}: {3}", arg.Author, arg.Message, DateTime.Now.ToShortDateString(), DateTime.Now.ToShortTimeString());
             }
         }
@@ -106,13 +106,16 @@ namespace katzerle
             string presenceId = Args[12].ToString();
             string Author = Lua.GetReturnValues(String.Format("return BNGetFriendInfoByID({0})", presenceId))[3];
 
-            if (File.Exists(Rarekiller.Settings.SoundfileWisper))
-                new SoundPlayer(Rarekiller.Settings.SoundfileWisper).Play();
-            else if (File.Exists(Rarekiller.Soundfile))
-                new SoundPlayer(Rarekiller.Soundfile).Play();
-            else
-                Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Alert: playing Soundfile failes");
-            Logging.Write(Colors.Aqua, "Rarekiller Part Alert: You got a BN Wisper: {0}: {1} - Timestamp: {2}: {3}", Author, Message, DateTime.Now.ToShortDateString(), DateTime.Now.ToShortTimeString());
+            if (Rarekiller.Settings.BNWisper)
+            {
+                if (File.Exists(Rarekiller.Settings.SoundfileWisper))
+                    new SoundPlayer(Rarekiller.Settings.SoundfileWisper).Play();
+                else if (File.Exists(Rarekiller.Soundfile))
+                    new SoundPlayer(Rarekiller.Soundfile).Play();
+                else
+                    Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Alert: playing Soundfile failes");
+                Logging.Write(Colors.Aqua, "Rarekiller Part Alert: You got a BN Wisper: {0}: {1} - Timestamp: {2}: {3}", Author, Message, DateTime.Now.ToShortDateString(), DateTime.Now.ToShortTimeString());
+            }
         }
         public void newGuild(Chat.ChatGuildEventArgs arg)
         {
