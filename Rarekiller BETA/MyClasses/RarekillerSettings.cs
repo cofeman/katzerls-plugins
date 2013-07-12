@@ -54,11 +54,68 @@ namespace katzerle
 		public bool Poseidus = true;
         public bool Camel = true;
         public bool Aeonaxx = false;
+        // Mists of Pandaria
+        public bool Bonobos50828 = false;
+        public bool IkIk50836 = false;
+        public bool Nanners50840 = false;
+        public bool Ferocious50823 = false;
+        public bool Scritch50831 = false; 
+        public bool Spriggin50830 = false; 
+        public bool Yowler50832 = false; 
+        public bool Aethis50750 = false;          
+        public bool Cournith50768 = false; 
+        public bool Eshelon50772 = false; 
+        public bool Selena50766 = false; 
+        public bool Zai50769 = false;                    
+        public bool Sahn50780 = false; 
+        public bool Nalash50776 = false; 
+        public bool Garlok50739 = false; 
+        public bool Kaltik50749 = false;                     
+        public bool Lithik50734 = false; 
+        public bool Nallak50364 = false; 
+        public bool Kraxik50363 = false; 
+        public bool Skithik50733 = false;                   
+        public bool Torik50388 = false;
+        public bool Borginn50341 = false; 
+        public bool Kang50349 = false; 
+        public bool Gaarn50340 = false;                     
+        public bool Karr50347 = false; 
+        public bool Kornas50338 = false; 
+        public bool Norlaxx50344 = false; 
+        public bool Sulikshor50339 = false;                    
+        public bool Havak50354 = false; 
+        public bool JonnDar50351 = false; 
+        public bool Kahtir50355 = false; 
+        public bool Krol50356 = false;                    
+        public bool Morgrinn50350 = false; 
+        public bool Qunas50352 = false; 
+        public bool Urgolax50359 = false; 
+        public bool AiLi50821 = false;                     
+        public bool Ahone50817 = false; 
+        public bool AiRan50822 = false; 
+        public bool Ruun50816 = false; 
+        public bool Nasra50811 = false;                    
+        public bool Urobi50808 = false; 
+        public bool Yul50820 = false; 
+        public bool Arness50787 = false; 
+        public bool Moldo50806 = false;                     
+        public bool Nessos50789 = false; 
+        public bool Omnis50805 = false; 
+        public bool Salyin50783 = false; 
+        public bool Sarnak50782 = false;                    
+        public bool Siltriss50791 = false; 
+        public bool Blackhoof51059 = false; 
+        public bool Dak50334 = false; 
+        public bool Ferdinand51078 = false;                     
+        public bool GoKan50331 = false; 
+        public bool Korda50332 = false; 
+        public bool Lon50333 = false; 
+        public bool Yorik50336 = false;
+
         // Hunt by ID
         public bool HUNTbyID = false;
         public string MobID = "";
         //Tamer
-
 		public bool Hunteractivated = true;
         public bool NotKillTameable = false;
         public bool TameDefault = false;
@@ -105,9 +162,11 @@ namespace katzerle
 //Developer Things
         public bool DeveloperBoxActive = false;
         public bool DeveloperLogs = false;
+        public bool MoPRaresDeveloper = true;
 //Developer Testcases
         public bool TestRaptorNest = false;
         public bool TestFigurineInteract = false;
+        public bool TestcaseTamer = false;
         public bool Forceground = false;
 
         // -------------- Load ConfigFile ---------------
@@ -451,6 +510,351 @@ namespace katzerle
                     Aeonaxx = Convert.ToBoolean(xvar.InnerText);
                     Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Aeonaxx.ToString());
                 }
+
+                xvar = xml.SelectSingleNode("//Rarekiller/Bonobos50828");
+                if (xvar != null)
+                {
+                    Bonobos50828 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Bonobos50828.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/IkIk50836");
+                if (xvar != null)
+                {
+                    IkIk50836 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + IkIk50836.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Nanners50840");
+                if (xvar != null)
+                {
+                    Nanners50840 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Nanners50840.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Ferocious50823");
+                if (xvar != null)
+                {
+                    Ferocious50823 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Ferocious50823.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Scritch50831");
+                if (xvar != null)
+                {
+                    Scritch50831 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Scritch50831.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Spriggin50830");
+                if (xvar != null)
+                {
+                    Spriggin50830 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Spriggin50830.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Yowler50832");
+                if (xvar != null)
+                {
+                    Yowler50832 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Yowler50832.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Aethis50750");
+                if (xvar != null)
+                {
+                    Aethis50750 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Aethis50750.ToString());
+                }
+
+                xvar = xml.SelectSingleNode("//Rarekiller/Cournith50768");
+                if (xvar != null)
+                {
+                    Cournith50768 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Cournith50768.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Eshelon50772");
+                if (xvar != null)
+                {
+                    Eshelon50772 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Eshelon50772.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Selena50766");
+                if (xvar != null)
+                {
+                    Selena50766 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Selena50766.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Zai50769");
+                if (xvar != null)
+                {
+                    Zai50769 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Zai50769.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Sahn50780");
+                if (xvar != null)
+                {
+                    Sahn50780 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Sahn50780.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Nalash50776");
+                if (xvar != null)
+                {
+                    Nalash50776 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Nalash50776.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Garlok50739");
+                if (xvar != null)
+                {
+                    Garlok50739 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Garlok50739.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Kaltik50749");
+                if (xvar != null)
+                {
+                    Kaltik50749 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Kaltik50749.ToString());
+                }
+
+                xvar = xml.SelectSingleNode("//Rarekiller/Lithik50734");
+                if (xvar != null)
+                {
+                    Lithik50734 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Lithik50734.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Nallak50364");
+                if (xvar != null)
+                {
+                    Nallak50364 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Nallak50364.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Kraxik50363");
+                if (xvar != null)
+                {
+                    Kraxik50363 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Kraxik50363.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Skithik50733");
+                if (xvar != null)
+                {
+                    Skithik50733 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Skithik50733.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Torik50388");
+                if (xvar != null)
+                {
+                    Torik50388 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Torik50388.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Borginn50341");
+                if (xvar != null)
+                {
+                    Borginn50341 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Borginn50341.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Kang50349");
+                if (xvar != null)
+                {
+                    Kang50349 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Kang50349.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Gaarn50340");
+                if (xvar != null)
+                {
+                    Gaarn50340 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Gaarn50340.ToString());
+                }
+
+                xvar = xml.SelectSingleNode("//Rarekiller/Karr50347");
+                if (xvar != null)
+                {
+                    Karr50347 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Karr50347.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Kornas50338");
+                if (xvar != null)
+                {
+                    Kornas50338 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Kornas50338.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Norlaxx50344");
+                if (xvar != null)
+                {
+                    Norlaxx50344 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Norlaxx50344.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Sulikshor50339");
+                if (xvar != null)
+                {
+                    Sulikshor50339 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Sulikshor50339.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Havak50354");
+                if (xvar != null)
+                {
+                    Havak50354 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Havak50354.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/JonnDar50351");
+                if (xvar != null)
+                {
+                    JonnDar50351 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + JonnDar50351.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Kahtir50355");
+                if (xvar != null)
+                {
+                    Kahtir50355 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Kahtir50355.ToString());
+                }
+
+                xvar = xml.SelectSingleNode("//Rarekiller/Krol50356");
+                if (xvar != null)
+                {
+                    Krol50356 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Krol50356.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Morgrinn50350");
+                if (xvar != null)
+                {
+                    Morgrinn50350 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Morgrinn50350.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Qunas50352");
+                if (xvar != null)
+                {
+                    Qunas50352 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Qunas50352.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Urgolax50359");
+                if (xvar != null)
+                {
+                    Urgolax50359 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Urgolax50359.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/AiLi50821");
+                if (xvar != null)
+                {
+                    AiLi50821 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + AiLi50821.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Ahone50817");
+                if (xvar != null)
+                {
+                    Ahone50817 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Ahone50817.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/AiRan50822");
+                if (xvar != null)
+                {
+                    AiRan50822 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + AiRan50822.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Ruun50816");
+                if (xvar != null)
+                {
+                    Ruun50816 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Ruun50816.ToString());
+                }
+
+                xvar = xml.SelectSingleNode("//Rarekiller/Nasra50811");
+                if (xvar != null)
+                {
+                    Nasra50811 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Nasra50811.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Urobi50808");
+                if (xvar != null)
+                {
+                    Urobi50808 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Urobi50808.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Yul50820");
+                if (xvar != null)
+                {
+                    Yul50820 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Yul50820.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Arness50787");
+                if (xvar != null)
+                {
+                    Arness50787 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Arness50787.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Moldo50806");
+                if (xvar != null)
+                {
+                    Moldo50806 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Moldo50806.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Nessos50789");
+                if (xvar != null)
+                {
+                    Nessos50789 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Nessos50789.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Omnis50805");
+                if (xvar != null)
+                {
+                    Omnis50805 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Omnis50805.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Salyin50783");
+                if (xvar != null)
+                {
+                    Salyin50783 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Salyin50783.ToString());
+                }
+
+                xvar = xml.SelectSingleNode("//Rarekiller/Sarnak50782");
+                if (xvar != null)
+                {
+                    Sarnak50782 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Sarnak50782.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Siltriss50791");
+                if (xvar != null)
+                {
+                    Siltriss50791 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Siltriss50791.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Blackhoof51059");
+                if (xvar != null)
+                {
+                    Blackhoof51059 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Blackhoof51059.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Dak50334");
+                if (xvar != null)
+                {
+                    Dak50334 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Dak50334.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Ferdinand51078");
+                if (xvar != null)
+                {
+                    Ferdinand51078 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Ferdinand51078.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/GoKan50331");
+                if (xvar != null)
+                {
+                    GoKan50331 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + GoKan50331.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Korda50332");
+                if (xvar != null)
+                {
+                    Korda50332 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Korda50332.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Lon50333");
+                if (xvar != null)
+                {
+                    Lon50333 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Lon50333.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Yorik50336");
+                if (xvar != null)
+                {
+                    Yorik50336 = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Yorik50336.ToString());
+                }
+
+
             }
             catch (Exception e)
             {

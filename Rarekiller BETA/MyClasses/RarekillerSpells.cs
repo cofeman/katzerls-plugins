@@ -71,9 +71,48 @@ namespace katzerle
             return SpellSuccess;
         }
 
+        public void Interrupt(WoWUnit Unit)
+        {
+            XmlDocument SpellsXML = new XmlDocument();
+            string sPath = Path.Combine(Rarekiller.FolderPath, "config\\DefaultInterruptSpells.xml");
+            System.IO.FileStream fs = new System.IO.FileStream(@sPath, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
+            string ClassMe = Me.Class.ToString();
+            string ClassSpell = "None";
+
+            try
+            {
+                SpellsXML.Load(fs);
+                fs.Close();
+            }
+            catch (Exception e)
+            {
+                Logging.WriteDiagnostic(Colors.Red, e.Message);
+                fs.Close();
+                return;
+            }
+            XmlElement root = SpellsXML.DocumentElement;
+            foreach (XmlNode Node in root.ChildNodes)
+            {
+                ClassSpell = Node.Attributes["Class"].InnerText;
+                if (ClassMe == ClassSpell)
+                {
+                    if (!SpellManager.HasSpell(Node.Attributes["Name"].InnerText))
+                    {
+                        Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Interrupt Spells: I don't have Spell {0}", Node.Attributes["Name"].InnerText);
+                        return;
+                    }
+					if (SpellManager.CanCast(Node.Attributes["Name"].InnerText))
+						SpellManager.Cast(Node.Attributes["Name"].InnerText, Unit);
+					else
+						Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Interrupt Spells: Can't cast {0}", Node.Attributes["Name"].InnerText);
+                    return;
+                }
+            }
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Interrupt Spells: Class {0} not Found", ClassMe);
+            return;
+        }
         public string FastPullspell
         {
-
             get
             {
                 XmlDocument SpellsXML = new XmlDocument();
@@ -107,34 +146,8 @@ namespace katzerle
                         return Node.Attributes["Name"].InnerText;
                     }
                 }
-                Logging.WriteDiagnostic(Colors.MediumPurple, "Class {0} not Found", ClassMe);
+                Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Spells: Class {0} not Found", ClassMe);
                 return "NoSpell";
-
-
-                //if (SpellManager.HasSpell("Shadow Word: Pain"))
-                //    return "Shadow Word: Pain";
-                //else if (SpellManager.HasSpell("Fire Blast"))
-                //    return "Fire Blast";
-                //else if (SpellManager.HasSpell("Heroic Throw"))
-                //    return "Heroic Throw";
-                //else if (SpellManager.HasSpell("Arcane Shot"))
-                //    return "Arcane Shot";
-                //else if (SpellManager.HasSpell("Sinister Strike"))
-                //    return "Sinister Strike";
-                //else if (SpellManager.HasSpell("Icy Touch"))
-                //    return "Icy Touch";
-                //else if (SpellManager.HasSpell("Crusader Strike"))
-                //    return "Crusader Strike";
-                //else if (SpellManager.HasSpell("Earth Shock"))
-                //    return "Earth Shock";
-                //else if (SpellManager.HasSpell("Corruption"))
-                //    return "Corruption";
-                //else if (SpellManager.HasSpell("Moonfire"))
-                //    return "Moonfire";
-                //else if (SpellManager.HasSpell("Jab"))
-                //    return "Jab";
-                //else
-                //    return "no Spell";
             }
         }
 

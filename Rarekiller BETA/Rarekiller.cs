@@ -26,6 +26,7 @@ using Styx.Helpers;
 using Styx.WoWInternals;
 using Styx.WoWInternals.WoWObjects;
 using Styx.Plugins;
+using Styx.Pathing;
 
 namespace katzerle
 {
@@ -35,7 +36,7 @@ namespace katzerle
 		public static string name { get { return "Rarekiller"; } }
 		public override string Name { get { return name; } }
 		public override string Author { get { return "katzerle"; } }
-		private readonly static Version _version = new Version(3, 5);
+		private readonly static Version _version = new Version(4, 0);
 		public override Version Version { get { return _version; } }
 		public override string ButtonText { get { return "Settings"; } }
 		public override bool WantButton { get { return true; } }
@@ -49,9 +50,12 @@ namespace katzerle
         public static RarekillerCollector Collector = new RarekillerCollector();
         public static RarekillerSecurity Security = new RarekillerSecurity();
 		public static RarekillerSpells Spells = new RarekillerSpells();
+        public static RarekillerMoPRares MoPRares = new RarekillerMoPRares();
 
         private static Stopwatch Checktimer = new Stopwatch();
         private static Stopwatch Shadowmeldtimer = new Stopwatch();
+        // Developer Thing (ToDo Remove)
+        private static Stopwatch DumpAuraTimer = new Stopwatch();
         public static Random rnd = new Random();
 
 		public static Dictionary<Int32, string> BlacklistMobsList = new Dictionary<Int32, string>();
@@ -73,7 +77,7 @@ namespace katzerle
 			UpdatePlugin();
 
             Settings.Load();
-            Logging.Write(Colors.MediumPurple, "Rarekiller 3.5 BETA loaded");
+            Logging.Write(Colors.MediumPurple, "Rarekiller 4.0 BETA loaded");
             if (Me.Class != WoWClass.Hunter)
             {
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Tamer: I'm no Hunter. Deactivate the Tamer Part");
@@ -160,8 +164,8 @@ namespace katzerle
             Lua.Events.AttachEvent("CHAT_MSG_BN_WHISPER", Security.BNWhisper);
             Chat.Guild += Security.newGuild;
             Chat.Officer += Security.newOfficer;
-//Blacklisted Mobs to List
 
+            #region File Blacklisted Mobs
             XmlDocument BlacklistMobsXML = new XmlDocument();
             string sPath = Path.Combine(FolderPath, "config\\BlacklistedMobs.xml");
             Logging.WriteDiagnostic(Colors.MediumPurple, "Load BlacklistedMobs.xml");
@@ -194,7 +198,9 @@ namespace katzerle
                 BlacklistMobsList.Add(99999999, "DummyMob");
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: File Rarekiller/config/BlacklistedMobs.xml doesn't exist");
             }
-//Tameable Mobs to List
+            #endregion
+
+            #region File Tameable Mobs
             XmlDocument TameableMobsXML = new XmlDocument();
             string sPath2 = Path.Combine(FolderPath, "config\\TameableMobs.xml");
             Logging.WriteDiagnostic(Colors.MediumPurple, "Load TameableMobs.xml");
@@ -227,8 +233,9 @@ namespace katzerle
                 TameableMobsList.Add(99999999, "DummyMob");
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: File Rarekiller/config/TameableMobs.xml doesn't exist");
             }
+            #endregion
 
-//CollectObjects to List
+            #region File Collect Objects
             XmlDocument CollectObjectsXML = new XmlDocument();
             string sPath3 = Path.Combine(FolderPath, "config\\CollectObjects.xml");
             Logging.WriteDiagnostic(Colors.MediumPurple, "Load CollectObjects.xml");
@@ -261,8 +268,9 @@ namespace katzerle
                 CollectObjectsList.Add(99999999, "DummyMob");
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: File Rarekiller/config/CollectObjects.xml doesn't exist");
             }
+            #endregion
 
-//KillMobs to List
+            #region File Kill Mobs
             XmlDocument KillMobsXML = new XmlDocument();
             string sPath4 = Path.Combine(FolderPath, "config\\KillMobs.xml");
             Logging.WriteDiagnostic(Colors.MediumPurple, "Load KillMobs.xml");
@@ -295,8 +303,9 @@ namespace katzerle
                 KillMobsList.Add(99999999, "DummyMob");
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: File Rarekiller/config/KillMobs.xml doesn't exist");
             }
+            #endregion
 
-//InteractNPC to List
+            #region File Interact NPCs
             XmlDocument InteractNPCXML = new XmlDocument();
             string sPath5 = Path.Combine(FolderPath, "config\\InteractNPC.xml");
             Logging.WriteDiagnostic(Colors.MediumPurple, "Load InteractNPC.xml");
@@ -329,8 +338,9 @@ namespace katzerle
                 InteractNPCList.Add(99999999, "DummyMob");
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: File Rarekiller/config/InteractNPC.xml doesn't exist");
             }
+            #endregion
 
-//AnotherMansTreasure to List
+            #region File Another Mans Treasure
             XmlDocument AnotherMansTreasureXML = new XmlDocument();
             string sPath6 = Path.Combine(FolderPath, "config\\AnotherMansTreasure.xml");
             Logging.WriteDiagnostic(Colors.MediumPurple, "Load AnotherMansTreasure.xml");
@@ -363,8 +373,9 @@ namespace katzerle
                 AnotherMansTreasureList.Add(99999999, "DummyMob");
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: File Rarekiller/config/AnotherMansTreasure.xml doesn't exist");
             }
+            #endregion
 
-//Frostbitten to List
+            #region File Frostbitten
             XmlDocument FrostbittenXML = new XmlDocument();
             string sPath7 = Path.Combine(FolderPath, "config\\Frostbitten.xml");
             Logging.WriteDiagnostic(Colors.MediumPurple, "Load Frostbitten.xml");
@@ -397,8 +408,9 @@ namespace katzerle
                 FrostbittenList.Add(99999999, "DummyMob");
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: File Rarekiller/config/Frostbitten.xml doesn't exist");
             }
+            #endregion
 
-//BloodyRare to List
+            #region File Bloody Rares
             XmlDocument BloodyRareXML = new XmlDocument();
             string sPath8 = Path.Combine(FolderPath, "config\\BloodyRare.xml");
             Logging.WriteDiagnostic(Colors.MediumPurple, "Load BloodyRare.xml");
@@ -431,8 +443,9 @@ namespace katzerle
                 BloodyRareList.Add(99999999, "DummyMob");
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: File Rarekiller/config/BloodyRare.xml doesn't exist");
             }
+            #endregion
 
-//CataRares to List
+            #region File Cata Rares
             XmlDocument CataRaresXML = new XmlDocument();
             string sPath9 = Path.Combine(FolderPath, "config\\CataRares.xml");
             Logging.WriteDiagnostic(Colors.MediumPurple, "Load CataRares.xml");
@@ -465,8 +478,9 @@ namespace katzerle
                 CataRaresList.Add(99999999, "DummyMob");
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: File Rarekiller/config/CataRares.xml doesn't exist");
             }
+            #endregion
 
-//TaggedMobs to List
+            #region File Tagged Mobs
             XmlDocument TaggedMobsXML = new XmlDocument();
             string sPath10 = Path.Combine(FolderPath, "config\\TaggedMobs.xml");
             Logging.WriteDiagnostic(Colors.MediumPurple, "Load TaggedMobs.xml");
@@ -499,6 +513,7 @@ namespace katzerle
                 TaggedMobsList.Add(99999999, "DummyMob");
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: File Rarekiller/config/TaggedMobs.xml doesn't exist");
             }
+            #endregion
         }
 
 
@@ -506,24 +521,23 @@ namespace katzerle
         public override void Pulse()
 		{
 			try
-			{
-                
-// ------------ Deactivate if not in Game or in Combat etc
+            {
+                #region Plugin deactivated if ...
                 if (Me == null || !StyxWoW.IsInGame || Me.IsDead || Me.IsGhost || InPetCombat())
                     return;
-
-// ------------ Deactivate Plugin in BGs and Inis
                 if (Battlegrounds.IsInsideBattleground || Me.IsInInstance)
-				return;
-				
-// ------------ Part Init
+				    return;
+                #endregion
+
+                #region Init
                 if (!hasItBeenInitialized)
                 {
                     Initialize();
                     hasItBeenInitialized = true;
                 }
+                #endregion
 
-// ------------ Start the Timer for Anti-AFK
+                #region Timer
                 if (Settings.Keyer && !Checktimer.IsRunning && !Me.IsMoving)
                     Checktimer.Start();
                 if (Settings.Keyer && Checktimer.IsRunning && Me.IsMoving)
@@ -532,51 +546,66 @@ namespace katzerle
                     Shadowmeldtimer.Start();
                 if (Settings.Shadowmeld && Shadowmeldtimer.IsRunning && Me.IsMoving)
                     Shadowmeldtimer.Reset();
+                // Developer Thing (ToDo Remove)
+                if (!DumpAuraTimer.IsRunning && Rarekiller.Settings.MoPRaresDeveloper)
+                {
+                    DumpAuraTimer.Reset();
+                    DumpAuraTimer.Start();
+                }
 
-// ------------ Part Slowfall if falling down
-				if(Me.IsFalling && Settings.UseSlowfall)
+
+                #endregion
+
+                #region Slowfall
+                if (Me.IsFalling && Settings.UseSlowfall)
 				{
 					Thread.Sleep(Convert.ToInt32(Rarekiller.Settings.Falltimer));
 					if (Me.IsFalling && !Me.IsDead && !Me.IsGhost)
 						Slowfall.HelpFalling();
-				}
-					
-				if (!Me.Combat) //ToDo
-				{
+                }
+                #endregion
 
-// ------------ Part Camel Figurine
-					if (Settings.Camel || Settings.TestFigurineInteract || Settings.AnotherMansTreasure || Settings.InteractNPC)
-						Camel.findAndPickupObject();
+                if (!Me.Combat)
+                {
+
+                    #region Camel Figurine and NPC Interactor
+                    if (Settings.Camel || Settings.TestFigurineInteract || Settings.AnotherMansTreasure || Settings.InteractNPC)
+                        Camel.findAndPickupObject();
                     if (Settings.Camel)
-						Camel.findAndKillDormus();
+                        Camel.LootCamelFigurine();
+                    if (Me.HasAura("Dormus' Rage") || Settings.Camel)
+                        Camel.findAndKillDormus();
+                    #endregion
 
-// ------------ Part Raptor Nest
+                    #region Object Interactor
                     if (Settings.RaptorNest || Settings.TestRaptorNest || Settings.ObjectsCollector || Settings.AnotherMansTreasure)
-						Collector.findAndPickupObject();
+                        Collector.findAndPickupObject();
+                    #endregion
 
-// ------------ Part The Tamer
-					if ((Me.Class == WoWClass.Hunter) && (Rarekiller.Settings.TameDefault || Rarekiller.Settings.TameByID))
-					{
-						if (Me.HealthPercent > 30)
-							Tamer.findAndTameMob();
-					}
+                    #region Tamer
+                    if (((Me.Class == WoWClass.Hunter) && (Rarekiller.Settings.TameDefault || Rarekiller.Settings.TameByID)) || Rarekiller.Settings.TestcaseTamer)
+                    {
+                        if (Me.HealthPercent > 30)
+                            Tamer.findAndTameMob();
+                    }
+                    #endregion
 
-// ------------ Part Rarekiller						
+                    #region Rarekiller
                     if (Settings.KillList || Settings.MOP || Settings.WOTLK || Settings.BC || Settings.CATA || Settings.TLPD || Settings.LowRAR || Settings.HUNTbyID || Settings.Poseidus)
-						Killer.findAndKillMob();
+                        Killer.findAndKillMob();
+                    #endregion
 
-// ------------ Part Security - Keypresser
+                    #region Security
                     if (Settings.Keyer && !Me.IsMoving)
-					{
+                    {
                         if (Checktimer.Elapsed.TotalSeconds > MoveTimer)
-						{
+                        {
                             Checktimer.Reset();
-							MoveTimer = rnd.Next(90, 200);
-							Security.Movearound();
-						}
-					}
+                            MoveTimer = rnd.Next(90, 200);
+                            Security.Movearound();
+                        }
+                    }
 
-// ------------ Part Shadowmeld
                     if (Settings.Shadowmeld && !Me.IsMoving)
                     {
                         if (Shadowmeldtimer.Elapsed.TotalSeconds > 5)
@@ -589,7 +618,163 @@ namespace katzerle
                             }
                         }
                     }
-				}
+                    #endregion
+                }
+                else // In Combat with MoPRares / Dormus
+                {
+                    #region Hozen working
+                    if (MoPRares.Hozen != null)
+                    {
+                        // Bananarang
+                        if (MoPRares.Hozen.CastingSpellId == 125311)
+                            MoPRares.AvoidEnemyCast(MoPRares.Hozen, 80, 15);
+                        // Going Bananas
+                        if (MoPRares.Hozen.CastingSpellId == 125363 && MoPRares.Hozen.Location.Distance(Me.Location) > 3)
+                            Navigator.MoveTo(MoPRares.Hozen.Location);
+						
+                    }
+                    #endregion
+
+                    #region Mogu Sorcerer working
+                    if (MoPRares.MoguSorcerer != null)
+                    {                        
+                        //Voidcloud
+                        if (MoPRares.getVoidcloudList != null && MoPRares.getVoidcloudList[0].Distance < (MoPRares.getVoidcloudList[0].Radius * 1.6f))
+                            MoPRares.AvoidEnemyAOE(Me.Location, MoPRares.getVoidcloudList, "Voidcloud", 15);
+
+                        if (MoPRares.MoguSorcerer.CastingSpellId == 125241)
+                            MoPRares.AvoidEnemyCast(MoPRares.MoguSorcerer, 80, 7);
+
+                    }
+                    #endregion
+
+                    #region Mogu Warrior not working - Devastating Arc
+                    if (MoPRares.MoguWarrior != null)
+                    {
+                        // Developer Thing (ToDo Remove)
+                        if (DumpAuraTimer.Elapsed.TotalSeconds > 1 && Rarekiller.Settings.MoPRaresDeveloper)
+                        {
+                            DumpAuraTimer.Reset();
+                            MoPRares.DumpAOEEffect();
+                        }
+                        
+                        // Devastating Arc
+                        while (MoPRares.MoguWarrior.CastingSpellId == 124946)
+                            WoWMovement.Move(WoWMovement.MovementDirection.Forward);
+							
+                    }
+                    #endregion
+
+                    #region Yaungol working
+                    if (MoPRares.Yaungol != null)
+                    {
+                        // Yaungol Stomp
+                        while (MoPRares.Yaungol.CastingSpellId == 124289 && MoPRares.Yaungol.Location.Distance(Me.Location) < 15)
+                            WoWMovement.Move(WoWMovement.MovementDirection.Forward);
+                        // Bellowing Rage
+                        while (MoPRares.Yaungol.HasAura("Bellowing Rage") && MoPRares.Yaungol.Location.Distance(Me.Location) < 15)
+                            WoWMovement.Move(WoWMovement.MovementDirection.Forward);
+                        // Rushing Charge
+                        if (MoPRares.Yaungol.Location.Distance(Me.Location) > 20)
+                            Navigator.MoveTo(MoPRares.Yaungol.Location);
+                    }
+                    #endregion
+
+                    #region Jinyu not working - Rain Dance
+                    if (MoPRares.Jinyu != null)
+                    {
+
+                        // Developer Thing (ToDo Remove)
+                        if (DumpAuraTimer.Elapsed.TotalSeconds > 1 && Rarekiller.Settings.MoPRaresDeveloper)
+                        {
+                            DumpAuraTimer.Reset();
+                            MoPRares.DumpAOEEffect();
+                            MoPRares.DumpJinyuThings();
+                        }
+                        
+                        // Torrent - interrupt
+                        if (MoPRares.Jinyu.CastingSpellId == 124935)
+                            Spells.Interrupt(MoPRares.Jinyu);
+
+                        //Rain Dance - avoid
+                        //if (MoPRares.Jinyu.CastingSpellId == 124860 && MoPRares.Jinyu.Location.Distance(Me.Location) < 45)
+                        //    WoWMovement.Move(WoWMovement.MovementDirection.Forward);
+
+                        // Rain Dance - interrupt
+                        //if (MoPRares.Jinyu.CastingSpellId == 124860)
+                        //    Spells.Interrupt(MoPRares.Jinyu);                    
+                    }
+                    #endregion
+
+                    #region Mantid not working - Tornado + Blade Flurry
+                    if (MoPRares.Mantid != null)
+                    {
+                        // Tornado
+                        if (MoPRares.Mantid.CastingSpellId == 125398)
+                            MoPRares.AvoidEnemyCast(MoPRares.Mantid, 80, 15);
+
+                        if (MoPRares.Tornado != null)
+                        {
+                            while (Me.Location.Distance(MoPRares.Tornado.Location) < 10)
+                                WoWMovement.Move(WoWMovement.MovementDirection.StrafeLeft);
+                        }
+
+                        //if (MoPRares.getTornadoList != null && MoPRares.getTornadoList[0].Distance < 10)
+                        //    MoPRares.AvoidEnemyAOE(Me.Location, MoPRares.getTornadoList, "Tornado", 20);
+
+                        //Blade Flurry
+                        if (MoPRares.Mantid.CastingSpellId == 125370)
+                            MoPRares.AvoidEnemyCast(MoPRares.Mantid, 80, 15);
+                    }
+                    #endregion
+
+                    #region Saurok working
+                    if (MoPRares.Saurok != null)
+                    {
+                        if (MoPRares.Saurok.Location.Distance(Me.Location) > 15)
+                            Navigator.MoveTo(MoPRares.Saurok.Location);
+                    }
+                    #endregion
+
+                    #region Pandaren working
+                    if (MoPRares.Pandaren != null)
+                    {
+                        // Spinning Crane Kick
+                        while (MoPRares.Pandaren.CastingSpellId == 125799 && MoPRares.Pandaren.Location.Distance(Me.Location) < 40) //&& MoPRares.Pandaren.HasAura("Spinning Crane Kick")
+                            WoWMovement.Move(WoWMovement.MovementDirection.Forward);
+                        
+                        // Healing Mists
+                        if (MoPRares.Pandaren.CastingSpellId == 125802)
+                            Spells.Interrupt(MoPRares.Pandaren);
+							
+						// Chi Burst
+                        if (MoPRares.Pandaren.Location.Distance(Me.Location) > 12)
+                            Navigator.MoveTo(MoPRares.Pandaren.Location);
+                    }
+                    #endregion
+
+                    #region Dormus - Not tested
+                    if (MoPRares.Dormus != null)
+                    {
+                        // Developer Thing (ToDo Remove)
+                        if (DumpAuraTimer.Elapsed.TotalSeconds > 1 && Rarekiller.Settings.MoPRaresDeveloper)
+                        {
+                            DumpAuraTimer.Reset();
+                            MoPRares.DumpAOEEffect();
+                        }
+
+                        if (Me.HasAura("Dormus' Rage") && Me.HasAura("Spit"))
+                            Camel.AvoidSpit(MoPRares.Dormus);
+						
+                        if (MoPRares.Dormus.Location.Distance(Me.Location) > 25)
+                            Navigator.MoveTo(MoPRares.Dormus.Location);
+
+                        //if (Me.HasAura("Spit") && MoPRares.getSpitList != null && MoPRares.getSpitList[0].Distance < (MoPRares.getSpitList[0].Radius * 1.6f))
+                        //    MoPRares.AvoidEnemyAOE(Me.Location, MoPRares.getSpitList, "Spit", 15);
+                    }
+
+                    #endregion
+                }
 			}
 			
 			catch (ThreadAbortException) { }
@@ -631,7 +816,7 @@ namespace katzerle
             }
         }
 		
-//Update Function (deactivated
+//Update Function
 		static public void UpdatePlugin()
 		{
 			//Here you have to insert your Internetlocation for the SVN

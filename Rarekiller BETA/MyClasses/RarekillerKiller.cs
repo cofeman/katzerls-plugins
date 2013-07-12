@@ -21,6 +21,7 @@ using Styx.Common;
 using Styx.CommonBot;
 using Styx.WoWInternals;
 using Styx.WoWInternals.WoWObjects;
+using Styx.CommonBot.Routines;
 using Styx.Pathing;
 
 namespace katzerle
@@ -37,7 +38,9 @@ namespace katzerle
 
             if (Rarekiller.Settings.DeveloperLogs)
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Scan for Rare Mob");
-// ----------------- Generate a List with all wanted Rares found in Object Manager ---------------------		
+
+            #region create List of Mobs in Reach
+            // ----------------- Generate a List with all wanted Rares found in Object Manager ---------------------		
             ObjectManager.Update();
             List<WoWUnit> objList = ObjectManager.GetObjectsOfType<WoWUnit>()
                 .Where(o => (!Blacklist.Contains(o.Guid, Rarekiller.Settings.Flags) && (
@@ -50,20 +53,134 @@ namespace katzerle
                 || (Rarekiller.Settings.BC && (Rarekiller.BloodyRareList.ContainsKey(Convert.ToInt32(o.Entry))))
                 || (Rarekiller.Settings.KillList && (Rarekiller.KillMobsList.ContainsKey(Convert.ToInt32(o.Entry)))) //Kill Mobs from List
                 || (Rarekiller.Settings.KillList && o.TaggedByOther && (Rarekiller.TaggedMobsList.ContainsKey(Convert.ToInt32(o.Entry)))) //Kill Tagged Mobs from List
-                || ((o.Level == 86 || o.Level == 87 || o.Level == 88 || o.Level == 89 || o.Level == 90) && Rarekiller.Settings.MOP && (o.CreatureRank == Styx.WoWUnitClassificationType.Rare)) // every single Pandaren Rare Mob is hunted
                 || ((o.Level < Rarekiller.Settings.Level) && Rarekiller.Settings.LowRAR && (o.CreatureRank == Styx.WoWUnitClassificationType.Rare)) // every single Rare Mob < Level 61 is hunted	
                 || (Rarekiller.Settings.HUNTbyID && (o.Entry == Convert.ToInt64(Rarekiller.Settings.MobID)))				// Hunt special IDs 
+                // Pandaria Rares
+                || (Rarekiller.Settings.MOP && (
+                        (o.Entry == 50828 && Rarekiller.Settings.Bonobos50828) //
+                        || (o.Entry == 50836 && Rarekiller.Settings.IkIk50836) //
+                        || (o.Entry == 50840 && Rarekiller.Settings.Nanners50840) //
+                        || (o.Entry == 50823 && Rarekiller.Settings.Ferocious50823) //
+                        || (o.Entry == 50831 && Rarekiller.Settings.Scritch50831) // 
+                        || (o.Entry == 50830 && Rarekiller.Settings.Spriggin50830) // 
+                        || (o.Entry == 50832 && Rarekiller.Settings.Yowler50832) // 
+                        || (o.Entry == 50750 && Rarekiller.Settings.Aethis50750) //          
+                        || (o.Entry == 50768 && Rarekiller.Settings.Cournith50768) // 
+                        || (o.Entry == 50772 && Rarekiller.Settings.Eshelon50772) // 
+                        || (o.Entry == 50766 && Rarekiller.Settings.Selena50766) // 
+                        || (o.Entry == 50769 && Rarekiller.Settings.Zai50769) //                    
+                        || (o.Entry == 50780 && Rarekiller.Settings.Sahn50780) // 
+                        || (o.Entry == 50776 && Rarekiller.Settings.Nalash50776) // 
+                        || (o.Entry == 50739 && Rarekiller.Settings.Garlok50739) // 
+                        || (o.Entry == 50749 && Rarekiller.Settings.Kaltik50749) //                     
+                        || (o.Entry == 50734 && Rarekiller.Settings.Lithik50734) // 
+                        || (o.Entry == 50364 && Rarekiller.Settings.Nallak50364) // 
+                        || (o.Entry == 50363 && Rarekiller.Settings.Kraxik50363) // 
+                        || (o.Entry == 50733 && Rarekiller.Settings.Skithik50733) //                   
+                        || (o.Entry == 50388 && Rarekiller.Settings.Torik50388) //
+                        || (o.Entry == 50341 && Rarekiller.Settings.Borginn50341) // 
+                        || (o.Entry == 50349 && Rarekiller.Settings.Kang50349) // 
+                        || (o.Entry == 50340 && Rarekiller.Settings.Gaarn50340) //                     
+                        || (o.Entry == 50347 && Rarekiller.Settings.Karr50347) // 
+                        || (o.Entry == 50338 && Rarekiller.Settings.Kornas50338) // 
+                        || (o.Entry == 50344 && Rarekiller.Settings.Norlaxx50344) // 
+                        || (o.Entry == 50339 && Rarekiller.Settings.Sulikshor50339) //                    
+                        || (o.Entry == 50354 && Rarekiller.Settings.Havak50354) // 
+                        || (o.Entry == 50351 && Rarekiller.Settings.JonnDar50351) // 
+                        || (o.Entry == 50355 && Rarekiller.Settings.Kahtir50355) // 
+                        || (o.Entry == 50356 && Rarekiller.Settings.Krol50356) //                    
+                        || (o.Entry == 50350 && Rarekiller.Settings.Morgrinn50350) // 
+                        || (o.Entry == 50352 && Rarekiller.Settings.Qunas50352) // 
+                        || (o.Entry == 50359 && Rarekiller.Settings.Urgolax50359) // 
+                        || (o.Entry == 50821 && Rarekiller.Settings.AiLi50821) //                     
+                        || (o.Entry == 50817 && Rarekiller.Settings.Ahone50817) // 
+                        || (o.Entry == 50822 && Rarekiller.Settings.AiRan50822) // 
+                        || (o.Entry == 50816 && Rarekiller.Settings.Ruun50816) // 
+                        || (o.Entry == 50811 && Rarekiller.Settings.Nasra50811) //                    
+                        || (o.Entry == 50808 && Rarekiller.Settings.Urobi50808) // 
+                        || (o.Entry == 50820 && Rarekiller.Settings.Yul50820) // 
+                        || (o.Entry == 50787 && Rarekiller.Settings.Arness50787) // 
+                        || (o.Entry == 50806 && Rarekiller.Settings.Moldo50806) //                     
+                        || (o.Entry == 50789 && Rarekiller.Settings.Nessos50789) // 
+                        || (o.Entry == 50805 && Rarekiller.Settings.Omnis50805) // 
+                        || (o.Entry == 50783 && Rarekiller.Settings.Salyin50783) // 
+                        || (o.Entry == 50782 && Rarekiller.Settings.Sarnak50782) //                    
+                        || (o.Entry == 50791 && Rarekiller.Settings.Siltriss50791) // 
+                        || (o.Entry == 51059 && Rarekiller.Settings.Blackhoof51059) // 
+                        || (o.Entry == 50334 && Rarekiller.Settings.Dak50334) // 
+                        || (o.Entry == 51078 && Rarekiller.Settings.Ferdinand51078) //                     
+                        || (o.Entry == 50331 && Rarekiller.Settings.GoKan50331) // 
+                        || (o.Entry == 50332 && Rarekiller.Settings.Korda50332) // 
+                        || (o.Entry == 50333 && Rarekiller.Settings.Lon50333) // 
+                        || (o.Entry == 50336 && Rarekiller.Settings.Yorik50336) //
+                        ))
                 )))
                 .OrderBy(o => o.Distance).ToList();
+            #endregion
+
             foreach (WoWUnit o in objList)
             {
                 if (!o.IsDead && !o.IsPet)
                 {
+                    #region MoP and Low Health
+
+                    // Don't kill Pandaria Rares with Low Health
+                    if ((o.Entry == 50828 || o.Entry == 50836 || o.Entry == 50840 || o.Entry == 50823 ||
+                    o.Entry == 50831 || o.Entry == 50830 || o.Entry == 50832 || o.Entry == 50750 ||
+                    o.Entry == 50768 || o.Entry == 50772 || o.Entry == 50766 || o.Entry == 50769 ||
+                    o.Entry == 50780 || o.Entry == 50776 || o.Entry == 50739 || o.Entry == 50749 ||
+                    o.Entry == 50734 || o.Entry == 50364 || o.Entry == 50363 || o.Entry == 50733 ||
+                    o.Entry == 50388 || o.Entry == 50341 || o.Entry == 50349 || o.Entry == 50340 ||
+                    o.Entry == 50347 || o.Entry == 50338 || o.Entry == 50344 || o.Entry == 50339 ||
+                    o.Entry == 50354 || o.Entry == 50351 || o.Entry == 50355 || o.Entry == 50356 ||
+                    o.Entry == 50350 || o.Entry == 50352 || o.Entry == 50359 || o.Entry == 50821 ||
+                    o.Entry == 50817 || o.Entry == 50822 || o.Entry == 50816 || o.Entry == 50811 ||
+                    o.Entry == 50808 || o.Entry == 50820 || o.Entry == 50787 || o.Entry == 50806 ||
+                    o.Entry == 50789 || o.Entry == 50805 || o.Entry == 50783 || o.Entry == 50782 ||
+                    o.Entry == 50791 || o.Entry == 51059 || o.Entry == 50334 || o.Entry == 51078 ||
+                    o.Entry == 50331 || o.Entry == 50332 || o.Entry == 50333 || o.Entry == 50336)
+                        && Me.HealthPercent < 90)
+                    {
+                        if (!Me.HasAura("Food") && !Me.IsFlying)
+                        {
+                            RoutineManager.Current.Rest();
+                            Thread.Sleep(500);
+                        }
+                        return;
+                    }
+                    #endregion
+
                     Logging.Write(Colors.MediumPurple, "Rarekiller: Find a hunted Mob called {0} ID {1}", o.Name, o.Entry);
                     if (Rarekiller.Settings.LUAoutput)
                         Lua.DoString("print('NPCScan: Find {0} ID {1}')", o.Name, o.Entry);
 
-// Don't kill the Rare if ...
+                    #region don't kill if ...
+                    // Don't kill Pandaria Rares with Level < 90
+                    if ((o.Entry == 50828 || o.Entry == 50836 || o.Entry == 50840 || o.Entry == 50823 ||
+                    o.Entry == 50831 || o.Entry == 50830 || o.Entry == 50832 || o.Entry == 50750 ||
+                    o.Entry == 50768 || o.Entry == 50772 || o.Entry == 50766 || o.Entry == 50769 ||
+                    o.Entry == 50780 || o.Entry == 50776 || o.Entry == 50739 || o.Entry == 50749 ||
+                    o.Entry == 50734 || o.Entry == 50364 || o.Entry == 50363 || o.Entry == 50733 ||
+                    o.Entry == 50388 || o.Entry == 50341 || o.Entry == 50349 || o.Entry == 50340 ||
+                    o.Entry == 50347 || o.Entry == 50338 || o.Entry == 50344 || o.Entry == 50339 ||
+                    o.Entry == 50354 || o.Entry == 50351 || o.Entry == 50355 || o.Entry == 50356 ||
+                    o.Entry == 50350 || o.Entry == 50352 || o.Entry == 50359 || o.Entry == 50821 ||
+                    o.Entry == 50817 || o.Entry == 50822 || o.Entry == 50816 || o.Entry == 50811 ||
+                    o.Entry == 50808 || o.Entry == 50820 || o.Entry == 50787 || o.Entry == 50806 ||
+                    o.Entry == 50789 || o.Entry == 50805 || o.Entry == 50783 || o.Entry == 50782 ||
+                    o.Entry == 50791 || o.Entry == 51059 || o.Entry == 50334 || o.Entry == 51078 ||
+                    o.Entry == 50331 || o.Entry == 50332 || o.Entry == 50333 || o.Entry == 50336)
+                        && Me.Level < 90)
+                    {
+                        Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Find {0}, but my level is to Low to kill him", o.Name);
+                        Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
+                        Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Blacklist Mob for 5 Minutes.");
+                        if (Rarekiller.Settings.LUAoutput)
+                            Lua.DoString("print('NPCScan: My Level is to low')", o.Name);
+                        return;
+                    }
+                    
+                    // Don't kill the Rare if ...
                     if (o.TaggedByOther && !Rarekiller.TaggedMobsList.ContainsKey(Convert.ToInt32(o.Entry)))
                     {
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Find {0}, but he's tagged by another Player", o.Name);
@@ -82,11 +199,6 @@ namespace katzerle
                             Lua.DoString("print('NPCScan: NPC is tameable, don't kill')", o.Name);
                         Rarekiller.Tamer.findAndTameMob();
 					}
-
-                    if (o.Level == 86 || o.Level == 87 || o.Level == 88 || o.Level == 89 || o.Level == 90)
-                        Logging.Write(Colors.MediumPurple, "Rarekiller: Note: a Pandarenmop is hard to kill");
-
-                        
 
                     if (Me.IsFlying && Me.IsOutdoors && o.IsIndoors)
                     {
@@ -149,7 +261,8 @@ namespace katzerle
                         Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist15));
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Blacklist Mob for 15 Minutes.");
 						return;
-					}
+                    }
+                    
 
                     if (Me.Combat) // ... I'm in combat
 					{
@@ -164,8 +277,10 @@ namespace katzerle
                         if (Rarekiller.Settings.LUAoutput)
                             Lua.DoString("print('NPCScan: I'm on Transport')");
 						return;
-					}
-						
+                    }
+                    #endregion
+
+                    #region Alert
 // ----------------- Alert ---------------------
                     Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Make Noise");
 					if (Rarekiller.Settings.Alert)
@@ -176,7 +291,8 @@ namespace katzerle
 							new SoundPlayer(Rarekiller.Soundfile).Play();
 						else
                             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: playing Soundfile failes");
-					}
+                    }
+                    #endregion
 
                     if (Me.IsCasting)
                     {
@@ -184,7 +300,9 @@ namespace katzerle
                         Thread.Sleep(100);
                     }
 
-// ----------------- Move to Mob Part ---------------------	
+                    #region Move to Mob
+                    // ----------------- Move to Mob Part ---------------------	
+
                     if (!(Me.Pet == null) && ((Me.Class == WoWClass.Hunter) || (Me.Class == WoWClass.Warlock)))
                         Lua.DoString(string.Format("RunMacroText(\"/petpassive\")"), 0);
 
@@ -192,8 +310,27 @@ namespace katzerle
                     BlacklistTimer.Reset();
                     BlacklistTimer.Start();
 					
-					// ----------------- Hunting Flying Mobs with Groundmount Mode ---------------------
-// Spellrange Test Default Pull Spell
+
+                    // Spellrange Test Default Pull Spell
+                    if (o.Entry == 50828 || o.Entry == 50836 || o.Entry == 50840 || o.Entry == 50823 ||
+                    o.Entry == 50831 || o.Entry == 50830 || o.Entry == 50832 || o.Entry == 50750 || 
+                    o.Entry == 50768 || o.Entry == 50772 || o.Entry == 50766 || 
+                    o.Entry == 50780 || o.Entry == 50776 || o.Entry == 50739 || o.Entry == 50749 ||
+                    o.Entry == 50734 || o.Entry == 50363 || o.Entry == 50733 ||
+                    o.Entry == 50388 || o.Entry == 50341 || o.Entry == 50349 || o.Entry == 50340 || 
+                    o.Entry == 50347 || o.Entry == 50338 || o.Entry == 50344 || o.Entry == 50339 ||
+                    o.Entry == 50354 || o.Entry == 50351 || o.Entry == 50355 || o.Entry == 50356 ||
+                    o.Entry == 50350 || o.Entry == 50352 || o.Entry == 50359 || o.Entry == 50821 || 
+                    o.Entry == 50817 || o.Entry == 50822 || o.Entry == 50816 || o.Entry == 50811 ||
+                    o.Entry == 50808 || o.Entry == 50820 || o.Entry == 50787 || o.Entry == 50806 || 
+                    o.Entry == 50789 || o.Entry == 50805 || o.Entry == 50783 || o.Entry == 50782 ||
+                    o.Entry == 50791 || o.Entry == 51059 || o.Entry == 50334 || o.Entry == 51078 || 
+                    o.Entry == 50331 || o.Entry == 50332 || o.Entry == 50333 || o.Entry == 50336)
+                    {
+                        Rarekiller.Settings.Range = "5";
+                        Logging.WriteDiagnostic(Colors.MediumPurple, "Set Range to 5 because of Pandaria Rare");
+                    }
+                    
                     if (Rarekiller.Settings.DefaultPull && (Convert.ToInt64(Rarekiller.Settings.Range) > Convert.ToInt64(Rarekiller.Spells.RangeCheck(Rarekiller.Spells.FastPullspell))))
                     {
                         Rarekiller.Settings.Range = Rarekiller.Spells.RangeCheck(Rarekiller.Spells.FastPullspell);
@@ -252,8 +389,10 @@ namespace katzerle
                     Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Pull at Mob Location: {0} / {1} / {2}", Convert.ToString(o.X), Convert.ToString(o.Y), Convert.ToString(o.Z));
                     Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: ... my Location: {0} / {1} / {2}", Convert.ToString(Me.X), Convert.ToString(Me.Y), Convert.ToString(Me.Z));
                     Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Target is Flying - {0}", o.IsFlying);
+                    #endregion
 
-// ----------------- Pull Part --------------------
+                    #region Pull Mob
+                    // ----------------- Pull Part --------------------
 					WoWMovement.MoveStop();
 
                     if (!(Rarekiller.Settings.DefaultPull) && SpellManager.HasSpell(Rarekiller.Settings.Pull))
@@ -277,9 +416,12 @@ namespace katzerle
 
                     if (!(Me.Pet == null) && ((Me.Class == WoWClass.Hunter) || (Me.Class == WoWClass.Warlock)))
                         Lua.DoString(string.Format("RunMacroText(\"/petdefensive\")"), 0);
+                    #endregion
 
                     Thread.Sleep(100);
 					WoWMovement.MoveStop();
+
+                    #region Quick Slowfall for known flying Mobs
                     Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Use Quick Slowfall: {0} Mob: {1}", Me.IsFalling, o.Name);
                     if (Me.IsFalling && Rarekiller.Settings.UseSlowfall && ((o.Entry == 29753) || (o.Entry == 32491) || (o.Entry == 32630) || (o.Entry == 33687)))
 					{
@@ -289,13 +431,16 @@ namespace katzerle
 					if(Me.CurrentTarget != o)
 						o.Target();
 					o.Face();
+                    #endregion
+
                     return;					
                 }
                 else if (o.IsDead)
                 {
                     if (o.CanLoot)
                     {
-// ----------------- Loot Helper for all killed Rare Mobs ---------------------
+                        #region Loothelper
+                        // ----------------- Loot Helper for all killed Rare Mobs ---------------------
                         Logging.Write(Colors.MediumPurple, "Rarekiller: Found lootable corpse, move to him");
 
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part MoveTo: Take Screen and Move to target");
@@ -343,8 +488,9 @@ namespace katzerle
                             
                         }
                         Logging.Write(Colors.MediumPurple, "Rarekiller: Loot failed 3 Times");
+                        #endregion
                     }
-
+                        
                     if (!Blacklist.Contains(o.Guid, Rarekiller.Settings.Flags))
                     {
                         Logging.Write(Colors.MediumPurple, "Rarekiller: Find {0}, but sadly he's dead", o.Name);
