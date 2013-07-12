@@ -642,8 +642,8 @@ namespace katzerle
                         if (MoPRares.getVoidcloudList != null && MoPRares.getVoidcloudList[0].Distance < (MoPRares.getVoidcloudList[0].Radius * 1.6f))
                             MoPRares.AvoidEnemyAOE(Me.Location, MoPRares.getVoidcloudList, "Voidcloud", 15);
 
-                        if (MoPRares.MoguSorcerer.CastingSpellId == 125241)
-                            MoPRares.AvoidEnemyCast(MoPRares.MoguSorcerer, 80, 7);
+                        //if (MoPRares.MoguSorcerer.CastingSpellId == 125241)
+                        //    MoPRares.AvoidEnemyCast(MoPRares.MoguSorcerer, 80, 7);
 
                     }
                     #endregion
@@ -701,8 +701,8 @@ namespace katzerle
                         //    WoWMovement.Move(WoWMovement.MovementDirection.Forward);
 
                         // Rain Dance - interrupt
-                        //if (MoPRares.Jinyu.CastingSpellId == 124860)
-                        //    Spells.Interrupt(MoPRares.Jinyu);                    
+                        if (MoPRares.Jinyu.CastingSpellId == 124860)
+                            Spells.Interrupt(MoPRares.Jinyu);                    
                     }
                     #endregion
 
@@ -710,8 +710,8 @@ namespace katzerle
                     if (MoPRares.Mantid != null)
                     {
                         // Tornado
-                        if (MoPRares.Mantid.CastingSpellId == 125398)
-                            MoPRares.AvoidEnemyCast(MoPRares.Mantid, 80, 15);
+                        //if (MoPRares.Mantid.CastingSpellId == 125398)
+                        //    MoPRares.AvoidEnemyCast(MoPRares.Mantid, 80, 15);
 
                         if (MoPRares.Tornado != null)
                         {
@@ -723,8 +723,8 @@ namespace katzerle
                         //    MoPRares.AvoidEnemyAOE(Me.Location, MoPRares.getTornadoList, "Tornado", 20);
 
                         //Blade Flurry
-                        if (MoPRares.Mantid.CastingSpellId == 125370)
-                            MoPRares.AvoidEnemyCast(MoPRares.Mantid, 80, 15);
+                        while (MoPRares.Mantid.CastingSpellId == 125370 && Me.Location.Distance(MoPRares.Mantid.Location) < 15)
+                            WoWMovement.Move(WoWMovement.MovementDirection.Forward);
                     }
                     #endregion
 
