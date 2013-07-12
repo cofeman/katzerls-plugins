@@ -40,7 +40,7 @@ namespace katzerle
             {
                 //KeyboardManager.PressKey('A');
                 WoWMovement.Move(WoWMovement.MovementDirection.TurnLeft);
-				Thread.Sleep(100);
+				Thread.Sleep(50);
 				WoWMovement.MoveStop();
                 //KeyboardManager.ReleaseKey('A');
                 LeftRight = false;
@@ -49,7 +49,7 @@ namespace katzerle
             {
                 //KeyboardManager.PressKey('D');
 				WoWMovement.Move(WoWMovement.MovementDirection.TurnRight);
-                Thread.Sleep(100);
+                Thread.Sleep(50);
 				WoWMovement.MoveStop();
                 //KeyboardManager.ReleaseKey('D');
                 LeftRight = true;
@@ -143,6 +143,5 @@ namespace katzerle
                 Logging.Write(Colors.Lime, "Rarekiller Part Alert: Officermessage: {0}: {1} - Timestamp: {2}: {3}", arg.Author, arg.Message, DateTime.Now.ToShortDateString(), DateTime.Now.ToShortTimeString());
             }
         }
-		
     }
 }

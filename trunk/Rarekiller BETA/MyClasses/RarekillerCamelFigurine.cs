@@ -34,6 +34,7 @@ namespace katzerle
         public static WoWPoint ProblemCamel2 = new WoWPoint(-9900.116, 461.3653, 45.62226);
         public static WoWPoint ProblemCamel3 = new WoWPoint(-10697.69, 1045.757, 24.125);
         public static WoWPoint ProblemCamel4 = new WoWPoint(-11066.67, -2100.342, 175.2816);
+        public static WoWPoint DormusPoint = new WoWPoint(-5703.058, 680.358, 163.2576);
 
         //ToDo Landing Points for of Underground NPCs
         public static WoWPoint LandingPoint64227 = new WoWPoint(2359.229, 2484.88, 686.5128);
@@ -44,6 +45,8 @@ namespace katzerle
 
             if (Rarekiller.Settings.DeveloperLogs)
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Scan for NPC to Interact");
+
+            #region create a List with NPCs in reach
             ObjectManager.Update();
             List<WoWUnit> objList = ObjectManager.GetObjectsOfType<WoWUnit>()
                 .Where(o => (!Blacklist.Contains(o.Guid, Rarekiller.Settings.Flags) && (
@@ -53,6 +56,7 @@ namespace katzerle
                     || ((o.Entry == 48959) && Rarekiller.Settings.TestFigurineInteract) //Testcase rostiger Amboss - Schnotzz Landing
                 )))
                 .OrderBy(o => o.Distance).ToList();
+            #endregion
 
             List<WoWUnit> RareList = ObjectManager.GetObjectsOfType<WoWUnit>()
                 .Where(r => ((r.CreatureRank == Styx.WoWUnitClassificationType.Rare) && r.Level > 85 && !r.IsDead)).OrderBy(r => r.Distance).ToList();
@@ -63,9 +67,11 @@ namespace katzerle
                 if (Rarekiller.Settings.LUAoutput)
                     Lua.DoString("print('NPCScan: Find {0} ID {1}')", o.Name, o.Entry);
 
+                
                 if (Me.IsIndoors)
                     Rarekiller.Settings.Forceground = true;
-                
+
+                #region Alert
                 if (Rarekiller.Settings.Alert)
                 {
                     if (File.Exists(Rarekiller.Settings.SoundfileFoundRare))
@@ -75,8 +81,10 @@ namespace katzerle
                     else
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part NPC: playing Soundfile failes");
                 }
-				
-// ----------------- Underground ----------
+                #endregion
+
+                #region don't collect if ...
+                // ----------------- Underground ----------
                 //if not ID of Underground NPCs of Another Mans Treasure --> don't collect
                 if (!(o.Entry == 64227))
                 {
@@ -129,12 +137,15 @@ namespace katzerle
                         Lua.DoString("print('NPCScan: I'm on Transport')");
                     return;
                 }
+                #endregion
+
                 if (Me.IsCasting)
                 {
                     SpellManager.StopCasting();
                     Thread.Sleep(100);
                 }
 
+                #region Move to Helperpoint if found known Figurine under a Tent
                 if (!Rarekiller.Settings.Forceground && ((o.Location.Distance(ProblemCamel1) < 10) || (o.Location.Distance(ProblemCamel2) < 10) || 
 						(o.Location.Distance(ProblemCamel3) < 10) || (o.Location.Distance(ProblemCamel4) < 20)))
 				{
@@ -158,9 +169,11 @@ namespace katzerle
                         Lua.DoString("Dismount()");
 
 					Thread.Sleep(300);
-                    Rarekiller.Settings.Forceground = true;						
-				}
+                    Rarekiller.Settings.Forceground = true;
+                }
+                #endregion
 
+                #region Move to Helperpoint if known underground NPC
                 //ToDo IDs of Underground NPCs
                 if (!Rarekiller.Settings.Forceground && o.Entry == 64227)
                 {
@@ -181,8 +194,9 @@ namespace katzerle
                         Lua.DoString("Dismount()");
 
                     Thread.Sleep(300);
-                    Rarekiller.Settings.Forceground = true;						
+                    Rarekiller.Settings.Forceground = true;
                 }
+                #endregion
 
 
                 Logging.Write(Colors.MediumPurple, "Rarekiller Part MoveTo: Move to target");
@@ -190,8 +204,8 @@ namespace katzerle
                 BlacklistTimer.Reset();
                 BlacklistTimer.Start();
 
-
-				while (o.Location.Distance(Me.Location) > 4)
+                #region Move to NPC
+                while (o.Location.Distance(Me.Location) > 4)
 				{
                     if (Rarekiller.Settings.Forceground)
 						Navigator.MoveTo(o.Location);
@@ -220,6 +234,7 @@ namespace katzerle
                     Lua.DoString("CancelShapeshiftForm()");
                 else if (Me.Mounted)
                     Lua.DoString("Dismount()");
+                #endregion
 
                 //Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Take a Screen");
                 //Lua.DoString("TakeScreenshot()"); 
@@ -228,16 +243,64 @@ namespace katzerle
                 o.Interact();
                 o.Interact();
                 Logging.Write(Colors.MediumPurple, "Rarekiller Part NPC: Interact with NPC - ID {0}", o.Entry);
-                Thread.Sleep(1000);
+                Thread.Sleep(300);
+
+                Rarekiller.Settings.Forceground = false;
+
+                while(Me.HasAura("Sandstorm"))
+                    Thread.Sleep(500);
+
+				
                 //64143 = Test
 				if (o.Entry == 65552 || o.Entry == 64272 || o.Entry == 64004 || o.Entry == 64191 || o.Entry == 64227)
 				{
-					Lua.DoString("RunMacroText(\"/click GossipTitleButton1\");");
-					Thread.Sleep(1000);
+                    Thread.Sleep(500);
+                    Lua.DoString("RunMacroText(\"/click GossipTitleButton1\");");
+					Thread.Sleep(500);
 				}
-                Rarekiller.Settings.Forceground = false;
             }
         }
+
+        public void LootCamelFigurine()
+        {
+            #region Loothelper for Crumbled Statuette Remands
+            if (Rarekiller.Settings.DeveloperLogs)
+                Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Scan for Lootable Figurine");
+            ObjectManager.Update();
+            List<WoWUnit> objList = ObjectManager.GetObjectsOfType<WoWUnit>()
+                .Where(o => (!Blacklist.Contains(o.Guid, Rarekiller.Settings.Flags)) && (o.Entry == 999999) && o.Lootable)
+                .OrderBy(o => o.Distance).ToList();
+            foreach (WoWUnit o in objList)
+            {
+                Logging.Write(Colors.MediumPurple, "Rarekiller Part Camel: Found lootable {0}, move to him", o.Name);
+                // ----------------- Loot Helper ---------------------
+                if (o.CanLoot)
+                {
+                    if (Me.Auras.ContainsKey("Flight Form"))
+                        Lua.DoString("CancelShapeshiftForm()");
+                    else if (Me.Mounted)
+                        Lua.DoString("Dismount()");
+
+                    // ------------- Move to Corpse -------------------					
+                    Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Camel: ... move to him to loot");
+                    while (o.Location.Distance(Me.Location) > 3)
+                    {
+                        Navigator.MoveTo(o.Location);
+                        Thread.Sleep(100);
+                    }
+
+                    Thread.Sleep(500);
+                    WoWMovement.MoveStop();
+                    o.Interact();
+                    Thread.Sleep(1000);
+                    Lua.DoString("RunMacroText(\"/click StaticPopup1Button1\");");
+                    Thread.Sleep(500);
+                }
+            }
+            #endregion
+        }
+
+
 
         public void findAndKillDormus()
         {
@@ -245,16 +308,28 @@ namespace katzerle
 
             if (Rarekiller.Settings.DeveloperLogs)
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Scan for Dormus");
+            
             ObjectManager.Update();
             List<WoWUnit> objList = ObjectManager.GetObjectsOfType<WoWUnit>()
                 .Where(o => (!Blacklist.Contains(o.Guid, Rarekiller.Settings.Flags)) && (o.Entry == 50245))
                 .OrderBy(o => o.Distance).ToList();
+
+            #region Move to Dormus Helperpoint
+            if (Me.HasAura("Dormus' Rage") && objList == null && !Me.Combat)
+            {
+                Flightor.MoveTo(DormusPoint);
+                Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Swim to Dormus Helper Point");
+                return;
+            }
+            #endregion
+
             foreach (WoWUnit o in objList)
             {
                 if (!o.IsDead)
                 {
                     Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: Find Dormus.");
-                    
+
+                    #region Alert
                     if (Rarekiller.Settings.Alert)
                     {
                         if (File.Exists(Rarekiller.Settings.SoundfileFoundRare))
@@ -264,12 +339,14 @@ namespace katzerle
                         else
                             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Dormus: playing Soundfile failes");
                     }
+                    #endregion
 
 
                     if (RoutineManager.Current.NeedRest)
                     {
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Dormus: CC says we need rest - Letting it do it before Fight.");
                         RoutineManager.Current.Rest();
+                        return;
                     }
 
                     if (Me.Auras.ContainsKey("Flight Form"))
@@ -278,30 +355,34 @@ namespace katzerle
                         Lua.DoString("Dismount()");
 
                     o.Target();
-                    Thread.Sleep(500);
 
-                    while (!Rarekiller.inCombat)
+                    while (!Rarekiller.inCombat && Me.HasAura("Dormus' Rage"))
                     {
+                        #region Move to Dormus
                         // ------------- Move to Dormus with Klick to Move -------------------					
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Dormus: Move to Dormus");
 
-                        while (Me.IsSwimming)
+                        while (Me.IsSwimming && Me.HasAura("Dormus' Rage"))
                         {
-                            WoWMovement.ClickToMove(o.Location);
+                            Flightor.MoveTo(DormusPoint);
+                            Thread.Sleep(100);
                         }
-                        WoWMovement.MoveStop();
 
-                        while (o.Location.Distance(Me.Location) > 3)
+                        while (o.Location.Distance(Me.Location) > 3 && Me.HasAura("Dormus' Rage"))
                         {
                             Navigator.MoveTo(o.Location);
                             Thread.Sleep(100);
                         }
                         WoWMovement.MoveStop();
+                        #endregion
+
+                        #region Pull Dormus
                         // ------------- pull Dormus  -------------------					
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Dormus: Distance: {0}", o.Location.Distance(Me.Location));
 						o.Target();
 						o.Face();
 						Thread.Sleep(100);
+
 
                         if (!(Rarekiller.Settings.DefaultPull) && SpellManager.HasSpell(Rarekiller.Settings.Pull))
                             CastSuccess = RarekillerSpells.CastSafe(Rarekiller.Settings.Pull, o, true);
@@ -323,6 +404,7 @@ namespace katzerle
                         {
                             Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: Pull Fails --> next try");
                         }
+                        #endregion
                     }
                 }
                 else
@@ -331,6 +413,7 @@ namespace katzerle
                     // ----------------- Loot Helper ---------------------
                     if (o.CanLoot)
                     {
+                        #region Loothelper
                         if (Me.Auras.ContainsKey("Flight Form"))
                             Lua.DoString("CancelShapeshiftForm()");
                         else if (Me.Mounted)
@@ -339,7 +422,7 @@ namespace katzerle
                         o.Target();
                         // ------------- Move to Corpse -------------------					
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Dormus: ... move to him to loot");
- 						while (o.Location.Distance(Me.Location) > 3)
+                        while (o.Location.Distance(Me.Location) > 3 && Me.HasAura("Dormus' Rage"))
 						{
 							Navigator.MoveTo(o.Location);
 							Thread.Sleep(100);
@@ -352,10 +435,10 @@ namespace katzerle
                         Lua.DoString("RunMacroText(\"/click StaticPopup1Button1\");");
                         Thread.Sleep(4000);
                         if (!o.CanLoot)
-                            Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: successfuly looted");
+                            Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: successfully looted");
                         else
                             Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: Loot failed, try again");
-
+                        #endregion
                     }
                     else if (!Blacklist.Contains(o.Guid, Rarekiller.Settings.Flags))
                     {
@@ -365,6 +448,19 @@ namespace katzerle
                     }
                 }
             }
+        }
+
+        public void AvoidSpit(WoWUnit Unit)
+        {
+            if (!StyxWoW.Me.IsFacing(Unit))
+            { Unit.Face(); Thread.Sleep(300); }
+
+            while (Me.HasAura("Spit") && Me.HasAura("Dormus' Rage"))
+            {
+                WoWMovement.Move(WoWMovement.MovementDirection.StrafeRight);
+                Unit.Face();
+            }
+            WoWMovement.MoveStop();
         }
     }
 }

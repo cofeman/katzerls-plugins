@@ -29,7 +29,8 @@ namespace katzerle
 		public static LocalPlayer Me = StyxWoW.Me;
         private static Stopwatch BlacklistTimer = new Stopwatch();
 
-        //ToDo Landing Points for of Underground Objects
+        #region Landingpoints for Underground Objects
+        //Landing Points for of Underground Objects
         public static WoWPoint LandingPoint213364 = new WoWPoint(2288.31, -1772.671, 238.9393);
         public static WoWPoint LandingPoint214337 = new WoWPoint(2417.861, -2929.056, 8.610151);
         public static WoWPoint LandingPoint213649 = new WoWPoint(178.477, 949.426, 171.0682);
@@ -50,6 +51,7 @@ namespace katzerle
         public static WoWPoint LandingPoint213970 = new WoWPoint(-536.6893, 4760.024, 1.222435);
         public static WoWPoint LandingPoint213970_2 = new WoWPoint(-463.5745, 4761.513, -32.32083);
         public static WoWPoint LandingPoint213362 = new WoWPoint(-986.6257, -2095.295, 4.935998);
+        #endregion
 
         public void findAndPickupObject()
         {
@@ -57,8 +59,9 @@ namespace katzerle
             //bool ForceGround = false;
             if (Rarekiller.Settings.DeveloperLogs)
                 Logging.WriteDiagnostic("Rarekiller: Scan for Objects to collect");
-// ----------------- Generate a List with all wanted Nests found in Object Manager ---------------------		
 
+            #region create a List with Objects in Reach
+            // ----------------- Generate a List with all wanted Nests found in Object Manager ---------------------		
 			ObjectManager.Update();
             List<WoWGameObject> objList = ObjectManager.GetObjectsOfType<WoWGameObject>()
                 .Where(o => (!Blacklist.Contains(o.Guid, Rarekiller.Settings.Flags) && (((o.Entry == 202082) && Rarekiller.Settings.RaptorNest)
@@ -71,6 +74,7 @@ namespace katzerle
                 || ((o.Entry == 206195) && Rarekiller.Settings.TestRaptorNest) //Testcase Thundermar Ale Keg
                 )))
                 .OrderBy(o => o.Distance).ToList();
+            #endregion
 
             List<WoWUnit> RareList = ObjectManager.GetObjectsOfType<WoWUnit>()
                 .Where(r => ((r.CreatureRank == Styx.WoWUnitClassificationType.Rare) && r.Level > 85 && !r.IsDead)).OrderBy(r => r.Distance).ToList();
@@ -80,9 +84,9 @@ namespace katzerle
                 Logging.Write(Colors.MediumPurple, "Rarekiller: Find A Object to collect {0} ID {1}", o.Name, o.Entry);
                 if (Rarekiller.Settings.LUAoutput)
                     Lua.DoString("print('NPCScan: Find {0} ID {1}')", o.Name, o.Entry);
-				
-				
-// ----------------- Alert ---------------------
+
+                #region Alert
+                // ----------------- Alert ---------------------
                 if (Rarekiller.Settings.Alert)
                 {
                     if (File.Exists(Rarekiller.Settings.SoundfileFoundRare))
@@ -92,8 +96,10 @@ namespace katzerle
                     else
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Collector: playing Soundfile failes");
                 }
+                #endregion
 
-                if(o.Entry == 213970  || o.Entry == 213362)
+                #region don't speak with, if ...
+                if (o.Entry == 213970  || o.Entry == 213362)
                 {
                     Logging.Write(Colors.MediumPurple, "Rarekiller Part Collector: Can't reach Object because it is under Water {0}, Blacklist and Move on", o.Name);
                     if (Rarekiller.Settings.LUAoutput)
@@ -156,12 +162,14 @@ namespace katzerle
                         Lua.DoString("print('NPCScan: I'm on Transport')");
                     return;
                 }
-				
-		        while (Me.IsCasting)
+                #endregion
+
+                while (Me.IsCasting)
                 {
                     Thread.Sleep(100);
                 }
 
+                #region fly to Helperpoint if known Underground Object
                 //ToDo IDs of Underground NPCs
                 if (!Rarekiller.Settings.Forceground && (o.Entry == 213364 || o.Entry == 214337 || o.Entry == 213649 || o.Entry == 213650 || o.Entry == 214340 || o.Entry == 213651
                     || o.Entry == 213750 || o.Entry == 214325 || o.Entry == 213768 || o.Entry == 213751 || o.Entry == 213770 || o.Entry == 213793
@@ -224,8 +232,10 @@ namespace katzerle
                     //if ((o.Entry != 213362) && (o.Entry != 213970))
                     Rarekiller.Settings.Forceground = true;
                 }
+                #endregion
 
-// ----------------- Move to Object Part ---------------------
+                #region Move to Object
+                // ----------------- Move to Object Part ---------------------
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part MoveTo: Move to Object");
                 BlacklistTimer.Reset();
                 BlacklistTimer.Start();
@@ -254,7 +264,9 @@ namespace katzerle
                 BlacklistTimer.Reset();
 				Thread.Sleep(300);
 				WoWMovement.MoveStop();
-// Collect Object
+                #endregion
+
+                // Collect Object
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Collector: Object Location: {0} / {1} / {2}", Convert.ToString(o.X), Convert.ToString(o.Y), Convert.ToString(o.Z));
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Collector: My Location: {0} / {1} / {2}", Convert.ToString(Me.X), Convert.ToString(Me.Y), Convert.ToString(Me.Z));
                 if (Me.Auras.ContainsKey("Flight Form"))

@@ -35,7 +35,7 @@ namespace katzerle
         {
             if (Rarekiller.Settings.DeveloperLogs)
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Scan for Tamer");
-            if (Me.Class != WoWClass.Hunter)
+            if (Me.Class != WoWClass.Hunter && !Rarekiller.Settings.TestcaseTamer)
                 return;
 // ----------------- Generate a List with all wanted Rares found in Object Manager ---------------------		
             ObjectManager.Update();
@@ -52,6 +52,8 @@ namespace katzerle
                     Logging.Write(Colors.MediumPurple, "Rarekiller Part Tamer: Found a new Pet {0} ID {1}", o.Name, o.Entry);
                     if (Rarekiller.Settings.LUAoutput)
                         Lua.DoString("print('NPCScan: Find {0} ID {1}')", o.Name, o.Entry);
+
+                    #region don't tame if
                     // Don't tame the Rare if ...
                     if (Me.Combat)
                     {
@@ -86,25 +88,30 @@ namespace katzerle
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Tamer: ... but I'm on a Transport.");
                         return;
                     }
-                    if (Me.IsCasting)
-                    {
-                        SpellManager.StopCasting();
-                        Thread.Sleep(100);
-                    }
+
                     if (Rarekiller.BlacklistMobsList.ContainsKey(Convert.ToInt32(o.Entry)))
                     {
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Tamer: {0} is Member of the BlacklistedMobs.xml", o.Name);
                         Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist15));
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Tamer: Blacklist Mob for 15 Minutes.");
-                        if (Rarekiller.Settings.LUAoutput)
-                            Lua.DoString("print('NPCScan: I'm on Transport')");
                         return;
+                    }
+                    #endregion
+
+                    if (Me.IsCasting)
+                    {
+                        SpellManager.StopCasting();
+                        Thread.Sleep(100);
                     }
 
                     //Dismiss Pet
-                    SpellManager.Cast("Dismiss Pet");
-                    Thread.Sleep(3000);
+                    if (Me.Class == WoWClass.Hunter)
+                    {
+                        SpellManager.Cast("Dismiss Pet");
+                        Thread.Sleep(3000);
+                    }
 
+                    #region Alert
                     // ----------------- Alert ---------------------
                     if (Rarekiller.Settings.Alert)
                     {
@@ -115,6 +122,9 @@ namespace katzerle
                         else
                             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Tamer: playing Soundfile failes");
                     }
+                    #endregion
+
+                    #region Move to tameable Mob
                     // ----------------- Move to Mob Part ---------------------	
 
                     WoWPoint newPoint = WoWMovement.CalculatePointFrom(o.Location, (float)Rarekiller.Settings.Tamedistance);
@@ -159,33 +169,51 @@ namespace katzerle
                         Lua.DoString("CancelShapeshiftForm()");
                     else if (Me.Mounted)
                         Lua.DoString("Dismount()");
+                    #endregion
 
                     Thread.Sleep(150);
                     o.Target();
-                    // Tame it
-                    while (!o.IsPet)
+                    if (Me.Class == WoWClass.Hunter)
                     {
-                        if (o.IsDead)
+                        #region Tame
+                        // Tame it
+                        while (!o.IsPet)
                         {
-                            Logging.Write(Colors.MediumPurple, "Rarekiller Part Tamer: Mob was dying, I'm so Sorry !!! ");
-                            return;
-                        }
-                        if (Me.HealthPercent < 10)
-                        {
-                            Logging.Write(Colors.MediumPurple, "Rarekiller Part Tamer: Health < 10% , Use Feign Death !!! ");
-                            SpellManager.Cast("Feign Death");
-                            return;
-                        }
+                            if (o.IsDead)
+                            {
+                                Logging.Write(Colors.MediumPurple, "Rarekiller Part Tamer: Mob was dying, I'm so Sorry !!! ");
+                                return;
+                            }
+                            if (Me.HealthPercent < 10)
+                            {
+                                Logging.Write(Colors.MediumPurple, "Rarekiller Part Tamer: Health < 10% , Use Feign Death !!! ");
+                                SpellManager.Cast("Feign Death");
+                                return;
+                            }
 
-                        if (!Me.IsCasting)
+                            if (!Me.IsCasting)
+                            {
+                                WoWMovement.MoveStop();
+                                SpellManager.Cast("Tame Beast");
+                                Logging.Write(Colors.MediumPurple, "Plugin Part The Tamer: Try to tame Beast {0}", o.Name);
+                                Thread.Sleep(1500);
+                            }
+                        }
+                        Logging.Write(Colors.MediumPurple, "Rarekiller Part Tamer: Sucessfully tamed Beast {0}", o.Name);
+                        #endregion
+                    }
+                     
+                   else
+                    {
+                        #region Testcase for my Shammi
+                        while (!o.IsDead)
                         {
-                            WoWMovement.MoveStop();
-                            SpellManager.Cast("Tame Beast");
-                            Logging.Write(Colors.MediumPurple, "Plugin Part The Tamer: Try to tame Beast {0}", o.Name);
+                            Logging.Write(Colors.MediumPurple, "Rarekiller Part Tamer Test: Try to tame Beast", o.Name);
                             Thread.Sleep(1500);
                         }
+                        #endregion
                     }
-                    Logging.Write(Colors.MediumPurple, "Rarekiller Part Tamer: Sucessfully tamed Beast {0}", o.Name);
+                    
                 }
                 else if (o.IsPet)
                     return;
