@@ -151,6 +151,7 @@ namespace katzerle
                     #endregion
 
                     Logging.Write(Colors.MediumPurple, "Rarekiller: Find a hunted Mob called {0} ID {1}", o.Name, o.Entry);
+					Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Mob Location: {0} / {1} / {2}", Convert.ToString(o.X), Convert.ToString(o.Y), Convert.ToString(o.Z));
                     if (Rarekiller.Settings.LUAoutput)
                         Lua.DoString("print('NPCScan: Find {0} ID {1}')", o.Name, o.Entry);
 
