@@ -353,6 +353,7 @@ namespace katzerle
 							Flightor.MoveTo(o.Location);
 						Thread.Sleep(50);
 
+                        if (Rarekiller.inCombat) return;
                         if (o.TaggedByOther && !Rarekiller.TaggedMobsList.ContainsKey(Convert.ToInt32(o.Entry)))
                         {
                             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Find {0}, but he's tagged by another Player", o.Name);
