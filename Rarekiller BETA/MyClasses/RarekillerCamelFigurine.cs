@@ -34,15 +34,11 @@ namespace katzerle
         public static WoWPoint ProblemCamel2 = new WoWPoint(-9900.116, 461.3653, 45.62226);
         public static WoWPoint ProblemCamel3 = new WoWPoint(-10697.69, 1045.757, 24.125);
         public static WoWPoint ProblemCamel4 = new WoWPoint(-11066.67, -2100.342, 175.2816);
-        public static WoWPoint DormusPoint = new WoWPoint(-5703.058, 680.358, 163.2576);
-
-        //ToDo Landing Points for of Underground NPCs
+        public static WoWPoint DormusPoint = new WoWPoint(-5726.439, 673.6976, 163.293);
         public static WoWPoint LandingPoint64227 = new WoWPoint(2359.229, 2484.88, 686.5128);
 
         public void findAndPickupObject()
         {
-            //bool ForceGround = false;
-
             if (Rarekiller.Settings.DeveloperLogs)
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Scan for NPC to Interact");
 
@@ -236,9 +232,7 @@ namespace katzerle
                 else if (Me.Mounted)
                     Lua.DoString("Dismount()");
                 #endregion
-
-                //Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Take a Screen");
-                //Lua.DoString("TakeScreenshot()"); 
+ 
 				Thread.Sleep(500);
                 o.Interact();
                 o.Interact();
@@ -247,10 +241,6 @@ namespace katzerle
                 Thread.Sleep(300);
 
                 Rarekiller.Settings.Forceground = false;
-
-                while(Me.HasAura("Sandstorm"))
-                    Thread.Sleep(500);
-
 				
                 //64143 = Test
 				if (o.Entry == 65552 || o.Entry == 64272 || o.Entry == 64004 || o.Entry == 64191 || o.Entry == 64227)
@@ -262,73 +252,38 @@ namespace katzerle
             }
         }
 
-        public void LootCamelFigurine()
-        {
-            #region Loothelper for Crumbled Statuette Remands
-            if (Rarekiller.Settings.DeveloperLogs)
-                Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Scan for Lootable Figurine");
-            ObjectManager.Update();
-            List<WoWUnit> objList = ObjectManager.GetObjectsOfType<WoWUnit>()
-                .Where(o => (!Blacklist.Contains(o.Guid, Rarekiller.Settings.Flags)) && (o.Entry == 999999) && o.Lootable)
-                .OrderBy(o => o.Distance).ToList();
-            foreach (WoWUnit o in objList)
-            {
-                Logging.Write(Colors.MediumPurple, "Rarekiller Part Camel: Found lootable {0}, move to him", o.Name);
-                // ----------------- Loot Helper ---------------------
-                if (o.CanLoot)
-                {
-                    if (Me.Auras.ContainsKey("Flight Form"))
-                        Lua.DoString("CancelShapeshiftForm()");
-                    else if (Me.Mounted)
-                        Lua.DoString("Dismount()");
-
-                    // ------------- Move to Corpse -------------------					
-                    Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Camel: ... move to him to loot");
-                    while (o.Location.Distance(Me.Location) > 3)
-                    {
-                        Navigator.MoveTo(o.Location);
-                        Thread.Sleep(100);
-                    }
-
-                    Thread.Sleep(500);
-                    WoWMovement.MoveStop();
-                    o.Interact();
-                    Thread.Sleep(1000);
-                    Lua.DoString("RunMacroText(\"/click StaticPopup1Button1\");");
-                    Thread.Sleep(500);
-                }
-            }
-            #endregion
-        }
-
-
-
         public void findAndKillDormus()
         {
             bool CastSuccess = false;
+			//Testcase Priest --> 51756 = Blutelfenjunge --> 50245 = Dormus
+            int IDDormus = 50245;
+            //Testcase Priest --> 6346 = Fear Ward --> Dormus' Rage = 93269
+            int IDDormusAura = 93269;
 
             if (Rarekiller.Settings.DeveloperLogs)
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Scan for Dormus");
             
             ObjectManager.Update();
-            List<WoWUnit> objList = ObjectManager.GetObjectsOfType<WoWUnit>()
-                .Where(o => (!Blacklist.Contains(o.Guid, Rarekiller.Settings.Flags)) && (o.Entry == 50245))
-                .OrderBy(o => o.Distance).ToList();
+            
+            WoWUnit Dormus = ObjectManager.GetObjectsOfType<WoWUnit>().Where(u => u.Entry == IDDormus).OrderBy(u => u.Distance).FirstOrDefault();
 
             #region Move to Dormus Helperpoint
-            if (Me.HasAura("Dormus' Rage") && objList == null && !Me.Combat)
+            while (Me.HasAura(IDDormusAura) && Dormus == null && !Me.Combat && Me.Location.Distance(DormusPoint) > 5 && Me.Location.Distance(DormusPoint) < 500)
             {
-                Flightor.MoveTo(DormusPoint);
-                Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Swim to Dormus Helper Point");
-                return;
+                WoWMovement.ClickToMove(DormusPoint);
+                Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Dormus not in sight, Swim to Dormus Helper Point");
+                Thread.Sleep(500);
+
+                ObjectManager.Update();
+                Dormus = ObjectManager.GetObjectsOfType<WoWUnit>().Where(u => u.Entry == IDDormus).OrderBy(u => u.Distance).FirstOrDefault();
             }
             #endregion
 
-            foreach (WoWUnit o in objList)
+            if (Dormus != null)
             {
-                if (!o.IsDead)
+                if (!Dormus.IsDead)
                 {
-                    Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: Find Dormus.");
+                    Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: Find {0}", Dormus.Name);
 
                     #region Alert
                     if (Rarekiller.Settings.Alert)
@@ -342,77 +297,72 @@ namespace katzerle
                     }
                     #endregion
 
+                    Dormus.Target();
+					
+					#region Move to Dormus
+					// ------------- Move to Dormus with Klick to Move -------------------		
 
-                    if (RoutineManager.Current.NeedRest)
-                    {
-                        Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Dormus: CC says we need rest - Letting it do it before Fight.");
-                        RoutineManager.Current.Rest();
-                        return;
-                    }
-
-                    if (Me.Auras.ContainsKey("Flight Form"))
-                        Lua.DoString("CancelShapeshiftForm()");
-                    else if (Me.Mounted)
-                        Lua.DoString("Dismount()");
-
-                    o.Target();
-
-                    while (!Rarekiller.inCombat && Me.HasAura("Dormus' Rage"))
-                    {
-                        #region Move to Dormus
-                        // ------------- Move to Dormus with Klick to Move -------------------					
-                        Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Dormus: Move to Dormus");
-
-                        while (Me.IsSwimming && Me.HasAura("Dormus' Rage"))
-                        {
-                            Flightor.MoveTo(DormusPoint);
-                            Thread.Sleep(100);
-                        }
-
-                        while (o.Location.Distance(Me.Location) > 3 && Me.HasAura("Dormus' Rage"))
-                        {
-                            Navigator.MoveTo(o.Location);
-                            Thread.Sleep(100);
-                        }
-                        WoWMovement.MoveStop();
-                        #endregion
-
-                        #region Pull Dormus
-                        // ------------- pull Dormus  -------------------					
-                        Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Dormus: Distance: {0}", o.Location.Distance(Me.Location));
-						o.Target();
-						o.Face();
+                    while (DormusPoint.Distance(Me.Location) > 5 && Me.HasAura(IDDormusAura) && !Dormus.IsDead && !Rarekiller.Settings.ReachedDormusHelperpoint)
+					{
+						WoWMovement.ClickToMove(DormusPoint);
 						Thread.Sleep(100);
+						Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Dormus: Move out of Water to Helperpoint");
+                        if (Rarekiller.inCombat) return;
+					}
+                    Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Dormus: Reached Dormus Helperpoint");
+                    Rarekiller.Settings.ReachedDormusHelperpoint = true;
 
-
-                        if (!(Rarekiller.Settings.DefaultPull) && SpellManager.HasSpell(Rarekiller.Settings.Pull))
-                            CastSuccess = RarekillerSpells.CastSafe(Rarekiller.Settings.Pull, o, true);
-                        else if (SpellManager.HasSpell(Rarekiller.Spells.FastPullspell))
-                            CastSuccess = RarekillerSpells.CastSafe(Rarekiller.Spells.FastPullspell, o, false);
-                        else
-                            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Dormus: I have no Pullspell");
-                        if (!CastSuccess && SpellManager.HasSpell("Shoot"))
-                            CastSuccess = RarekillerSpells.CastSafe("Shoot", o, true);
-                        if (CastSuccess)
-                        {
-                            Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: successfully pulled Dormus");
-                            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Dormus: Pull Distance: {0}", o.Location.Distance(Me.Location));
-                            return;
-                        }
-                        else if (!CastSuccess && Me.Combat)
-                            Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: got Aggro");
+                    while (Dormus.Location.Distance(Me.Location) > 3 && Me.HasAura(IDDormusAura) && !Dormus.IsDead)
+					{
+                        if (Navigator.CanNavigateFully(Me.Location, Dormus.Location))
+                            Navigator.MoveTo(Dormus.Location);
                         else
                         {
-                            Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: Pull Fails --> next try");
+                            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Dormus: Navigation Issue, use Click to Move");
+                            WoWMovement.ClickToMove(Dormus.Location);
                         }
-                        #endregion
-                    }
+						Thread.Sleep(100);
+						Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Dormus: Move to Dormus");
+                        if (Rarekiller.inCombat) return;
+					}
+					WoWMovement.MoveStop();
+					#endregion
+
+					#region Pull Dormus
+					// ------------- pull Dormus  -------------------					
+					Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Dormus: Distance: {0}", Dormus.Location.Distance(Me.Location));
+					Dormus.Target();
+					Dormus.Face();
+					Thread.Sleep(100);
+
+
+					if (!(Rarekiller.Settings.DefaultPull) && SpellManager.HasSpell(Rarekiller.Settings.Pull))
+						CastSuccess = RarekillerSpells.CastSafe(Rarekiller.Settings.Pull, Dormus, true);
+					else if (SpellManager.HasSpell(Rarekiller.Spells.FastPullspell))
+						CastSuccess = RarekillerSpells.CastSafe(Rarekiller.Spells.FastPullspell, Dormus, false);
+					else
+						Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Dormus: I have no Pullspell");
+					if (!CastSuccess && SpellManager.HasSpell("Shoot"))
+						CastSuccess = RarekillerSpells.CastSafe("Shoot", Dormus, true);
+					if (CastSuccess)
+					{
+						Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: successfully pulled Dormus");
+						Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Dormus: Pull Distance: {0}", Dormus.Location.Distance(Me.Location));
+						return;
+					}
+					else if (!CastSuccess && Me.Combat)
+						Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: got Aggro");
+					else
+					{
+						Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: Pull Fails --> next try");
+					}
+					#endregion
                 }
                 else
                 {
-                    Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: Found lootable {0}, move to him", o.Name);
+                    Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: Found lootable {0}, move to him", Dormus.Name);
                     // ----------------- Loot Helper ---------------------
-                    if (o.CanLoot)
+                    if (Dormus.CanLoot)
                     {
                         #region Loothelper
                         if (Me.Auras.ContainsKey("Flight Form"))
@@ -420,31 +370,31 @@ namespace katzerle
                         else if (Me.Mounted)
                             Lua.DoString("Dismount()");
 
-                        o.Target();
+                        Dormus.Target();
                         // ------------- Move to Corpse -------------------					
                         Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Dormus: ... move to him to loot");
-                        while (o.Location.Distance(Me.Location) > 3 && Me.HasAura("Dormus' Rage"))
+                        while (Dormus.Location.Distance(Me.Location) > 3 && Me.HasAura(IDDormusAura))
 						{
-							Navigator.MoveTo(o.Location);
+							Navigator.MoveTo(Dormus.Location);
 							Thread.Sleep(100);
 						}
 						
                         Thread.Sleep(500);
                         WoWMovement.MoveStop();
-                        o.Interact();
+                        Dormus.Interact();
                         Thread.Sleep(2000);
                         Lua.DoString("RunMacroText(\"/click StaticPopup1Button1\");");
                         Thread.Sleep(4000);
-                        if (!o.CanLoot)
+                        if (!Dormus.CanLoot)
                             Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: successfully looted");
                         else
                             Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: Loot failed, try again");
                         #endregion
                     }
-                    else if (!Blacklist.Contains(o.Guid, Rarekiller.Settings.Flags))
+                    else if (!Blacklist.Contains(Dormus.Guid, Rarekiller.Settings.Flags))
                     {
-                        Logging.Write(Colors.MediumPurple, "Rarekiller: Find {0}, but sadly he's dead", o.Name);
-                        Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist60));
+                        Logging.Write(Colors.MediumPurple, "Rarekiller: Find {0}, but sadly he's dead", Dormus.Name);
+                        Blacklist.Add(Dormus.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist60));
                         Logging.Write(Colors.MediumPurple, "Rarekiller: Blacklist Mob for 60 Minutes.");
                     }
                 }
@@ -456,12 +406,11 @@ namespace katzerle
             if (!StyxWoW.Me.IsFacing(Unit))
             { Unit.Face(); Thread.Sleep(300); }
 
-            while (Me.HasAura("Spit") && Me.HasAura("Dormus' Rage"))
-            {
+            //94967 = Aura Spit
+            while (Me.HasAura(94967))
                 WoWMovement.Move(WoWMovement.MovementDirection.StrafeRight);
-                Unit.Face();
-            }
             WoWMovement.MoveStop();
+            Unit.Face();
         }
     }
 }

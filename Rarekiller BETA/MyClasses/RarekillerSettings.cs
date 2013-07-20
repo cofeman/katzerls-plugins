@@ -164,10 +164,12 @@ namespace katzerle
         public bool DeveloperLogs = false;
         public bool MoPRaresDeveloper = true;
 //Developer Testcases
+        public bool TestCaseDormus = true;
         public bool TestRaptorNest = false;
         public bool TestFigurineInteract = false;
         public bool TestcaseTamer = false;
         public bool Forceground = false;
+        public bool ReachedDormusHelperpoint = false;
 
         // -------------- Load ConfigFile ---------------
         public void Load()

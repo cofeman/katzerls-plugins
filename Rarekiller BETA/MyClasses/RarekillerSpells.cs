@@ -150,7 +150,6 @@ namespace katzerle
                 return "NoSpell";
             }
         }
-
         public string RangeCheck (string Spell)
         {
             //get

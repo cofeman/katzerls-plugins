@@ -119,8 +119,8 @@ namespace katzerle
         {
             get
             {
-                return ObjectManager.GetObjectsOfType<WoWUnit>().Where(u => (u.Entry == 50245) && u.Distance < 30 && !u.IsDead).OrderBy(u => u.Distance).FirstOrDefault();
-            }
+                return ObjectManager.GetObjectsOfType<WoWUnit>().Where(u => (u.Entry == 50245) && !u.IsDead).OrderBy(u => u.Distance).FirstOrDefault();
+                }
         }
         #endregion
 

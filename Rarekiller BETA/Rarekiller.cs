@@ -36,7 +36,7 @@ namespace katzerle
 		public static string name { get { return "Rarekiller"; } }
 		public override string Name { get { return name; } }
 		public override string Author { get { return "katzerle"; } }
-		private readonly static Version _version = new Version(4, 1);
+		private readonly static Version _version = new Version(4, 2);
 		public override Version Version { get { return _version; } }
 		public override string ButtonText { get { return "Settings"; } }
 		public override bool WantButton { get { return true; } }
@@ -77,7 +77,7 @@ namespace katzerle
 			UpdatePlugin();
 
             Settings.Load();
-            Logging.Write(Colors.MediumPurple, "Rarekiller 4.1 BETA loaded");
+            Logging.Write(Colors.MediumPurple, "Rarekiller 4.2 BETA loaded");
             if (Me.Class != WoWClass.Hunter)
             {
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Tamer: I'm no Hunter. Deactivate the Tamer Part");
@@ -571,9 +571,8 @@ namespace katzerle
                     #region Camel Figurine and NPC Interactor
                     if (Settings.Camel || Settings.TestFigurineInteract || Settings.AnotherMansTreasure || Settings.InteractNPC)
                         Camel.findAndPickupObject();
-                    if (Settings.Camel)
-                        Camel.LootCamelFigurine();
-                    if (Me.HasAura("Dormus' Rage") || Settings.Camel)
+                    // --> Dormus' Rage = 93269
+                    if (Me.HasAura(93269) || Settings.Camel)
                         Camel.findAndKillDormus();
                     #endregion
 
@@ -753,21 +752,22 @@ namespace katzerle
                     }
                     #endregion
 
-                    #region Dormus - Not tested
+                    #region Dormus - Just dump AEO Effects and Avoid Spit
                     if (MoPRares.Dormus != null)
                     {
                         // Developer Thing (ToDo Remove)
-                        if (DumpAuraTimer.Elapsed.TotalSeconds > 1 && Rarekiller.Settings.MoPRaresDeveloper)
+                        if (DumpAuraTimer.Elapsed.TotalSeconds > 5 && Rarekiller.Settings.MoPRaresDeveloper)
                         {
                             DumpAuraTimer.Reset();
                             MoPRares.DumpAOEEffect();
                         }
 
-                        if (Me.HasAura("Dormus' Rage") && Me.HasAura("Spit"))
+                        //94967 = Aura Spit
+                        if (Me.HasAura(94967))
                             Camel.AvoidSpit(MoPRares.Dormus);
 						
-                        if (MoPRares.Dormus.Location.Distance(Me.Location) > 25)
-                            Navigator.MoveTo(MoPRares.Dormus.Location);
+                        //if (MoPRares.Dormus.Location.Distance(Me.Location) > 25)
+                        //    Navigator.MoveTo(MoPRares.Dormus.Location);
 
                         //if (Me.HasAura("Spit") && MoPRares.getSpitList != null && MoPRares.getSpitList[0].Distance < (MoPRares.getSpitList[0].Radius * 1.6f))
                         //    MoPRares.AvoidEnemyAOE(Me.Location, MoPRares.getSpitList, "Spit", 15);
