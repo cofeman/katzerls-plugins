@@ -116,6 +116,14 @@ namespace katzerle
             this.CBEshelon50772 = new System.Windows.Forms.CheckBox();
             this.CBCournith50768 = new System.Windows.Forms.CheckBox();
             this.CBAethis50750 = new System.Windows.Forms.CheckBox();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.CBKorda50332 = new System.Windows.Forms.CheckBox();
+            this.CBYorik50336 = new System.Windows.Forms.CheckBox();
+            this.CBGoKan50331 = new System.Windows.Forms.CheckBox();
+            this.CBLon50333 = new System.Windows.Forms.CheckBox();
+            this.CBBlackhoof51059 = new System.Windows.Forms.CheckBox();
+            this.CBDak50334 = new System.Windows.Forms.CheckBox();
+            this.CBFerdinand51078 = new System.Windows.Forms.CheckBox();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
             this.CBNasra50811 = new System.Windows.Forms.CheckBox();
             this.CBYul50820 = new System.Windows.Forms.CheckBox();
@@ -124,6 +132,14 @@ namespace katzerle
             this.CBAhone50817 = new System.Windows.Forms.CheckBox();
             this.CBUrobi50808 = new System.Windows.Forms.CheckBox();
             this.CBAiRan50822 = new System.Windows.Forms.CheckBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.CBMorgrinn50350 = new System.Windows.Forms.CheckBox();
+            this.CBUrgolax50359 = new System.Windows.Forms.CheckBox();
+            this.CBJonnDar50351 = new System.Windows.Forms.CheckBox();
+            this.CBQunas50352 = new System.Windows.Forms.CheckBox();
+            this.CBKrol50356 = new System.Windows.Forms.CheckBox();
+            this.CBHavak50354 = new System.Windows.Forms.CheckBox();
+            this.CBKahtir50355 = new System.Windows.Forms.CheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.CBKornas50338 = new System.Windows.Forms.CheckBox();
             this.CBNorlaxx50344 = new System.Windows.Forms.CheckBox();
@@ -148,22 +164,6 @@ namespace katzerle
             this.CBSarnak50782 = new System.Windows.Forms.CheckBox();
             this.CBArness50787 = new System.Windows.Forms.CheckBox();
             this.CBNessos50789 = new System.Windows.Forms.CheckBox();
-            this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.CBKorda50332 = new System.Windows.Forms.CheckBox();
-            this.CBYorik50336 = new System.Windows.Forms.CheckBox();
-            this.CBGoKan50331 = new System.Windows.Forms.CheckBox();
-            this.CBLon50333 = new System.Windows.Forms.CheckBox();
-            this.CBBlackhoof51059 = new System.Windows.Forms.CheckBox();
-            this.CBDak50334 = new System.Windows.Forms.CheckBox();
-            this.CBFerdinand51078 = new System.Windows.Forms.CheckBox();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.CBMorgrinn50350 = new System.Windows.Forms.CheckBox();
-            this.CBUrgolax50359 = new System.Windows.Forms.CheckBox();
-            this.CBJonnDar50351 = new System.Windows.Forms.CheckBox();
-            this.CBQunas50352 = new System.Windows.Forms.CheckBox();
-            this.CBKrol50356 = new System.Windows.Forms.CheckBox();
-            this.CBHavak50354 = new System.Windows.Forms.CheckBox();
-            this.CBKahtir50355 = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.CBYowler50832 = new System.Windows.Forms.CheckBox();
             this.CBIkIk50836 = new System.Windows.Forms.CheckBox();
@@ -189,6 +189,7 @@ namespace katzerle
             this.CBAeonaxx = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.BDefault = new System.Windows.Forms.Button();
+            this.CBFootprints = new System.Windows.Forms.CheckBox();
             this.GBAddon.SuspendLayout();
             this.GBSlowfall.SuspendLayout();
             this.GBPull.SuspendLayout();
@@ -203,12 +204,12 @@ namespace katzerle
             this.groupBox12.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.groupBox15.SuspendLayout();
+            this.groupBox10.SuspendLayout();
             this.groupBox14.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox13.SuspendLayout();
             this.groupBox9.SuspendLayout();
-            this.groupBox10.SuspendLayout();
-            this.groupBox7.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -808,7 +809,7 @@ namespace katzerle
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(362, 641);
+            this.tabPage1.Size = new System.Drawing.Size(372, 641);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Rarekiller";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -909,6 +910,7 @@ namespace katzerle
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.CBFootprints);
             this.groupBox5.Controls.Add(this.TBTameID);
             this.groupBox5.Controls.Add(this.label11);
             this.groupBox5.Controls.Add(this.CBTameByID);
@@ -916,9 +918,9 @@ namespace katzerle
             this.groupBox5.Controls.Add(this.CBNotKillTameable);
             this.groupBox5.Controls.Add(this.CBTameDefault);
             this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox5.Location = new System.Drawing.Point(180, 129);
+            this.groupBox5.Location = new System.Drawing.Point(180, 120);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(167, 147);
+            this.groupBox5.Size = new System.Drawing.Size(167, 181);
             this.groupBox5.TabIndex = 13;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "TheTamer";
@@ -1142,6 +1144,92 @@ namespace katzerle
             this.CBAethis50750.Text = "Aethis (85)";
             this.CBAethis50750.UseVisualStyleBackColor = true;
             // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.CBKorda50332);
+            this.groupBox10.Controls.Add(this.CBYorik50336);
+            this.groupBox10.Controls.Add(this.CBGoKan50331);
+            this.groupBox10.Controls.Add(this.CBLon50333);
+            this.groupBox10.Controls.Add(this.CBBlackhoof51059);
+            this.groupBox10.Controls.Add(this.CBDak50334);
+            this.groupBox10.Controls.Add(this.CBFerdinand51078);
+            this.groupBox10.Location = new System.Drawing.Point(7, 310);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(349, 70);
+            this.groupBox10.TabIndex = 0;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Yaungol";
+            // 
+            // CBKorda50332
+            // 
+            this.CBKorda50332.AutoSize = true;
+            this.CBKorda50332.Location = new System.Drawing.Point(7, 44);
+            this.CBKorda50332.Name = "CBKorda50332";
+            this.CBKorda50332.Size = new System.Drawing.Size(103, 17);
+            this.CBKorda50332.TabIndex = 2;
+            this.CBKorda50332.Text = "Korda Torro (88)";
+            this.CBKorda50332.UseVisualStyleBackColor = true;
+            // 
+            // CBYorik50336
+            // 
+            this.CBYorik50336.AutoSize = true;
+            this.CBYorik50336.Location = new System.Drawing.Point(260, 44);
+            this.CBYorik50336.Name = "CBYorik50336";
+            this.CBYorik50336.Size = new System.Drawing.Size(71, 17);
+            this.CBYorik50336.TabIndex = 1;
+            this.CBYorik50336.Text = "Yorik (91)";
+            this.CBYorik50336.UseVisualStyleBackColor = true;
+            // 
+            // CBGoKan50331
+            // 
+            this.CBGoKan50331.AutoSize = true;
+            this.CBGoKan50331.Location = new System.Drawing.Point(207, 19);
+            this.CBGoKan50331.Name = "CBGoKan50331";
+            this.CBGoKan50331.Size = new System.Drawing.Size(82, 17);
+            this.CBGoKan50331.TabIndex = 1;
+            this.CBGoKan50331.Text = "Go\'Kan (87)";
+            this.CBGoKan50331.UseVisualStyleBackColor = true;
+            // 
+            // CBLon50333
+            // 
+            this.CBLon50333.AutoSize = true;
+            this.CBLon50333.Location = new System.Drawing.Point(116, 44);
+            this.CBLon50333.Name = "CBLon50333";
+            this.CBLon50333.Size = new System.Drawing.Size(65, 17);
+            this.CBLon50333.TabIndex = 0;
+            this.CBLon50333.Text = "Lon (88)";
+            this.CBLon50333.UseVisualStyleBackColor = true;
+            // 
+            // CBBlackhoof51059
+            // 
+            this.CBBlackhoof51059.AutoSize = true;
+            this.CBBlackhoof51059.Location = new System.Drawing.Point(106, 19);
+            this.CBBlackhoof51059.Name = "CBBlackhoof51059";
+            this.CBBlackhoof51059.Size = new System.Drawing.Size(95, 17);
+            this.CBBlackhoof51059.TabIndex = 0;
+            this.CBBlackhoof51059.Text = "Blackhoof (86)";
+            this.CBBlackhoof51059.UseVisualStyleBackColor = true;
+            // 
+            // CBDak50334
+            // 
+            this.CBDak50334.AutoSize = true;
+            this.CBDak50334.Location = new System.Drawing.Point(187, 44);
+            this.CBDak50334.Name = "CBDak50334";
+            this.CBDak50334.Size = new System.Drawing.Size(67, 17);
+            this.CBDak50334.TabIndex = 1;
+            this.CBDak50334.Text = "Dak (90)";
+            this.CBDak50334.UseVisualStyleBackColor = true;
+            // 
+            // CBFerdinand51078
+            // 
+            this.CBFerdinand51078.AutoSize = true;
+            this.CBFerdinand51078.Location = new System.Drawing.Point(6, 19);
+            this.CBFerdinand51078.Name = "CBFerdinand51078";
+            this.CBFerdinand51078.Size = new System.Drawing.Size(94, 17);
+            this.CBFerdinand51078.TabIndex = 0;
+            this.CBFerdinand51078.Text = "Ferdinand (85)";
+            this.CBFerdinand51078.UseVisualStyleBackColor = true;
+            // 
             // groupBox14
             // 
             this.groupBox14.Controls.Add(this.CBNasra50811);
@@ -1227,6 +1315,100 @@ namespace katzerle
             this.CBAiRan50822.TabIndex = 0;
             this.CBAiRan50822.Text = "Ai-Ran (91)";
             this.CBAiRan50822.UseVisualStyleBackColor = true;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.CBMorgrinn50350);
+            this.groupBox7.Controls.Add(this.CBUrgolax50359);
+            this.groupBox7.Controls.Add(this.CBJonnDar50351);
+            this.groupBox7.Controls.Add(this.CBQunas50352);
+            this.groupBox7.Controls.Add(this.CBKrol50356);
+            this.groupBox7.Controls.Add(this.CBHavak50354);
+            this.groupBox7.Controls.Add(this.CBKahtir50355);
+            this.groupBox7.Location = new System.Drawing.Point(7, 234);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(349, 70);
+            this.groupBox7.TabIndex = 0;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Mogu Warrior";
+            this.groupBox7.UseWaitCursor = true;
+            // 
+            // CBMorgrinn50350
+            // 
+            this.CBMorgrinn50350.AutoSize = true;
+            this.CBMorgrinn50350.Location = new System.Drawing.Point(7, 19);
+            this.CBMorgrinn50350.Name = "CBMorgrinn50350";
+            this.CBMorgrinn50350.Size = new System.Drawing.Size(88, 17);
+            this.CBMorgrinn50350.TabIndex = 2;
+            this.CBMorgrinn50350.Text = "Morgrinn (85)";
+            this.CBMorgrinn50350.UseVisualStyleBackColor = true;
+            this.CBMorgrinn50350.UseWaitCursor = true;
+            // 
+            // CBUrgolax50359
+            // 
+            this.CBUrgolax50359.AutoSize = true;
+            this.CBUrgolax50359.Location = new System.Drawing.Point(245, 42);
+            this.CBUrgolax50359.Name = "CBUrgolax50359";
+            this.CBUrgolax50359.Size = new System.Drawing.Size(83, 17);
+            this.CBUrgolax50359.TabIndex = 1;
+            this.CBUrgolax50359.Text = "Urgolax (91)";
+            this.CBUrgolax50359.UseVisualStyleBackColor = true;
+            this.CBUrgolax50359.UseWaitCursor = true;
+            // 
+            // CBJonnDar50351
+            // 
+            this.CBJonnDar50351.AutoSize = true;
+            this.CBJonnDar50351.Location = new System.Drawing.Point(101, 19);
+            this.CBJonnDar50351.Name = "CBJonnDar50351";
+            this.CBJonnDar50351.Size = new System.Drawing.Size(89, 17);
+            this.CBJonnDar50351.TabIndex = 1;
+            this.CBJonnDar50351.Text = "Jonn\'Dar (86)";
+            this.CBJonnDar50351.UseVisualStyleBackColor = true;
+            this.CBJonnDar50351.UseWaitCursor = true;
+            // 
+            // CBQunas50352
+            // 
+            this.CBQunas50352.AutoSize = true;
+            this.CBQunas50352.Location = new System.Drawing.Point(196, 19);
+            this.CBQunas50352.Name = "CBQunas50352";
+            this.CBQunas50352.Size = new System.Drawing.Size(80, 17);
+            this.CBQunas50352.TabIndex = 0;
+            this.CBQunas50352.Text = "Qu\'nas (87)";
+            this.CBQunas50352.UseVisualStyleBackColor = true;
+            this.CBQunas50352.UseWaitCursor = true;
+            // 
+            // CBKrol50356
+            // 
+            this.CBKrol50356.AutoSize = true;
+            this.CBKrol50356.Location = new System.Drawing.Point(174, 42);
+            this.CBKrol50356.Name = "CBKrol50356";
+            this.CBKrol50356.Size = new System.Drawing.Size(65, 17);
+            this.CBKrol50356.TabIndex = 1;
+            this.CBKrol50356.Text = "Krol (90)";
+            this.CBKrol50356.UseVisualStyleBackColor = true;
+            this.CBKrol50356.UseWaitCursor = true;
+            // 
+            // CBHavak50354
+            // 
+            this.CBHavak50354.AutoSize = true;
+            this.CBHavak50354.Location = new System.Drawing.Point(7, 42);
+            this.CBHavak50354.Name = "CBHavak50354";
+            this.CBHavak50354.Size = new System.Drawing.Size(79, 17);
+            this.CBHavak50354.TabIndex = 0;
+            this.CBHavak50354.Text = "Havak (88)";
+            this.CBHavak50354.UseVisualStyleBackColor = true;
+            this.CBHavak50354.UseWaitCursor = true;
+            // 
+            // CBKahtir50355
+            // 
+            this.CBKahtir50355.AutoSize = true;
+            this.CBKahtir50355.Location = new System.Drawing.Point(92, 42);
+            this.CBKahtir50355.Name = "CBKahtir50355";
+            this.CBKahtir50355.Size = new System.Drawing.Size(76, 17);
+            this.CBKahtir50355.TabIndex = 0;
+            this.CBKahtir50355.Text = "Kah\'tir (89)";
+            this.CBKahtir50355.UseVisualStyleBackColor = true;
+            this.CBKahtir50355.UseWaitCursor = true;
             // 
             // groupBox4
             // 
@@ -1486,186 +1668,6 @@ namespace katzerle
             this.CBNessos50789.Text = "Nessos (88)";
             this.CBNessos50789.UseVisualStyleBackColor = true;
             // 
-            // groupBox10
-            // 
-            this.groupBox10.Controls.Add(this.CBKorda50332);
-            this.groupBox10.Controls.Add(this.CBYorik50336);
-            this.groupBox10.Controls.Add(this.CBGoKan50331);
-            this.groupBox10.Controls.Add(this.CBLon50333);
-            this.groupBox10.Controls.Add(this.CBBlackhoof51059);
-            this.groupBox10.Controls.Add(this.CBDak50334);
-            this.groupBox10.Controls.Add(this.CBFerdinand51078);
-            this.groupBox10.Location = new System.Drawing.Point(7, 310);
-            this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(349, 70);
-            this.groupBox10.TabIndex = 0;
-            this.groupBox10.TabStop = false;
-            this.groupBox10.Text = "Yaungol";
-            // 
-            // CBKorda50332
-            // 
-            this.CBKorda50332.AutoSize = true;
-            this.CBKorda50332.Location = new System.Drawing.Point(7, 44);
-            this.CBKorda50332.Name = "CBKorda50332";
-            this.CBKorda50332.Size = new System.Drawing.Size(103, 17);
-            this.CBKorda50332.TabIndex = 2;
-            this.CBKorda50332.Text = "Korda Torro (88)";
-            this.CBKorda50332.UseVisualStyleBackColor = true;
-            // 
-            // CBYorik50336
-            // 
-            this.CBYorik50336.AutoSize = true;
-            this.CBYorik50336.Location = new System.Drawing.Point(260, 44);
-            this.CBYorik50336.Name = "CBYorik50336";
-            this.CBYorik50336.Size = new System.Drawing.Size(71, 17);
-            this.CBYorik50336.TabIndex = 1;
-            this.CBYorik50336.Text = "Yorik (91)";
-            this.CBYorik50336.UseVisualStyleBackColor = true;
-            // 
-            // CBGoKan50331
-            // 
-            this.CBGoKan50331.AutoSize = true;
-            this.CBGoKan50331.Location = new System.Drawing.Point(207, 19);
-            this.CBGoKan50331.Name = "CBGoKan50331";
-            this.CBGoKan50331.Size = new System.Drawing.Size(82, 17);
-            this.CBGoKan50331.TabIndex = 1;
-            this.CBGoKan50331.Text = "Go\'Kan (87)";
-            this.CBGoKan50331.UseVisualStyleBackColor = true;
-            // 
-            // CBLon50333
-            // 
-            this.CBLon50333.AutoSize = true;
-            this.CBLon50333.Location = new System.Drawing.Point(116, 44);
-            this.CBLon50333.Name = "CBLon50333";
-            this.CBLon50333.Size = new System.Drawing.Size(65, 17);
-            this.CBLon50333.TabIndex = 0;
-            this.CBLon50333.Text = "Lon (88)";
-            this.CBLon50333.UseVisualStyleBackColor = true;
-            // 
-            // CBBlackhoof51059
-            // 
-            this.CBBlackhoof51059.AutoSize = true;
-            this.CBBlackhoof51059.Location = new System.Drawing.Point(106, 19);
-            this.CBBlackhoof51059.Name = "CBBlackhoof51059";
-            this.CBBlackhoof51059.Size = new System.Drawing.Size(95, 17);
-            this.CBBlackhoof51059.TabIndex = 0;
-            this.CBBlackhoof51059.Text = "Blackhoof (86)";
-            this.CBBlackhoof51059.UseVisualStyleBackColor = true;
-            // 
-            // CBDak50334
-            // 
-            this.CBDak50334.AutoSize = true;
-            this.CBDak50334.Location = new System.Drawing.Point(187, 44);
-            this.CBDak50334.Name = "CBDak50334";
-            this.CBDak50334.Size = new System.Drawing.Size(67, 17);
-            this.CBDak50334.TabIndex = 1;
-            this.CBDak50334.Text = "Dak (90)";
-            this.CBDak50334.UseVisualStyleBackColor = true;
-            // 
-            // CBFerdinand51078
-            // 
-            this.CBFerdinand51078.AutoSize = true;
-            this.CBFerdinand51078.Location = new System.Drawing.Point(6, 19);
-            this.CBFerdinand51078.Name = "CBFerdinand51078";
-            this.CBFerdinand51078.Size = new System.Drawing.Size(94, 17);
-            this.CBFerdinand51078.TabIndex = 0;
-            this.CBFerdinand51078.Text = "Ferdinand (85)";
-            this.CBFerdinand51078.UseVisualStyleBackColor = true;
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.CBMorgrinn50350);
-            this.groupBox7.Controls.Add(this.CBUrgolax50359);
-            this.groupBox7.Controls.Add(this.CBJonnDar50351);
-            this.groupBox7.Controls.Add(this.CBQunas50352);
-            this.groupBox7.Controls.Add(this.CBKrol50356);
-            this.groupBox7.Controls.Add(this.CBHavak50354);
-            this.groupBox7.Controls.Add(this.CBKahtir50355);
-            this.groupBox7.Location = new System.Drawing.Point(7, 234);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(349, 70);
-            this.groupBox7.TabIndex = 0;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Mogu Warrior";
-            this.groupBox7.UseWaitCursor = true;
-            // 
-            // CBMorgrinn50350
-            // 
-            this.CBMorgrinn50350.AutoSize = true;
-            this.CBMorgrinn50350.Location = new System.Drawing.Point(7, 19);
-            this.CBMorgrinn50350.Name = "CBMorgrinn50350";
-            this.CBMorgrinn50350.Size = new System.Drawing.Size(88, 17);
-            this.CBMorgrinn50350.TabIndex = 2;
-            this.CBMorgrinn50350.Text = "Morgrinn (85)";
-            this.CBMorgrinn50350.UseVisualStyleBackColor = true;
-            this.CBMorgrinn50350.UseWaitCursor = true;
-            // 
-            // CBUrgolax50359
-            // 
-            this.CBUrgolax50359.AutoSize = true;
-            this.CBUrgolax50359.Location = new System.Drawing.Point(245, 42);
-            this.CBUrgolax50359.Name = "CBUrgolax50359";
-            this.CBUrgolax50359.Size = new System.Drawing.Size(83, 17);
-            this.CBUrgolax50359.TabIndex = 1;
-            this.CBUrgolax50359.Text = "Urgolax (91)";
-            this.CBUrgolax50359.UseVisualStyleBackColor = true;
-            this.CBUrgolax50359.UseWaitCursor = true;
-            // 
-            // CBJonnDar50351
-            // 
-            this.CBJonnDar50351.AutoSize = true;
-            this.CBJonnDar50351.Location = new System.Drawing.Point(101, 19);
-            this.CBJonnDar50351.Name = "CBJonnDar50351";
-            this.CBJonnDar50351.Size = new System.Drawing.Size(89, 17);
-            this.CBJonnDar50351.TabIndex = 1;
-            this.CBJonnDar50351.Text = "Jonn\'Dar (86)";
-            this.CBJonnDar50351.UseVisualStyleBackColor = true;
-            this.CBJonnDar50351.UseWaitCursor = true;
-            // 
-            // CBQunas50352
-            // 
-            this.CBQunas50352.AutoSize = true;
-            this.CBQunas50352.Location = new System.Drawing.Point(196, 19);
-            this.CBQunas50352.Name = "CBQunas50352";
-            this.CBQunas50352.Size = new System.Drawing.Size(80, 17);
-            this.CBQunas50352.TabIndex = 0;
-            this.CBQunas50352.Text = "Qu\'nas (87)";
-            this.CBQunas50352.UseVisualStyleBackColor = true;
-            this.CBQunas50352.UseWaitCursor = true;
-            // 
-            // CBKrol50356
-            // 
-            this.CBKrol50356.AutoSize = true;
-            this.CBKrol50356.Location = new System.Drawing.Point(174, 42);
-            this.CBKrol50356.Name = "CBKrol50356";
-            this.CBKrol50356.Size = new System.Drawing.Size(65, 17);
-            this.CBKrol50356.TabIndex = 1;
-            this.CBKrol50356.Text = "Krol (90)";
-            this.CBKrol50356.UseVisualStyleBackColor = true;
-            this.CBKrol50356.UseWaitCursor = true;
-            // 
-            // CBHavak50354
-            // 
-            this.CBHavak50354.AutoSize = true;
-            this.CBHavak50354.Location = new System.Drawing.Point(7, 42);
-            this.CBHavak50354.Name = "CBHavak50354";
-            this.CBHavak50354.Size = new System.Drawing.Size(79, 17);
-            this.CBHavak50354.TabIndex = 0;
-            this.CBHavak50354.Text = "Havak (88)";
-            this.CBHavak50354.UseVisualStyleBackColor = true;
-            this.CBHavak50354.UseWaitCursor = true;
-            // 
-            // CBKahtir50355
-            // 
-            this.CBKahtir50355.AutoSize = true;
-            this.CBKahtir50355.Location = new System.Drawing.Point(92, 42);
-            this.CBKahtir50355.Name = "CBKahtir50355";
-            this.CBKahtir50355.Size = new System.Drawing.Size(76, 17);
-            this.CBKahtir50355.TabIndex = 0;
-            this.CBKahtir50355.Text = "Kah\'tir (89)";
-            this.CBKahtir50355.UseVisualStyleBackColor = true;
-            this.CBKahtir50355.UseWaitCursor = true;
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.CBYowler50832);
@@ -1766,7 +1768,7 @@ namespace katzerle
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(362, 641);
+            this.tabPage2.Size = new System.Drawing.Size(372, 641);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Slowfall and other Behavior";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1904,7 +1906,7 @@ namespace katzerle
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(362, 641);
+            this.tabPage3.Size = new System.Drawing.Size(372, 641);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Dev Box";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1942,6 +1944,17 @@ namespace katzerle
             this.BDefault.UseVisualStyleBackColor = true;
             this.BDefault.Click += new System.EventHandler(this.button1_Click);
             // 
+            // CBFootprints
+            // 
+            this.CBFootprints.AutoSize = true;
+            this.CBFootprints.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CBFootprints.Location = new System.Drawing.Point(6, 145);
+            this.CBFootprints.Name = "CBFootprints";
+            this.CBFootprints.Size = new System.Drawing.Size(140, 17);
+            this.CBFootprints.TabIndex = 16;
+            this.CBFootprints.Text = "Search Footprints (MoP)";
+            this.CBFootprints.UseVisualStyleBackColor = true;
+            // 
             // RarekillerUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1977,18 +1990,18 @@ namespace katzerle
             this.tabPage4.ResumeLayout(false);
             this.groupBox15.ResumeLayout(false);
             this.groupBox15.PerformLayout();
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
             this.groupBox14.ResumeLayout(false);
             this.groupBox14.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox13.ResumeLayout(false);
             this.groupBox13.PerformLayout();
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
-            this.groupBox10.ResumeLayout(false);
-            this.groupBox10.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.tabPage2.ResumeLayout(false);
@@ -2155,6 +2168,7 @@ namespace katzerle
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button CBUncheckAllMoP;
         private System.Windows.Forms.Button CBCheckAllMoP;
+        private System.Windows.Forms.CheckBox CBFootprints;
     }
 }
 

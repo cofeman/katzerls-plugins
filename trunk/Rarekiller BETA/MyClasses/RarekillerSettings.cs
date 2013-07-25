@@ -122,6 +122,7 @@ namespace katzerle
         public bool TameByID = false;
         public string TameMobID = "";
         public Int32 Tamedistance = 12;
+        public bool Footprints = false;
         // Slowfall
         public bool UseSlowfall = true;
         public bool Cloak = false;
@@ -164,7 +165,7 @@ namespace katzerle
         public bool DeveloperLogs = false;
         public bool MoPRaresDeveloper = true;
 //Developer Testcases
-        public bool TestCaseDormus = true;
+        public bool TestCaseDormus = false;
         public bool TestRaptorNest = false;
         public bool TestFigurineInteract = false;
         public bool TestcaseTamer = false;
@@ -308,6 +309,12 @@ namespace katzerle
                 }
 
                 // Tamer
+                xvar = xml.SelectSingleNode("//Rarekiller/Footprints");
+                if (xvar != null)
+                {
+                    Footprints = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Footprints.ToString());
+                }
                 xvar = xml.SelectSingleNode("//Rarekiller/NotKillTameable");
                 if (xvar != null)
                 {

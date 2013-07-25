@@ -36,7 +36,7 @@ namespace katzerle
 		public static string name { get { return "Rarekiller"; } }
 		public override string Name { get { return name; } }
 		public override string Author { get { return "katzerle"; } }
-		private readonly static Version _version = new Version(4, 2);
+		private readonly static Version _version = new Version(4, 3);
 		public override Version Version { get { return _version; } }
 		public override string ButtonText { get { return "Settings"; } }
 		public override bool WantButton { get { return true; } }
@@ -77,7 +77,7 @@ namespace katzerle
 			UpdatePlugin();
 
             Settings.Load();
-            Logging.Write(Colors.MediumPurple, "Rarekiller 4.2 BETA loaded");
+            Logging.Write(Colors.MediumPurple, "Rarekiller 4.3 BETA loaded");
             if (Me.Class != WoWClass.Hunter)
             {
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Tamer: I'm no Hunter. Deactivate the Tamer Part");
@@ -85,6 +85,7 @@ namespace katzerle
                 Settings.TameDefault = false;
                 Settings.TameMobID = "";
                 Settings.Hunteractivated = false;
+                Settings.Footprints = false;
             }
             if (Me.Race != WoWRace.NightElf)
             {
@@ -587,6 +588,9 @@ namespace katzerle
                         if (Me.HealthPercent > 30)
                             Tamer.findAndTameMob();
                     }
+
+                    if ((Me.Class == WoWClass.Hunter && Rarekiller.Settings.Footprints) || Rarekiller.Settings.TestcaseTamer)
+                        Tamer.findandfollowFootsteps();
                     #endregion
 
                     #region Rarekiller
@@ -640,14 +644,10 @@ namespace katzerle
                         //Voidcloud
                         if (MoPRares.getVoidcloudList != null && MoPRares.getVoidcloudList[0].Distance < (MoPRares.getVoidcloudList[0].Radius * 1.6f))
                             MoPRares.AvoidEnemyAOE(Me.Location, MoPRares.getVoidcloudList, "Voidcloud", 15);
-
-                        //if (MoPRares.MoguSorcerer.CastingSpellId == 125241)
-                        //    MoPRares.AvoidEnemyCast(MoPRares.MoguSorcerer, 80, 7);
-
                     }
                     #endregion
 
-                    #region Mogu Warrior not working - Devastating Arc
+                    #region Mogu Warrior working
                     if (MoPRares.MoguWarrior != null)
                     {
                         // Developer Thing (ToDo Remove)
@@ -658,9 +658,8 @@ namespace katzerle
                         }
                         
                         // Devastating Arc
-                        while (MoPRares.MoguWarrior.CastingSpellId == 124946)
-                            WoWMovement.Move(WoWMovement.MovementDirection.Forward);
-							
+                        while (MoPRares.MoguWarrior.CastingSpellId == 124946 && (Me.Location.Distance(MoPRares.MoguWarrior.Location) < 15 || !Me.IsBehind(MoPRares.MoguWarrior)))
+                            WoWMovement.Move(WoWMovement.MovementDirection.Forward);		
                     }
                     #endregion
 
@@ -705,7 +704,7 @@ namespace katzerle
                     }
                     #endregion
 
-                    #region Mantid not working - Tornado + Blade Flurry
+                    #region Mantid working but not very well
                     if (MoPRares.Mantid != null)
                     {
                         // Tornado
@@ -714,7 +713,7 @@ namespace katzerle
 
                         if (MoPRares.Tornado != null)
                         {
-                            while (Me.Location.Distance(MoPRares.Tornado.Location) < 10)
+                            while (Me.Location.Distance(MoPRares.Tornado.Location) < 15)
                                 WoWMovement.Move(WoWMovement.MovementDirection.StrafeLeft);
                         }
 
@@ -722,7 +721,7 @@ namespace katzerle
                         //    MoPRares.AvoidEnemyAOE(Me.Location, MoPRares.getTornadoList, "Tornado", 20);
 
                         //Blade Flurry
-                        while (MoPRares.Mantid.CastingSpellId == 125370 && Me.Location.Distance(MoPRares.Mantid.Location) < 15)
+                        while (MoPRares.Mantid.CastingSpellId == 125370 && (Me.Location.Distance(MoPRares.Mantid.Location) < 15 || !Me.IsBehind(MoPRares.Mantid)))
                             WoWMovement.Move(WoWMovement.MovementDirection.Forward);
                     }
                     #endregion

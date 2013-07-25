@@ -1,0 +1,4 @@
+\\defthw9900tsto.ww002.siemens.net\walttasj$O$\Tanja Privat\Programmieren\in Arbeit\RareKiller\obj\x86\Release\ResolveAssemblyReference.cache
+\\defthw9900tsto.ww002.siemens.net\walttasj$O$\Tanja Privat\Programmieren\in Arbeit\RareKiller\obj\x86\Release\katzerle.RarekillerUI.resources
+\\defthw9900tsto.ww002.siemens.net\walttasj$O$\Tanja Privat\Programmieren\in Arbeit\RareKiller\obj\x86\Release\GenerateResource.read.1.tlog
+\\defthw9900tsto.ww002.siemens.net\walttasj$O$\Tanja Privat\Programmieren\in Arbeit\RareKiller\obj\x86\Release\GenerateResource.write.1.tlog

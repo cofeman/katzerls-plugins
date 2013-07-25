@@ -30,6 +30,7 @@ namespace katzerle
     {
         public static LocalPlayer Me = StyxWoW.Me;
         private static Stopwatch BlacklistTimer = new Stopwatch();
+        private static Stopwatch Alerttimer = new Stopwatch();
         
         public void findAndTameMob()
         {
@@ -227,6 +228,163 @@ namespace katzerle
                     Logging.Write(Colors.MediumPurple, "Rarekiller Part Tamer: Blacklist Mob for 5 Minutes.");
                     return;
                 }
+            }
+        }
+
+        public void findandfollowFootsteps()
+        {
+            if (Rarekiller.Settings.DeveloperLogs)
+                Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Scan for Tamer");
+            if (Me.Class != WoWClass.Hunter && !Rarekiller.Settings.TestcaseTamer)
+                return;
+
+            #region create a List with Objects in Reach
+            // ----------------- Generate a List with all wanted Nests found in Object Manager ---------------------		
+            ObjectManager.Update();
+            WoWGameObject Footprint = ObjectManager.GetObjectsOfType<WoWGameObject>()
+                .Where(o => (!Blacklist.Contains(o.Guid, Rarekiller.Settings.Flags) && (
+                    (o.Entry == 214430) //patrannache footprint
+                    || (o.Entry == 214429) //rockhide the immovable footprint
+                    || (o.Entry == 214431) //bloodtooth footprint
+                    || (o.Entry == 214432) //hexapos footprint
+                    || (o.Entry == 214433) //stompy footprint
+                    || (o.Entry == 214434) //bristlespine footprint
+                    || (o.Entry == 214435) //portent footprint
+                    || (o.Entry == 214436) //savage footprint
+                    || (o.Entry == 214437) //glimmer footprint
+                    || ((o.Entry == 210565) && Rarekiller.Settings.TestcaseTamer) //Testcase for Developer
+                )))
+                .OrderBy(o => o.Distance).FirstOrDefault();
+            #endregion
+
+            List<WoWUnit> RareList = ObjectManager.GetObjectsOfType<WoWUnit>()
+                .Where(r => ((r.CreatureRank == Styx.WoWUnitClassificationType.Rare) && r.Level > 85 && !r.IsDead)).OrderBy(r => r.Distance).ToList();
+
+            Logging.Write(Colors.MediumPurple, "Rarekiller: Found a Footprint {0} ID {1}", Footprint.Name, Footprint.Entry);
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Tamer: Mob Location: {0} / {1} / {2}", Convert.ToString(Footprint.X), Convert.ToString(Footprint.Y), Convert.ToString(Footprint.Z));
+            if (Rarekiller.Settings.LUAoutput)
+                Lua.DoString("print('NPCScan: Find {0} ID {1}')", Footprint.Name, Footprint.Entry);
+
+            #region Alert
+            // ----------------- Alert ---------------------
+            if (Rarekiller.Settings.Alert)
+            {
+                if (File.Exists(Rarekiller.Settings.SoundfileFoundRare))
+                    new SoundPlayer(Rarekiller.Settings.SoundfileFoundRare).Play();
+                else if (File.Exists(Rarekiller.Soundfile))
+                    new SoundPlayer(Rarekiller.Soundfile).Play();
+                else
+                    Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Collector: playing Soundfile failes");
+            }
+            #endregion
+
+            #region don't follow, if ...
+            // ----------------- don't collect if Rare Pandaria Elite Around
+            if (RareList != null)
+            {
+                foreach (WoWUnit r in RareList)
+                {
+                    if (r.Location.Distance(Footprint.Location) < 30)
+                    {
+                        Logging.Write(Colors.MediumPurple, "Rarekiller Part Collector: Can't reach Object because there's a Rare Elite around, Blacklist and move on", Footprint.Name);
+                        if (Rarekiller.Settings.LUAoutput)
+                            Lua.DoString("print('NPCScan: Object Elite Rare around')", Footprint.Name);
+                        Blacklist.Add(Footprint.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
+                        return;
+                    }
+                }
+            }
+
+            if (Me.Combat)
+            {
+                Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Collector: ... but first I have to finish fighting another Mob.");
+                if (Rarekiller.Settings.LUAoutput)
+                    Lua.DoString("print('NPCScan: First finish combat')");
+                return;
+            }
+            if (Me.IsOnTransport)
+            {
+                Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Collector: ... but I'm on a Transport.");
+                if (Rarekiller.Settings.LUAoutput)
+                    Lua.DoString("print('NPCScan: I'm on Transport')");
+                return;
+            }
+            #endregion
+
+            while (Me.IsCasting)
+            {
+                Thread.Sleep(100);
+            }
+
+            while (Footprint != null)
+            {
+                if (Rarekiller.inCombat) return;
+                
+                #region Move to Object
+                // ----------------- Move to Object Part ---------------------
+                Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part MoveTo: Move to Object");
+                BlacklistTimer.Reset();
+                BlacklistTimer.Start();
+
+                while (Footprint.Location.Distance(Me.Location) > 10)
+                {
+                    Flightor.MoveTo(Footprint.Location);
+                    Thread.Sleep(100);
+                    // ----------------- Security  ---------------------
+                    if (Rarekiller.inCombat) return;
+                    if (Rarekiller.Settings.BlacklistCheck && (BlacklistTimer.Elapsed.TotalSeconds > (Convert.ToInt32(Rarekiller.Settings.BlacklistTime))))
+                    {
+                        Logging.Write(Colors.MediumPurple, "Rarekiller Part MoveTo: Can't reach Object {0}, Blacklist and Move on", Footprint.Name);
+                        Blacklist.Add(Footprint.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
+                        BlacklistTimer.Reset();
+                        WoWMovement.MoveStop();
+                        Rarekiller.Settings.Forceground = false;
+                        return;
+                    }
+                }
+                BlacklistTimer.Reset();
+                Thread.Sleep(300);
+                WoWMovement.MoveStop();
+                #endregion
+                    
+                #region Alert
+                if (!Alerttimer.IsRunning)
+                {
+                    Alerttimer.Reset();
+                    Alerttimer.Start();
+                }
+                // ----------------- Alert ---------------------
+                if (Rarekiller.Settings.Alert && Alerttimer.Elapsed.TotalSeconds > 20)
+                {
+                    if (File.Exists(Rarekiller.Settings.SoundfileFoundRare))
+                        new SoundPlayer(Rarekiller.Settings.SoundfileFoundRare).Play();
+                    else if (File.Exists(Rarekiller.Soundfile))
+                        new SoundPlayer(Rarekiller.Soundfile).Play();
+                    else
+                        Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Collector: playing Soundfile failes");
+                    Alerttimer.Reset();
+                    Alerttimer.Start();
+                }
+                #endregion
+
+                #region create a List with Objects in Reach
+                // ----------------- Generate a List with all wanted Nests found in Object Manager ---------------------		
+                ObjectManager.Update();
+                Footprint = ObjectManager.GetObjectsOfType<WoWGameObject>()
+                    .Where(o => (!Blacklist.Contains(o.Guid, Rarekiller.Settings.Flags) && (
+                        (o.Entry == 214430) //patrannache footprint
+                        || (o.Entry == 214429) //rockhide the immovable footprint
+                        || (o.Entry == 214431) //bloodtooth footprint
+                        || (o.Entry == 214432) //hexapos footprint
+                        || (o.Entry == 214433) //stompy footprint
+                        || (o.Entry == 214434) //bristlespine footprint
+                        || (o.Entry == 214435) //portent footprint
+                        || (o.Entry == 214436) //savage footprint
+                        || (o.Entry == 214437) //glimmer footprint
+                        || ((o.Entry == 210565) && Rarekiller.Settings.TestcaseTamer) //Testcase for Developer
+                    )))
+                    .OrderBy(o => o.Distance).FirstOrDefault();
+                #endregion 
             }
         }
     }
