@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Rarekiller will kill these Mobs-->
+<KillMob>
+	<Mob Entry="99999999" Name="DefaulMob" />
+</KillMob>

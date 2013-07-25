@@ -69,9 +69,11 @@ namespace katzerle
             CBTameByID.Checked = Rarekiller.Settings.TameByID;
             CBNotKillTameable.Checked = Rarekiller.Settings.NotKillTameable;
             TBTameID.Text = Rarekiller.Settings.TameMobID;
+            CBFootprints.Checked = Rarekiller.Settings.Footprints;
             CBTameDefault.Enabled = Rarekiller.Settings.Hunteractivated;
             CBTameByID.Enabled = Rarekiller.Settings.Hunteractivated;
             TBTameID.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBFootprints.Enabled = Rarekiller.Settings.Hunteractivated;
             // Slowfall
             CBUseSlowfall.Checked = Rarekiller.Settings.UseSlowfall;
             RBCloak.Checked = Rarekiller.Settings.Cloak;
@@ -381,6 +383,7 @@ namespace katzerle
             Rarekiller.Settings.MobID = TBHuntByID.Text;
             Rarekiller.Settings.BlacklistCheck = CBBlacklistCheck.Checked;
             Rarekiller.Settings.BlacklistTime = TBBlacklistTime.Text;
+            Rarekiller.Settings.Footprints = CBFootprints.Checked;
             //Tamer
             Rarekiller.Settings.TameDefault = CBTameDefault.Checked;
             Rarekiller.Settings.TameByID = CBTameByID.Checked;
@@ -505,6 +508,7 @@ namespace katzerle
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: TameByID = {0}", CBTameByID.Checked.ToString());
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: NotKillTameable = {0}", CBNotKillTameable.Checked.ToString());
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: TameID = {0}", TBTameID.Text.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Footprints = {0}", CBFootprints.Checked.ToString());
             // Pullspell
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: DefaultPull = {0}", CBPull.Checked.ToString());
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Spell = {0}", TBPull.Text.ToString());
@@ -753,6 +757,11 @@ namespace katzerle
             //let's add another element (child of the root)
             element = xml.CreateElement("TameMobID");
             text = xml.CreateTextNode(TBTameID.Text.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("Footprints");
+            text = xml.CreateTextNode(CBFootprints.Checked.ToString());
             element.AppendChild(text);
             root.AppendChild(element);
 			
@@ -1289,9 +1298,11 @@ namespace katzerle
             CBTameByID.Checked = false;
             CBNotKillTameable.Checked = false;
             TBTameID.Text = "";
+            CBFootprints.Checked = false;
             CBTameDefault.Enabled = Rarekiller.Settings.Hunteractivated;
             CBTameByID.Enabled = Rarekiller.Settings.Hunteractivated;
             TBTameID.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBFootprints.Enabled = Rarekiller.Settings.Hunteractivated;
             // Slowfall
             CBUseSlowfall.Checked = true;
             RBCloak.Checked = false;
@@ -1401,6 +1412,7 @@ namespace katzerle
             Rarekiller.Settings.TameByID = CBTameByID.Checked;
             Rarekiller.Settings.NotKillTameable = CBNotKillTameable.Checked;
             Rarekiller.Settings.TameMobID = TBTameID.Text;
+            Rarekiller.Settings.Footprints = CBFootprints.Checked;
             // Slowfall
             Rarekiller.Settings.UseSlowfall = CBUseSlowfall.Checked;
             Rarekiller.Settings.Cloak = RBCloak.Checked;

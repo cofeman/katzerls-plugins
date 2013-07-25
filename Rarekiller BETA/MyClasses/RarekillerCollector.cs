@@ -99,7 +99,7 @@ namespace katzerle
                 }
                 #endregion
 
-                #region don't speak with, if ...
+                #region don't collect, if ...
                 if (o.Entry == 213970  || o.Entry == 213362)
                 {
                     Logging.Write(Colors.MediumPurple, "Rarekiller Part Collector: Can't reach Object because it is under Water {0}, Blacklist and Move on", o.Name);
@@ -240,8 +240,6 @@ namespace katzerle
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part MoveTo: Move to Object");
                 BlacklistTimer.Reset();
                 BlacklistTimer.Start();
-
-
 
 				while (o.Location.Distance(Me.Location) > 4)
 				{

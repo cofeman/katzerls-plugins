@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Rarekiller will not kill these Mobs-->
+<Blacklist>
+	<Mob Entry="9999999" Name="Default Mob" />
+</Blacklist>

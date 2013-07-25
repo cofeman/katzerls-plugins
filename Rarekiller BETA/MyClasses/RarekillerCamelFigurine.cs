@@ -255,9 +255,9 @@ namespace katzerle
         public void findAndKillDormus()
         {
             bool CastSuccess = false;
-			//Testcase Priest --> 51756 = Blutelfenjunge --> 50245 = Dormus
+			//Testcases --> 51756 = Blutelfenjunge --> 52008 = Resortangestellter --> 50245 = Dormus
             int IDDormus = 50245;
-            //Testcase Priest --> 6346 = Fear Ward --> Dormus' Rage = 93269
+            //Testcases --> 6346 = Fear Ward --> 974 = Earthsschild --> Dormus' Rage = 93269
             int IDDormusAura = 93269;
 
             if (Rarekiller.Settings.DeveloperLogs)
@@ -358,13 +358,13 @@ namespace katzerle
 					}
 					#endregion
                 }
-                else
+                else if (!Blacklist.Contains(Dormus.Guid, Rarekiller.Settings.Flags))
                 {
-                    Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: Found lootable {0}, move to him", Dormus.Name);
                     // ----------------- Loot Helper ---------------------
                     if (Dormus.CanLoot)
                     {
                         #region Loothelper
+                        Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: Found lootable {0}, move to him", Dormus.Name);
                         if (Me.Auras.ContainsKey("Flight Form"))
                             Lua.DoString("CancelShapeshiftForm()");
                         else if (Me.Mounted)
@@ -391,7 +391,7 @@ namespace katzerle
                             Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: Loot failed, try again");
                         #endregion
                     }
-                    else if (!Blacklist.Contains(Dormus.Guid, Rarekiller.Settings.Flags))
+                    else
                     {
                         Logging.Write(Colors.MediumPurple, "Rarekiller: Find {0}, but sadly he's dead", Dormus.Name);
                         Blacklist.Add(Dormus.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist60));
@@ -405,12 +405,13 @@ namespace katzerle
         {
             if (!StyxWoW.Me.IsFacing(Unit))
             { Unit.Face(); Thread.Sleep(300); }
-
+			Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: Avoid Camel Spit");
             //94967 = Aura Spit
             while (Me.HasAura(94967))
                 WoWMovement.Move(WoWMovement.MovementDirection.StrafeRight);
             WoWMovement.MoveStop();
             Unit.Face();
+			Logging.Write(Colors.MediumPurple, "Rarekiller Part Dormus: successfully avoided Camel Spit");
         }
     }
 }
