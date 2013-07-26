@@ -37,6 +37,16 @@ namespace katzerle
         public static WoWPoint DormusPoint = new WoWPoint(-5726.439, 673.6976, 163.293);
         public static WoWPoint LandingPoint64227 = new WoWPoint(2359.229, 2484.88, 686.5128);
 
+        #region Unit
+        public WoWUnit Dormus
+        {
+            get
+            {
+                return ObjectManager.GetObjectsOfType<WoWUnit>().Where(u => (u.Entry == 50245) && !u.IsDead).OrderBy(u => u.Distance).FirstOrDefault();
+                }
+        }
+        #endregion
+
         public void findAndPickupObject()
         {
             if (Rarekiller.Settings.DeveloperLogs)

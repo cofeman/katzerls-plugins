@@ -36,7 +36,7 @@ namespace katzerle
 		public static string name { get { return "Rarekiller"; } }
 		public override string Name { get { return name; } }
 		public override string Author { get { return "katzerle"; } }
-		private readonly static Version _version = new Version(4, 3);
+		private readonly static Version _version = new Version(4, 4);
 		public override Version Version { get { return _version; } }
 		public override string ButtonText { get { return "Settings"; } }
 		public override bool WantButton { get { return true; } }
@@ -77,7 +77,7 @@ namespace katzerle
 			UpdatePlugin();
 
             Settings.Load();
-            Logging.Write(Colors.MediumPurple, "Rarekiller 4.3 BETA loaded");
+            Logging.Write(Colors.MediumPurple, "Rarekiller 4.4 BETA loaded");
             if (Me.Class != WoWClass.Hunter)
             {
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Part Tamer: I'm no Hunter. Deactivate the Tamer Part");
@@ -752,7 +752,7 @@ namespace katzerle
                     #endregion
 
                     #region Dormus - Just dump AEO Effects and Avoid Spit
-                    if (MoPRares.Dormus != null)
+                    if (Camel.Dormus != null)
                     {
                         // Developer Thing (ToDo Remove)
                         if (DumpAuraTimer.Elapsed.TotalSeconds > 5 && Rarekiller.Settings.MoPRaresDeveloper)
@@ -763,7 +763,7 @@ namespace katzerle
 
                         //94967 = Aura Spit
                         if (Me.HasAura(94967))
-                            Camel.AvoidSpit(MoPRares.Dormus);
+                            Camel.AvoidSpit(Camel.Dormus);
 						
                         //if (MoPRares.Dormus.Location.Distance(Me.Location) > 25)
                         //    Navigator.MoveTo(MoPRares.Dormus.Location);
