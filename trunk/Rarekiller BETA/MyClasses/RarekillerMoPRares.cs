@@ -114,15 +114,7 @@ namespace katzerle
                 return ObjectManager.GetObjectsOfType<WoWUnit>().Where(u => (u.Entry == 64267) && u.Distance < 10 && !u.IsDead).OrderBy(u => u.Distance).FirstOrDefault();
             }
         }
-
-        public WoWUnit Dormus
-        {
-            get
-            {
-                return ObjectManager.GetObjectsOfType<WoWUnit>().Where(u => (u.Entry == 50245) && !u.IsDead).OrderBy(u => u.Distance).FirstOrDefault();
-                }
-        }
-        #endregion
+		#endregion
 
         #region Avoid Enemy AOE Behaviors - not yet tested!
 
