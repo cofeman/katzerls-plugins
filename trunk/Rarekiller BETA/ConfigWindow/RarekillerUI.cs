@@ -3,8 +3,6 @@
 //				      Rarekiller - Plugin
 //						Autor: katzerle
 //			Honorbuddy Plugin - www.thebuddyforum.com
-//    Credits to highvoltz, bloodlove, SMcCloud, Lofi, ZapMan 
-//                and all the brave Testers
 //
 //==================================================================
 using System;
@@ -69,7 +67,6 @@ namespace katzerle
             CBTameByID.Checked = Rarekiller.Settings.TameByID;
             CBNotKillTameable.Checked = Rarekiller.Settings.NotKillTameable;
             TBTameID.Text = Rarekiller.Settings.TameMobID;
-            CBFootprints.Checked = Rarekiller.Settings.Footprints;
             CBTameDefault.Enabled = Rarekiller.Settings.Hunteractivated;
             CBTameByID.Enabled = Rarekiller.Settings.Hunteractivated;
             TBTameID.Enabled = Rarekiller.Settings.Hunteractivated;
@@ -111,8 +108,8 @@ namespace katzerle
             CBSelena50766.Checked = Rarekiller.Settings.Selena50766; 
             CBZai50769.Checked = Rarekiller.Settings.Zai50769;                    
             CBSahn50780.Checked = Rarekiller.Settings.Sahn50780; 
-            CBNalash50776.Checked = Rarekiller.Settings.Nalash50776; 
-            CBGarlok50739.Checked = Rarekiller.Settings.Garlok50739; 
+            CBNalash50776.Checked = Rarekiller.Settings.Nalash50776;
+            CBGarlok50739.Checked = Rarekiller.Settings.Garlok50739;
             CBKaltik50749.Checked = Rarekiller.Settings.Kaltik50749;                     
             CBLithik50734.Checked = Rarekiller.Settings.Lithik50734; 
             CBNallak50364.Checked = Rarekiller.Settings.Nallak50364; 
@@ -136,7 +133,7 @@ namespace katzerle
             CBAiLi50821.Checked = Rarekiller.Settings.AiLi50821;                     
             CBAhone50817.Checked = Rarekiller.Settings.Ahone50817; 
             CBAiRan50822.Checked = Rarekiller.Settings.AiRan50822; 
-            CBRuun50816.Checked = Rarekiller.Settings.Ruun50816; 
+            CBRuun50816.Checked = Rarekiller.Settings.Ruun50816;
             CBNasra50811.Checked = Rarekiller.Settings.Nasra50811;                    
             CBUrobi50808.Checked = Rarekiller.Settings.Urobi50808; 
             CBYul50820.Checked = Rarekiller.Settings.Yul50820; 
@@ -154,6 +151,11 @@ namespace katzerle
             CBKorda50332.Checked = Rarekiller.Settings.Korda50332; 
             CBLon50333.Checked = Rarekiller.Settings.Lon50333;
             CBYorik50336.Checked = Rarekiller.Settings.Yorik50336;
+
+            CBBlingtron.Checked = Rarekiller.Settings.Blingtron && Rarekiller.Settings.BETA;
+            CBFootprints.Checked = Rarekiller.Settings.Footprints && Rarekiller.Settings.BETA;
+            CBBlingtron.Enabled = Rarekiller.Settings.BETA;
+            CBFootprints.Enabled = Rarekiller.Settings.BETA;
         }
 		
         private void RBItem_CheckedChanged(object sender, EventArgs e)
@@ -170,6 +172,7 @@ namespace katzerle
             }
 
         }
+
         private void CBSpell_CheckedChanged(object sender, EventArgs e)
         {
             if (!CBSpell.Checked)
@@ -262,7 +265,7 @@ namespace katzerle
 //Mists of Pandaria
             if (Me.Level < 90)
             {
-                Logging.Write(Colors.MediumPurple, "Rarekiller Part Spells: Don't kill Pandaria Rares under Level 90");
+                Logging.Write(Colors.MediumPurple, "Rarekiller: Don't kill Pandaria Rares under Level 90");
                 CBMOP.Checked = false;
             }
 
@@ -270,7 +273,7 @@ namespace katzerle
 //Pull Spell
             if (!CBPull.Checked && !(SpellManager.HasSpell(TBPull.Text)))
             {
-                Logging.Write(Colors.MediumPurple, "Rarekiller Part Spells: Don't have your configured Pull Spell - setting to Default");
+                Logging.Write(Colors.MediumPurple, "Rarekiller: Don't have your configured Pull Spell - setting to Default");
                 CBPull.Checked = true;
                 CBPull2.Checked = false;
                 TBPull.Text = "";
@@ -286,20 +289,20 @@ namespace katzerle
             if (!CBPull.Checked && (Convert.ToInt64(TBRange.Text) > Convert.ToInt64(Rarekiller.Spells.RangeCheck(TBPull.Text))))
             {
                 TBRange.Text = Rarekiller.Spells.RangeCheck(TBPull.Text);
-                Logging.WriteDiagnostic(Colors.MediumPurple, "Set Range to {0} because of Low-Ranged Customized Spell", Rarekiller.Spells.RangeCheck(TBPull.Text));
+                Logging.Write(Colors.MediumPurple, "Set Range to {0} because of Low-Ranged Customized Spell", Rarekiller.Spells.RangeCheck(TBPull.Text));
             }
 
 // Spellrange Test Default Pull Spell
             if (!CBPull.Checked && (Convert.ToInt64(TBRange.Text) > Convert.ToInt64(Rarekiller.Spells.RangeCheck(Rarekiller.Spells.FastPullspell))))
             {
                 TBRange.Text = Rarekiller.Spells.RangeCheck(TBPull.Text);
-                Logging.WriteDiagnostic(Colors.MediumPurple, "Set Range to {0} because of Low-Ranged Default Spell", Rarekiller.Spells.RangeCheck(TBPull.Text));
+                Logging.Write(Colors.MediumPurple, "Set Range to {0} because of Low-Ranged Default Spell", Rarekiller.Spells.RangeCheck(TBPull.Text));
             }
 
             if ((CBMOP.Checked || CBWotlk.Checked || CBBC.Checked || CBCata.Checked || CBLowRAR.Checked || CBHuntByID.Checked)
                 && CBPull.Checked && !(SpellManager.HasSpell(Rarekiller.Spells.FastPullspell)))
             {
-                Logging.Write(Colors.MediumPurple, "Rarekiller Part Spells: Don't have your Pull Spell - please config one");
+                Logging.Write(Colors.MediumPurple, "Rarekiller: Don't have your Pull Spell - please config one");
                 CBKillList.Checked = false;
                 CBWotlk.Checked = false;
                 CBBC.Checked = false;
@@ -311,19 +314,19 @@ namespace katzerle
             if (CBTLPD.Checked && CBPull.Checked
                 && !(SpellManager.HasSpell(Rarekiller.Spells.FastPullspell)))
             {
-                Logging.Write(Colors.MediumPurple, "Rarekiller Part Spells: Don't have a valid Pull Spell for TLPD - please check your Config");
+                Logging.Write(Colors.MediumPurple, "Rarekiller: Don't have a valid Pull Spell for TLPD - please check your Config");
                 CBTLPD.Checked = false;
             }
 
 //Hunt and Tame by ID
             if (CBHuntByID.Checked && (TBHuntByID.Text == ""))
             {
-                Logging.Write(Colors.MediumPurple, "Rarekiller: You must insert the ID of the Mob you want to hunt");
+                Logging.Write(Colors.MediumPurple, "Rarekiller: You must insert the ID of the Unit you want to hunt");
                 CBHuntByID.Checked = false;
             }
             if (CBTameByID.Checked && (TBTameID.Text == ""))
             {
-                Logging.Write(Colors.MediumPurple, "Rarekiller: You must insert the ID of the Mob you want to tame");
+                Logging.Write(Colors.MediumPurple, "Rarekiller: You must insert the ID of the Unit you want to tame");
                 CBTameByID.Checked = false;
             }
 
@@ -376,6 +379,7 @@ namespace katzerle
             Rarekiller.Settings.RaptorNest = CBRaptorNest.Checked;
             Rarekiller.Settings.DarkSoil = CBDarkSoil.Checked;
             Rarekiller.Settings.ObjectsCollector = CBObjects.Checked;
+            Rarekiller.Settings.Blingtron = CBBlingtron.Checked;
             Rarekiller.Settings.Aeonaxx = CBAeonaxx.Checked;
 
             // Hunt by ID
@@ -496,6 +500,7 @@ namespace katzerle
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: DarkSoil = {0}", CBDarkSoil.Checked.ToString());
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: ObjectsCollect = {0}", CBObjects.Checked.ToString());
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: AnotherMansTreasure = {0}", CBAnotherMansTreasure.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Blingtron = {0}", CBBlingtron.Checked.ToString());
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: InteractNPC = {0}", CBInteractNPC.Checked.ToString());
             // Problem Mobs
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Vyragosa = {0}", CBVyragosa.Checked.ToString());
@@ -706,6 +711,11 @@ namespace katzerle
             //let's add another element (child of the root)
             element = xml.CreateElement("AnotherMansTreasure");
             text = xml.CreateTextNode(CBAnotherMansTreasure.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("Blingtron");
+            text = xml.CreateTextNode(CBBlingtron.Checked.ToString());
             element.AppendChild(text);
             root.AppendChild(element);
             //let's add another element (child of the root)
@@ -1273,6 +1283,8 @@ namespace katzerle
             CBRaptorNest.Checked = true;
             CBDarkSoil.Checked = false;
             CBAnotherMansTreasure.Checked = false;
+            CBBlingtron.Checked = false;
+            CBBlingtron.Enabled = Rarekiller.Settings.BETA;
             CBInteractNPC.Checked = false;
             CBObjects.Checked = true;
             // Hunt by ID
@@ -1290,8 +1302,8 @@ namespace katzerle
             CBGuild.Checked = false;
             CBKeyer.Checked = true;
             CBShadowmeld.Checked = false;
-            TBSoundfileWisper.Text = Rarekiller.Soundfile;
-            TBSoundfileGuild.Text = Rarekiller.Soundfile;
+            TBSoundfileWisper.Text = Rarekiller.Soundfile2;
+            TBSoundfileGuild.Text = Rarekiller.Soundfile2;
             TBSoundfileFoundRare.Text = Rarekiller.Soundfile;
             //Tamer
             CBTameDefault.Checked = false;
@@ -1299,6 +1311,7 @@ namespace katzerle
             CBNotKillTameable.Checked = false;
             TBTameID.Text = "";
             CBFootprints.Checked = false;
+            CBFootprints.Enabled = Rarekiller.Settings.BETA;
             CBTameDefault.Enabled = Rarekiller.Settings.Hunteractivated;
             CBTameByID.Enabled = Rarekiller.Settings.Hunteractivated;
             TBTameID.Enabled = Rarekiller.Settings.Hunteractivated;
@@ -1306,11 +1319,11 @@ namespace katzerle
             // Slowfall
             CBUseSlowfall.Checked = true;
             RBCloak.Checked = false;
-            CBItem.Checked = true;
-            TBSlowfallItem.Text = "Snowfall Lager";
+            CBItem.Checked = false;
+            TBSlowfallItem.Text = "";
             CBSpell.Checked = false;
             TBSlowfallSpell.Text = "";
-            TBFalltimer.Text = "900";
+            TBFalltimer.Text = "500";
             // Pullspell
             CBPull.Checked = true;
             CBPull2.Checked = false;
@@ -1385,7 +1398,6 @@ namespace katzerle
             CBLon50333.Checked = false;
             CBYorik50336.Checked = false;
 
-			
 			// Variablen nach Settings übernehmen
             // Addons
             Rarekiller.Settings.MOP = CBMOP.Checked;
@@ -1398,6 +1410,7 @@ namespace katzerle
 			Rarekiller.Settings.Poseidus = CBPoseidus.Checked;
             Rarekiller.Settings.Aeonaxx = CBAeonaxx.Checked;
             Rarekiller.Settings.RaptorNest = CBRaptorNest.Checked;
+            Rarekiller.Settings.Blingtron = CBBlingtron.Checked;
             Rarekiller.Settings.DarkSoil = CBDarkSoil.Checked;
             Rarekiller.Settings.InteractNPC = CBInteractNPC.Checked;
             Rarekiller.Settings.AnotherMansTreasure = CBAnotherMansTreasure.Checked;
@@ -1546,14 +1559,14 @@ namespace katzerle
             CBScritch50831.Checked = true;
             CBSpriggin50830.Checked = true;
             CBYowler50832.Checked = true;
-            //CBAethis50750.Checked = true;
-            //CBCournith50768.Checked = true;
-            //CBEshelon50772.Checked = true;
-            //CBSelena50766.Checked = true;
-            //CBZai50769.Checked = true;
-            //CBSahn50780.Checked = true;
-            //CBNalash50776.Checked = true;
-            CBGarlok50739.Checked = true;
+            CBAethis50750.Checked = true;
+            CBCournith50768.Checked = true;
+            CBEshelon50772.Checked = true;
+            CBSelena50766.Checked = true;
+            CBZai50769.Checked = true;
+            CBSahn50780.Checked = true;
+            CBNalash50776.Checked = true;
+            //CBGarlok50739.Checked = true;
             CBKaltik50749.Checked = true;
             CBLithik50734.Checked = true;
             //CBNallak50364.Checked = true;
@@ -1574,13 +1587,13 @@ namespace katzerle
             CBMorgrinn50350.Checked = true;
             CBQunas50352.Checked = true;
             CBUrgolax50359.Checked = true;
-            CBAiLi50821.Checked = true;
-            CBAhone50817.Checked = true;
-            CBAiRan50822.Checked = true;
-            CBRuun50816.Checked = true;
+            //CBAiLi50821.Checked = true;
+            //CBAhone50817.Checked = true;
+            //CBAiRan50822.Checked = true;
+            //CBRuun50816.Checked = true;
             CBNasra50811.Checked = true;
             CBUrobi50808.Checked = true;
-            CBYul50820.Checked = true;
+            //CBYul50820.Checked = true;
             CBArness50787.Checked = true;
             CBMoldo50806.Checked = true;
             CBNessos50789.Checked = true;

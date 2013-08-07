@@ -6,7 +6,7 @@
 	<Spell Class = "Warrior" Name="Disrupting Shout" />
 	<Spell Class = "Hunter" Name="Silencing Shot" />
 	<Spell Class = "Rogue" Name="Kick" />
-	<Spell Class = "DeathKnight" Name="Strangulate" />
+	<Spell Class = "DeathKnight" Name="Mind Freeze" />
 	<Spell Class = "Paladin" Name="Rebuke" />
 	<Spell Class = "Shaman" Name="Wind Shear" />				
 	<Spell Class = "Warlock" Name="Shadowfury" />

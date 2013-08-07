@@ -46,7 +46,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="WOWCam">
-      <HintPath>..\..\..\..\..\..\Helferleins\Honorbuddy 2.5.7291.636\WOWCam.exe</HintPath>
+      <HintPath>..\..\..\..\..\..\Helferleins\Honorbuddy 2.5.7496.650\WOWCam.exe</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
