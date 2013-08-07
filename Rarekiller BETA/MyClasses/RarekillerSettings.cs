@@ -3,8 +3,6 @@
 //				      Rarekiller - Plugin
 //						Autor: katzerle
 //			Honorbuddy Plugin - www.thebuddyforum.com
-//    Credits to highvoltz, bloodlove, SMcCloud, Lofi, ZapMan 
-//                and all the brave Testers
 //
 //==================================================================
 using System;
@@ -15,6 +13,7 @@ using System.Windows.Media;
 using Styx;
 using Styx.Common;
 using Styx.CommonBot;
+using Styx.WoWInternals.WoWObjects;
 
 
 namespace katzerle
@@ -49,6 +48,7 @@ namespace katzerle
         public bool RaptorNest = true;
         public bool DarkSoil = false;
         public bool ObjectsCollector = true;
+        public bool Blingtron = false;
         public bool AnotherMansTreasure = false;
         public bool InteractNPC = false;
 		public bool Poseidus = true;
@@ -126,15 +126,15 @@ namespace katzerle
         // Slowfall
         public bool UseSlowfall = true;
         public bool Cloak = false;
-        public bool Item = true;
+        public bool Item = false;
         public bool Spell = false;
-        public string Falltimer = "900";
+        public string Falltimer = "500";
         public string SlowfallSpell = "";
-        public string SlowfallItem = "Snowfall Lager";
+        public string SlowfallItem = "";
         // Pullspell
         public bool DefaultPull = true;
         public string Pull = "";
-        public string Range = "10";
+        public string Range = "5";
         public bool Vyragosa = true;
         public bool Blazewing = false;
         //Misc
@@ -147,8 +147,8 @@ namespace katzerle
         public bool Guild = false;
         public bool Keyer = true;
         public bool Shadowmeld = false;
-		public string SoundfileWisper = Rarekiller.Soundfile;
-		public string SoundfileGuild = Rarekiller.Soundfile;
+        public string SoundfileWisper = Rarekiller.Soundfile2;
+        public string SoundfileGuild = Rarekiller.Soundfile2;
 		public string SoundfileFoundRare = Rarekiller.Soundfile;
         public bool LUAoutput = false;
 //Some other Stuff
@@ -158,21 +158,28 @@ namespace katzerle
         public Int64 Blacklist5 = 300;
         public Int64 Blacklist2 = 120;
         public BlacklistFlags Flags = BlacklistFlags.All;
+        public Int32 PullCounter = 0;
+        public Int32 MaxPullCounter = 3;
+        public ulong GuidCurrentPull = 0;
+        public Int64 BlacklistCounter = 0;
  	
 // Attentione for Developers		
 //Developer Things
         public bool DeveloperBoxActive = false;
-        public bool DeveloperLogs = false;
         public bool MoPRaresDeveloper = true;
+        public bool BETA = true;
 //Developer Testcases
         public bool TestCaseDormus = false;
         public bool TestRaptorNest = false;
         public bool TestFigurineInteract = false;
         public bool TestcaseTamer = false;
-        public bool Forceground = false;
         public bool ReachedDormusHelperpoint = false;
 
         // -------------- Load ConfigFile ---------------
+
+        /// <summary>
+        /// Loads the Configfile
+        /// </summary>
         public void Load()
         {
             //    XmlTextReader reader;
@@ -269,6 +276,12 @@ namespace katzerle
                 {
                     AnotherMansTreasure = Convert.ToBoolean(xvar.InnerText);
                     Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + AnotherMansTreasure.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Blingtron");
+                if (xvar != null)
+                {
+                    Blingtron = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Blingtron.ToString());
                 }
 				xvar = xml.SelectSingleNode("//Rarekiller/Poseidus");
                 if (xvar != null)
@@ -869,6 +882,122 @@ namespace katzerle
             {
                 Logging.WriteDiagnostic(Colors.Red, e.Message);
             }
+        }
+
+        public void DeactivateMoPRare(WoWUnit o)
+        {
+            if (o.Entry == 50828)
+                Bonobos50828 = false;
+            if (o.Entry == 50836)
+                IkIk50836 = false;
+            if (o.Entry == 50840)
+                Nanners50840 = false;
+            if (o.Entry == 50823)
+                Ferocious50823 = false;
+            if (o.Entry == 50831)
+                Scritch50831 = false;
+            if (o.Entry == 50830)
+                Spriggin50830 = false;
+            if (o.Entry == 50832)
+                Yowler50832 = false;
+            if (o.Entry == 50750)
+                Aethis50750 = false;
+            if (o.Entry == 50768)
+                Cournith50768 = false;
+            if (o.Entry == 50772)
+                Eshelon50772 = false;
+            if (o.Entry == 50766)
+                Selena50766 = false;
+            if (o.Entry == 50769)
+                Zai50769 = false;
+            if (o.Entry == 50780)
+                Sahn50780 = false;
+            if (o.Entry == 50776)
+                Nalash50776 = false;
+            if (o.Entry == 50739)
+                Garlok50739 = false;
+            if (o.Entry == 50749)
+                Kaltik50749 = false;
+            if (o.Entry == 50734)
+                Lithik50734 = false;
+            if (o.Entry == 50364)
+                Nallak50364 = false;
+            if (o.Entry == 50363)
+                Kraxik50363 = false;
+            if (o.Entry == 50733)
+                Skithik50733 = false;
+            if (o.Entry == 50388)
+                Torik50388 = false;
+            if (o.Entry == 50341)
+                Borginn50341 = false;
+            if (o.Entry == 50349)
+                Kang50349 = false;
+            if (o.Entry == 50340)
+                Gaarn50340 = false;
+            if (o.Entry == 50347)
+                Karr50347 = false;
+            if (o.Entry == 50338)
+                Kornas50338 = false;
+            if (o.Entry == 50344)
+                Norlaxx50344 = false;
+            if (o.Entry == 50339)
+                Sulikshor50339 = false;
+            if (o.Entry == 50354)
+                Havak50354 = false;
+            if (o.Entry == 50351)
+                JonnDar50351 = false;
+            if (o.Entry == 50355)
+                Kahtir50355 = false;
+            if (o.Entry == 50356)
+                Krol50356 = false;
+            if (o.Entry == 50350)
+                Morgrinn50350 = false;
+            if (o.Entry == 50352)
+                Qunas50352 = false;
+            if (o.Entry == 50359)
+                Urgolax50359 = false;
+            if (o.Entry == 50821)
+                AiLi50821 = false;
+            if (o.Entry == 50817)
+                Ahone50817 = false;
+            if (o.Entry == 50822)
+                AiRan50822 = false;
+            if (o.Entry == 50816)
+                Ruun50816 = false;
+            if (o.Entry == 50811)
+                Nasra50811 = false;
+            if (o.Entry == 50808)
+                Urobi50808 = false;
+            if (o.Entry == 50820)
+                Yul50820 = false;
+            if (o.Entry == 50787)
+                Arness50787 = false;
+            if (o.Entry == 50806)
+                Moldo50806 = false;
+            if (o.Entry == 50789)
+                Nessos50789 = false;
+            if (o.Entry == 50805)
+                Omnis50805 = false;
+            if (o.Entry == 50783)
+                Salyin50783 = false;
+            if (o.Entry == 50782)
+                Sarnak50782 = false;
+            if (o.Entry == 50791)
+                Siltriss50791 = false;
+            if (o.Entry == 51059)
+                Blackhoof51059 = false;
+            if (o.Entry == 50334)
+                Dak50334 = false;
+            if (o.Entry == 51078)
+                Ferdinand51078 = false;
+            if (o.Entry == 50331)
+                GoKan50331 = false;
+            if (o.Entry == 50332)
+                Korda50332 = false;
+            if (o.Entry == 50333)
+                Lon50333 = false;
+            if (o.Entry == 50336)
+                Yorik50336 = false;
         }
 
     }
