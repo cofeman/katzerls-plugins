@@ -1,5 +1,5 @@
 = Introduction =
-===Rare Mob Killer -Plugin - Version 3.0===
+=== Rare Mob Killer -Plugin - Version 4.x ===
 
 *First:* Botting is against the Rules, so bot carefull and don't get slaphappy if you use this Plugin with your Main Account. Circle around 24/7 is very risky.  Good Luck in Hunting everybody 
 
