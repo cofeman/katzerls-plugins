@@ -4,15 +4,11 @@ The Pandaria Things are only tested on Shaman and Priest at the Moment, because 
 So all other please gimme feedback !!! I need it.
 
 === Rare Mob Killer - Plugin - Version 4.5 ===
-  * MoP Rares are not BETA any more and the Movement is much Better but don't kill them with bad Equip.
-  * Only Pandaren seem to be impossible to kill. If you press the Button "Check all" on the Pandaria Settings Page he will not check the Rares which I recommend not to kill. GorLack he will also not pull, because here I had to implement better 'Pullbehavior because of the different Houses he could be.
+  * MoP Rares: the Movement is much Better but don't kill them with bad Equip.
   * To prevent the Bot from to much dying he will pull each Rare of Pandaria only three times
 
 === Rare Mob Killer - Plugin - Version 4.6 und 4.6 BETA ===
-
-  * These Versions are the same now.
+  * BETA and Normal Versions are the same for the Moment.
   * I tested Blingtron and fixed some errors, now he works correct
   * I fixed a Bug let the Bot jump in Water with GB2
   * I refined some distances and Behavior (for example the Clear Area Behavior) which may cause issues.
-
-I recomment to set the Mountdistance in HB to 100 and also to deactivate interrupt of the Combat Routine, so Rarekiller can interrupt special Spells.
