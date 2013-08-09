@@ -3,7 +3,7 @@
 
 *First:* Botting is against the Rules, so bot carefull and don't get slaphappy if you use this Plugin with your Main Account. Circle around 24/7 is very risky.  Good Luck in Hunting everybody 
 
-*This Plugin will help you hunt Rare Mobs like TLPD and Poseidus - Also implemented:*
+*This Plugin will help you hunt Rare Mobs like [SetupTLPD TLPD] and Poseidus - Also implemented:*
   * Rare Mobs of Mists of Pandaria
   * Blingtron
   * Camel Figurines including Dormus Kill
@@ -14,6 +14,10 @@
   * Cataclysm Rare Mobs
   * Dark Soil and Onyx Eggs
   * mostly other Things you search for, you can set up in the GUI or in the Files of the config Folder --> see ConfigFiles
+
+  * [SetupTLPD Easy Setup for TLPD]
+  * [DescriptionConfigWindow Description of the Config Window]
+  * [BotSave Bot Save]
 
 If your WOW notices a hunted Mob/Object, this Plugin will take control over your toon and flys or walks to the Mob and aggro him with an spell.
 
@@ -34,10 +38,6 @@ If running this Plugin with Botbase GB2 you also need a Profile.
 
 *Note:* you have to Activate Autodismount in flight in your WOW !!!
 http://katzerls-plugins.googlecode.com/svn/wiki/autodismount.JPG
-
-  * [SetupTLPD Easy Setup for TLPD]
-  * [DescriptionConfigWindow Description of the Config Window]
-  * [BotSave Bot Save]
 
 ===Special Thanks ===
   * [SpecialThanks Special Thanks]
