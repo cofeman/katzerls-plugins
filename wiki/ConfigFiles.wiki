@@ -1,8 +1,8 @@
 #summary Collect Things of Configurable Lists.
 
 = Configurable Lists =
-To use this Lists unzip the ConfigFiles.zip in Folder Rarekiller/config
-http://katzerls-plugins.googlecode.com/svn/wiki/~RarekillerConfigfolder.JPG
+To use this Lists unzip the ~ConfigFiles.zip in Folder Rarekiller/config
+http://katzerls-plugins.googlecode.com/svn/wiki/RarekillerConfigfolder.JPG
 
 === Collect Objects from XML ===
 Collect Objects from File Rarekiller/config/CollectObjects.xml
