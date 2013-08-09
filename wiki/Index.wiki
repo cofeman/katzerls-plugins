@@ -20,9 +20,11 @@
   * [SetupTLPD Easy Setup for TLPD]
   * [DescriptionConfigWindow Description of the Config Window]
   * [BotSave Bot Save]
+  * I recomment to set the Mountdistance in HB to 100 and also to deactivate interrupt of the Combat Routine, so Rarekiller can interrupt special Spells.
 
 *Note:* you have to Activate Autodismount in flight in your WOW !!!
 http://katzerls-plugins.googlecode.com/svn/wiki/autodismount.JPG
+
 
 ===Functionality===
 If your WOW notices a hunted Mob/Object, this Plugin will take control over your toon and flys or walks to the Mob and aggro him with an spell.
