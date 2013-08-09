@@ -17,7 +17,6 @@
 
 
 ===How to Use===
-
 *Note:* you have to Activate Autodismount in flight in your WOW !!!
 http://katzerls-plugins.googlecode.com/svn/wiki/autodismount.JPG
 
@@ -25,6 +24,7 @@ http://katzerls-plugins.googlecode.com/svn/wiki/autodismount.JPG
   * [DescriptionConfigWindow Description of the Config Window]
   * [BotSave Bot Save]
 
+===Functionality===
 If your WOW notices a hunted Mob/Object, this Plugin will take control over your toon and flys or walks to the Mob and aggro him with an spell.
 
 If falling down from the Mount (while hunting flying Mobs) the implemented Slowfall-Part, if enabled, will cast slowfall, so you wont die. Ones Aggro your CC will bring it to the end and loot the Mob. The Plugin also plays a Sound if found a hunted Mob.
