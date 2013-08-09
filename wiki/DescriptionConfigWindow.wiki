@@ -13,11 +13,7 @@
 
 http://katzerls-plugins.googlecode.com/svn/wiki/Tab1Rarekiller.jpg
 
-===Tap Two - Slowfall and other Behavior===
-  * [SlowfallBehavior Slowfall Behavior]
-  * [CustomizePullspell customize Pullspell]
-  * [Alert]
-  * [Miscelaneous ANTI AFK]
+===Tap Two - MoP Rares ===
 
 http://katzerls-plugins.googlecode.com/svn/wiki/Tab2Rarekiller.jpg
 
