@@ -5,14 +5,13 @@
 There you can choose which Mobs you want the Plugin to pull.
 
 ===If checked these - he will hunt:===
-  * *Cataclysm:* all lootable Cataclysm-Rares for some nice Items - including *Poseidus*
-  * *Wrath of the Lich King:* WOTLK-Rares for Archievement Frostbitten
-  * *Burning Crusade:* BC-Rares for Archievement Bloodlust
+  * *MOP Rare Mobs:* MOP Rares - this is BETA but good working. Not every single Rare is implemented 
+  * *Cataclysm Rares:* all lootable Cataclysm-Rares for some nice Items - including *Poseidus*
+  * *Frostbitten WOTLK:* WOTLK-Rares for Archievement Frostbitten
+  * *Bloody Rare BC:* BC-Rares for Archievement Bloodlust
   * *Classic Rare Mobs:* Classic Rare Mobs <= Level 60
 
   * *Hunt by ID:* see below
-  * *Timelost Protodrake:* kill Timelost Protodrake for Mount (including killing Vyragosa because of respawn timer, if checked in Part Mobs with Problems)
-  * *Poseidus:* kill Poseidus for Mount
 
 *You can enable all of them at the same time*
 
