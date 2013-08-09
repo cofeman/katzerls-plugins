@@ -2,7 +2,7 @@
 
 = Mobs with Problems =
 
-Sometimes the Bot has Problems to kill Vyragosa, Blazewing or Bloodseeker.
+Sometimes the Bot has Problems to kill Vyragosa or Blazewing
 
 Vyragosa is a flying Caster Mob. Rogues and Warrior often have Problems to kill him, because the CCs can't handle such a fight. It often results in a couple of deaths for these Classes. If you have Problems with Vyragosa you should uncheck *"kill Vyragosa"*, so the Bot will ignore her.
 
