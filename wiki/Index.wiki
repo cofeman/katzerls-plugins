@@ -3,26 +3,27 @@
 
 *First:* Botting is against the Rules, so bot carefull and don't get slaphappy if you use this Plugin with your Main Account. Circle around 24/7 is very risky.  Good Luck in Hunting everybody 
 
-*This Plugin will help you hunt Rare Mobs like TLPD and Poseidus
-Also implemented:*
+*This Plugin will help you hunt Rare Mobs like TLPD and Poseidus - Also implemented:*
   * Rare Mobs of Mists of Pandaria
-  * Camel Figurines and kill Dormus
-  * Another Mans Treasure (the Ability to collect also the underground Objects will be implemented next weekend)
-  * Alert for Footprints of tameable Pandaria Rares
+  * Blingtron
+  * Camel Figurines including Dormus Kill
+  * Another Mans Treasure
+  * *Alert* for Footprints of tameable Pandaria Rares
   * Archievement Bloody Rare
   * Archievement Frostbitten
   * Cataclysm Rare Mobs
   * Dark Soil and Onyx Eggs
-  * other Things you search you can set up in the GUI or in the Files of the config Folder (if you have Questions just ask me)
+  * mostly other Things you search for, you can set up in the GUI or in the Files of the config Folder --> see ConfigFiles
 
-If your WOW notices a hunted Mob, this Plugin will take control over your toon and flys or walks to the Mob and aggro him with an spell.
+If your WOW notices a hunted Mob/Object, this Plugin will take control over your toon and flys or walks to the Mob and aggro him with an spell.
 
-If falling down from the Mount (while hunting flying Mobs) the implemented Slowfall-Part, if enabled, will cast slowfall, so you wont die. Ones Aggro your CC will bring it to the end and loot the Mob. The Plugin also plays a Sound if found a hunted Mob. I implemented a little workaround to make sure your Rares will be lootet, even if you disable it in GB2. 
+If falling down from the Mount (while hunting flying Mobs) the implemented Slowfall-Part, if enabled, will cast slowfall, so you wont die. Ones Aggro your CC will bring it to the end and loot the Mob. The Plugin also plays a Sound if found a hunted Mob.
 
 For your Security and to look more human while camping I also implemented
   * a Wisper-Alert inkl Battle Net Wispers
   * a Guildmessage-Alert inkl Officers Channel
   * a ANTI AFK which presses a Key every 3 - 14 Minutes to avoid AFK like a Human
+  * an Option to not collect Objects with other Players around
 
 You could use this Plugin beside Gathering, Arching and Leveling.
 If running this Plugin with Botbase GB2 you also need a Profile.
@@ -33,6 +34,7 @@ If running this Plugin with Botbase GB2 you also need a Profile.
   * [DescriptionConfigWindow Description of the Config Window]
   * [BotSave Bot Save]
   * ConfigFiles
+  * [SetupTLPD Easy Setup for TLPD]
 
 ===Special Thanks ===
   * [SpecialThanks Special Thanks]
