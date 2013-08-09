@@ -6,7 +6,7 @@ http://katzerls-plugins.googlecode.com/svn/wiki/RarekillerConfigfolder.JPG
 
 === Collect Objects from XML ===
 Collect Objects from File Rarekiller/config/Collectobjects.xml
-Per default Onyx Eggs afe a member of these List
+Per default Onyx Eggs is a member of these List
 
 === Interact NPCs from XML ===
 Interact with NPCs from File Rarekiller/config/InteractNPC.xml
