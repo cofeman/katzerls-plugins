@@ -21,4 +21,4 @@ You could also set change a Timer in mms. This is the Time how long the Char wil
 
 Try which Time works for you the Best. If you meet TLPD your Toon will use a special Quick Slowfall without timer, to make sure your Toon will not die.
 
-http://katzerls-plugins.googlecode.com/svn/wiki/Tab2Rarekiller.jpg
+http://katzerls-plugins.googlecode.com/svn/wiki/Tab3Rarekiller.jpg
