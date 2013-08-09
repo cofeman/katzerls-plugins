@@ -8,7 +8,7 @@
   * [ProblemMobs Mobs with Problems]
   * [Collector]
   * [Tamer The Tamer] 
-  * [ConbfigFiles Configurable XMLs]
+  * [ConfigFiles Configurable XMLs]
 
 
 http://katzerls-plugins.googlecode.com/svn/wiki/Tab1Rarekiller.jpg
