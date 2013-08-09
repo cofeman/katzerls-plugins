@@ -4,10 +4,12 @@
 
 ===Tap One - Rarekiller===
   * [RaremobKiller Raremob Killer]
+  * [RareMounts Mounts]
   * [ProblemMobs Mobs with Problems]
   * [Collector]
   * [Tamer The Tamer] 
-  * [BlackList Blacklist]
+  * [ConbfigFiles Configurable XMLs]
+
 
 http://katzerls-plugins.googlecode.com/svn/wiki/Tab1Rarekiller.jpg
 
@@ -18,3 +20,12 @@ http://katzerls-plugins.googlecode.com/svn/wiki/Tab1Rarekiller.jpg
   * [Miscelaneous ANTI AFK]
 
 http://katzerls-plugins.googlecode.com/svn/wiki/Tab2Rarekiller.jpg
+
+===Tap Three - Slowfall and other Behavior===
+  * [SlowfallBehavior Slowfall Behavior]
+  * [CustomizePullspell customize Pullspell]
+  * [Miscelaneous ANTI AFK / Shadowmeld / Player around]
+  * [BlackList Blacklist]
+  * [Alert]
+
+http://katzerls-plugins.googlecode.com/svn/wiki/Tab3Rarekiller.jpg
