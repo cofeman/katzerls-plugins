@@ -5,7 +5,6 @@
 
 *This Plugin will help you hunt Rare Mobs like TLPD and Poseidus
 Also implemented:*
-
   * Rare Mobs of Mists of Pandaria
   * Camel Figurines and kill Dormus
   * Another Mans Treasure (the Ability to collect also the underground Objects will be implemented next weekend)
@@ -14,8 +13,7 @@ Also implemented:*
   * Archievement Frostbitten
   * Cataclysm Rare Mobs
   * Dark Soil and Onyx Eggs
-  * other Things you search you can set up in the GUI or in the Files of the config Folder (if you have Questions just ask me) 
-*
+  * other Things you search you can set up in the GUI or in the Files of the config Folder (if you have Questions just ask me)
 
 If your WOW notices a hunted Mob, this Plugin will take control over your toon and flys or walks to the Mob and aggro him with an spell.
 
