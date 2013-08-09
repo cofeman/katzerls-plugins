@@ -40,5 +40,8 @@ For your Security and to look more human while camping I also implemented
 You could use this Plugin beside Gathering, Arching and Leveling.
 If running this Plugin with Botbase GB2 you also need a Profile.
 
+=== Used Spells in Rarekiller ===
+[UsedSpells]
+
 ===Special Thanks ===
   * [SpecialThanks Special Thanks]
