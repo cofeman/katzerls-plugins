@@ -39,4 +39,7 @@ For example Ghostcrawler:
   * ID: 50051
   * WOWHead Site: http://www.wowhead.com/npc=50051
 
+=== Footprints MoP Rares ===
+If he found a Footprint he will fly to it and alert every 20 seconds till he despawns.
+
 http://katzerls-plugins.googlecode.com/svn/wiki/Tab1Rarekiller.jpg
