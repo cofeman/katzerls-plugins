@@ -28,4 +28,8 @@ http://katzerls-plugins.googlecode.com/svn/wiki/Tab2Rarekiller.jpg
 ===Button Default Values===
   * This Button will set the Values to the Default ones in Rarekiller.
 
+===Button Save===
+  * This Button will save the Values.
+
+
 http://katzerls-plugins.googlecode.com/svn/wiki/Tab3Rarekiller.jpg
