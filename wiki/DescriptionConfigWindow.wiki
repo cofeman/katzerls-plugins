@@ -25,4 +25,7 @@ http://katzerls-plugins.googlecode.com/svn/wiki/Tab2Rarekiller.jpg
   * [BlackList Blacklist]
   * [Alert]
 
+===Button Default Values===
+  * This Button will set the Values to the Default ones in Rarekiller.
+
 http://katzerls-plugins.googlecode.com/svn/wiki/Tab3Rarekiller.jpg
