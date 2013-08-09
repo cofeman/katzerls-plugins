@@ -6,8 +6,9 @@ If you are a Hunter you maybe want to Tame a Rare Beast instead of killing him.
 
 Hint: Just use this Plugin-Part if you are sure, your Toon has enough free Slots to tame. Rarekiller is not able to check this, it is in your own responsibility to verify this.
 
-===don't kill tameable Mobs===
-If you check *"don't kill tameable Mobs"* Rarekiller is not allowed to kill Raremobs he found which are tameable. Anyhow: If you don't set this and you meet a Mob which is hunted also to kill and to tame the Bot will in 90% first try to tame the Mob.
+=== Footprints MoP Rares ===
+If he found a Footprint he will fly to it and alert every 20 seconds till he despawns.
+
 ===Tame Pets from XML===
 ... means: The Tamer Part will try to tame the Mobs of the List Tameablemobs.xml in the Configfolder of your Rarekiller, if he founds them. You could edit this List and add your own favourite Mobs to the List if you want.
 
@@ -39,7 +40,7 @@ For example Ghostcrawler:
   * ID: 50051
   * WOWHead Site: http://www.wowhead.com/npc=50051
 
-=== Footprints MoP Rares ===
-If he found a Footprint he will fly to it and alert every 20 seconds till he despawns.
+===don't kill tameable Mobs===
+If you check *"don't kill tameable Mobs"* Rarekiller is not allowed to kill Raremobs he found which are tameable. Anyhow: If you don't set this and you meet a Mob which is hunted also to kill and to tame the Bot will in 90% first try to tame the Mob.
 
 http://katzerls-plugins.googlecode.com/svn/wiki/Tab1Rarekiller.jpg
