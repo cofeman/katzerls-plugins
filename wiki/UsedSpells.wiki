@@ -1,8 +1,7 @@
 
-
 = Used Spells from Rarekiller: = 
 If I should use other Spells, please inform me. I only know Shaman and Priest Abilities.
-You can also config them in the Folder RareKiller/Config/...xml
+You can also config them in the Folder Rarekiller/Config/...xml
 
 Per Default the Rarekiller will use this Spells to Pull the Mobs:
   * Class = "Priest" Name="Shadow Word: Pain"
