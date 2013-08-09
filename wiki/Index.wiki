@@ -31,9 +31,9 @@ If running this Plugin with Botbase GB2 you also need a Profile.
 = Index =
 
 ===How to Use===
+  * [SetupTLPD Easy Setup for TLPD]
   * [DescriptionConfigWindow Description of the Config Window]
   * [BotSave Bot Save]
-  * [SetupTLPD Easy Setup for TLPD]
 
 ===Special Thanks ===
   * [SpecialThanks Special Thanks]
