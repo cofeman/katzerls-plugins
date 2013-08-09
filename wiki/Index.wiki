@@ -15,6 +15,12 @@
   * Dark Soil and Onyx Eggs
   * mostly other Things you search for, you can set up in the GUI or in the Files of the config Folder --> see ConfigFiles
 
+
+===How to Use===
+
+*Note:* you have to Activate Autodismount in flight in your WOW !!!
+http://katzerls-plugins.googlecode.com/svn/wiki/autodismount.JPG
+
   * [SetupTLPD Easy Setup for TLPD]
   * [DescriptionConfigWindow Description of the Config Window]
   * [BotSave Bot Save]
@@ -31,13 +37,6 @@ For your Security and to look more human while camping I also implemented
 
 You could use this Plugin beside Gathering, Arching and Leveling.
 If running this Plugin with Botbase GB2 you also need a Profile.
-
-= Index =
-
-===How to Use===
-
-*Note:* you have to Activate Autodismount in flight in your WOW !!!
-http://katzerls-plugins.googlecode.com/svn/wiki/autodismount.JPG
 
 ===Special Thanks ===
   * [SpecialThanks Special Thanks]
