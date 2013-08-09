@@ -17,12 +17,12 @@
 
 
 ===How to Use===
-*Note:* you have to Activate Autodismount in flight in your WOW !!!
-http://katzerls-plugins.googlecode.com/svn/wiki/autodismount.JPG
-
   * [SetupTLPD Easy Setup for TLPD]
   * [DescriptionConfigWindow Description of the Config Window]
   * [BotSave Bot Save]
+
+*Note:* you have to Activate Autodismount in flight in your WOW !!!
+http://katzerls-plugins.googlecode.com/svn/wiki/autodismount.JPG
 
 ===Functionality===
 If your WOW notices a hunted Mob/Object, this Plugin will take control over your toon and flys or walks to the Mob and aggro him with an spell.
