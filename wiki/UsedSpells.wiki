@@ -1,8 +1,8 @@
 = Used Spells from Rarekiller: = 
 If I should use other Spells, please inform me. I only know Shaman and Priest Abilities.
-You can also config them in the Folder Rarekiller/Config/...xml
+You can also config them in the Folder Rarekiller/Config/...
 
-Per Default the Rarekiller will use this Spells to Pull the Mobs:
+DefaultPull.xml - Per Default the Rarekiller will use this Spells to Pull the Mobs:
   * Class = "Priest" Name="Shadow Word: Pain"
   * Class = "Mage" Name="Fire Blast"
   * Class = "Warrior" Name="Heroic Throw"
@@ -15,7 +15,7 @@ Per Default the Rarekiller will use this Spells to Pull the Mobs:
   * Class = "Druid" Name="Moonfire"
   * Class = "Monk" Name="Jab"
 
-For Ranged Pull he will use
+DefaultRangedPull.xml - For Ranged Pull he will use
   * Class = "Priest" Name="Shadow Word: Pain"
   * Class = "Mage" Name="Frostfire Bolt"
   * Class = "Warrior" Name="Taunt"
@@ -28,7 +28,7 @@ For Ranged Pull he will use
   * Class = "Druid" Name="Moonfire"
   * Class = "Monk" Name="Chi Burst"
 
-To Interrupt Healing Mists of Pandaren and Torrent of Jinyu:
+DefaultInterruptPull.xml - To Interrupt Healing Mists of Pandaren and Torrent of Jinyu:
   * Class = "Priest" Name="Silence"
   * Class = "Mage" Name="Counterspell"
   * Class = "Warrior" Name="Disrupting Shout"
@@ -41,7 +41,7 @@ To Interrupt Healing Mists of Pandaren and Torrent of Jinyu:
   * Class = "Druid" Name="Mighty Bash"
   * Class = "Monk" Name="Spear Hand Strike"
 
-To Stun Spinning Crane Kick of Pandaren or Rain Dance of Jinyu (not necessary because he will flee also):
+DefaultStunPull.xml - To Stun Spinning Crane Kick of Pandaren or Rain Dance of Jinyu (not necessary because he will flee also):
   * Class = "Priest" Name="Psychic Horror"
   * Class = "Mage" Name="no Spell available"
   * Class = "Warrior" Name="Intimidating Shout"
@@ -55,7 +55,7 @@ To Stun Spinning Crane Kick of Pandaren or Rain Dance of Jinyu (not necessary be
   * Class = "Druid" Name="no Spell available"
   * Class = "Monk" Name="Paralysis"
 
-To run away faster (also not necessary but makes things easier):
+RunFastSpells.xml - To run away faster (also not necessary but makes things easier):
   * Class = "Worgen" Name="Darkflight"
   * Class = "Priest" Name="Power Word: Shield"
   * Class = "Mage" Name="Blink"
