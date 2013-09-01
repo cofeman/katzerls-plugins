@@ -112,7 +112,7 @@ namespace ProfileChanger
                 if (bot.Name == "PartyBot" || bot.Name == "Multibox Follower" || bot.Name == "Multibox Leader"
                     || bot.Name == "Mixed Mode" || bot.Name == "DungeonBuddy" || bot.Name == "BGBuddy" || bot.Name == "ArchaeologieBuddy"
                     || bot.Name == "Tyrael" || bot.Name == "LazyRaider" || bot.Name == "Combat Bot" || bot.Name == "Fpsware's LazyBoxer"
-                    || bot.Name == "ProfessionBuddy" || bot.Name == "Raid Bot")
+                    || bot.Name == "Raid Bot")
                 {
                     Logging.Write(Colors.LightSkyBlue, "{0} is choosen, so deactivate Profile Changer", bot.Name);
                     PluginMe.Enabled = false;
