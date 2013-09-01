@@ -15,4 +15,4 @@ So all other please gimme feedback !!! I need it.
 
 === Rare Mob Killer - Plugin - Version 4.7 und 4.7 BETA ===
   * BETA and Normal Versions are the same for the Moment.
-  * fixed a Bug with Pandaren, now the Chance to kill them is a little bit better (not perfekt but sometimes he was able to kill them successfully)
+  * fixed a Bug with Pandaren, now the Chance to kill them is a little bit better (not working perfekt, but much better)
