@@ -1,0 +1,285 @@
+        
+	class Rarekiller: HBPlugin
+	{
+		public static RarekillerMoPRares MoPRares = new RarekillerMoPRares();
+		
+		public override void Pulse()
+		{
+			try
+            {
+				//.... some Functions
+				if (!Me.Combat)
+                {
+					//.... some other Functions
+				}
+                else // In Combat with MoPRares / Dormus
+                {
+				                    #region Pandaren - don't work good
+                    if (MoPRares.Pandaren != null)
+                    {
+                        // Spinning Crane Kick
+                        if (MoPRares.Pandaren.CastingSpellId == 125799 && MoPRares.Pandaren.Location.Distance(Me.Location) < 25)
+                        {
+                            WoWMovement.Move(WoWMovement.MovementDirection.Backwards); 
+							//... this is because point calculation for the save point is sometimes a little bit slow, but we have to Move away quickly
+							// so move backward is better then doing nothing while calculation
+                            
+							MoPRares.FleeingFromEnemy(MoPRares.Pandaren, 125799, 40, 10, 5);
+							// ... this Function you find below and also an explanation to the Variables - Brodieman
+                        }
+
+                        // Healing Mists
+                        ...
+
+                        // Chi Burst
+                        ...
+                    }
+                    #endregion
+				}
+			}
+			catch (ThreadAbortException) { }
+			catch (Exception e)
+			{
+                Logging.WriteDiagnostic(Colors.Red, e.Message);
+			}
+		}
+	}
+		
+		
+		//...
+		
+	class RarekillerMoPRares
+    {
+		public WoWUnit Pandaren
+        {
+            get
+            {
+                return ObjectManager.GetObjectsOfType<WoWUnit>().Where(o => (
+                    o.Entry == 50821 || o.Entry == 50817 || o.Entry == 50822 || o.Entry == 50816 ||
+                    o.Entry == 50811 || o.Entry == 50808 || o.Entry == 50820) && o.Distance < 100 && !o.IsDead).OrderBy(u => u.Distance).FirstOrDefault();
+            }
+        }
+		
+		/// <summary>
+        /// Runs away from an Enemy 
+        /// </summary>
+        /// <param name="Enemy">the Enemy to run away from</param>
+        /// <param name="SpellID">the Spell ID which the Enemy is casting</param>
+        /// <param name="MinDistToEnemy">Minimum Distance to Run away from the Enemy</param>
+        /// <param name="TraceStep">How many Checks in one Round</param>
+        /// <param name="ScanDistance">Distance of the Scans to each other</param>
+        public void FleeingFromEnemy(WoWUnit Enemy, int SpellID, int MinDistToEnemy, int TraceStep, int ScanDistance)
+        {
+            int MaxDistToMove = MinDistToEnemy * 2;
+            Logging.Write(Colors.MediumPurple, "Rarekiller: Fleeing from {0}", Enemy.Name);
+            
+            Lua.DoString("RunMacroText(\"/stopcasting\");");
+			
+			
+            // get save location - This Function is is also explained - Brodieman
+            WoWPoint newP = getSaveFleeingLocationSingular(Enemy, MinDistToEnemy, MaxDistToMove, TraceStep, ScanDistance, SpellID);
+
+			
+            if (newP == WoWPoint.Empty)
+            {
+                // no save location found, turn around and move 2sec Forward
+                if(Me.IsFacing(Enemy))
+                    Navigator.MoveTo(getLocationBehindUnit(Me));
+                WoWMovement.Move(WoWMovement.MovementDirection.Forward, TimeSpan.FromSeconds(2));
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            }
+            else
+            {
+                // move to save location
+                while (StyxWoW.Me.Location.Distance(newP) > 4)
+                {
+                    if (Me.Class == WoWClass.Mage || Me.Class == WoWClass.Monk) //Monk Roll or Blink
+                    {
+                        if (SpellManager.CanCast(Rarekiller.Spells.RunFastSpell) && Me.IsFacing(newP) && newP.Distance(Me.Location) > 20)
+                            RarekillerSpells.CastSafe(Rarekiller.Spells.RunFastSpell, Me, false);
+                    }
+                    else
+                    {
+                        if (!Me.HasAura(Rarekiller.Spells.RunFastSpell) && SpellManager.CanCast(Rarekiller.Spells.RunFastSpell) && newP.Distance(Me.Location) > 15)
+                            RarekillerSpells.CastSafe(Rarekiller.Spells.RunFastSpell, Me, false);
+                    }
+
+                    if (Me.IsSwimming)
+                        WoWMovement.ClickToMove(newP);
+                    else
+                        Navigator.MoveTo(newP);
+                    Thread.Sleep(80);
+                    if (Rarekiller.ToonInvalid) return;
+                    if ((SpellID != 0 && (!Enemy.IsCasting || Enemy.CastingSpellId != SpellID)) || ((Enemy == Yaungol) && SpellID == 0 && !Enemy.HasAura("Bellowing Rage")))
+                    {
+                        Logging.Write(Colors.MediumPurple, "Rarekiller: {0} don't cast any more", Enemy.Name);
+                        WoWMovement.MoveStop();
+                        return;
+                    }
+                    if (Me.Location.Distance(Enemy.Location) > (MinDistToEnemy + 10)) //dont run to far away because then the Enemy will reset
+                    {
+                        Logging.Write(Colors.MediumPurple, "Rarekiller: reached save Location");
+                        WoWMovement.MoveStop();
+                        return;
+                    }
+                }
+            }
+            Logging.Write(Colors.MediumPurple, "Rarekiller: reached save Location");
+            WoWMovement.MoveStop();
+        }
+		
+		/// <summary>
+        /// Get a Save Location away from the Enemy
+        /// </summary>
+        /// <param name="Enemy">The Enemy</param>
+        /// <param name="minDist">Minimum Distance to the Enemy</param>
+        /// <param name="maxDist">Maximum Distance to the Enemy</param>
+        /// <param name="TraceStep">How many Checks in one Round</param>
+        /// <param name="ScanDistance">Distance of the Scans to each other</param>
+        /// <returns>Hopefully a save Point or WoWPoint.Empty</returns>
+        public WoWPoint getSaveFleeingLocationSingular(WoWUnit Enemy, int minDist, int maxDist, int TraceStep, int ScanDistance, int SpellID)
+        {
+            try
+            {
+                bool checkForEnemysAround = true;
+                DateTime startFind = DateTime.Now;
+                int countPointsChecked = 0;
+                int countFailToPointNav = 0;
+                int countFailSafe = 0;
+                double furthestNearMobDistSqr = 0f;
+                bool ChooseSafestAvailable = true;
+                WoWPoint pFurthest = WoWPoint.Empty;
+                WoWPoint pEnemy = Enemy.GetTraceLinePos();
+
+                //Line of Sight
+                int countFailToPointLoS = 0;
+                int countFailToMobLoS = 0;
+                bool CheckLineOfSight = true;
+                bool CheckLineOfSightEnemy = true;
+
+                WoWPoint pSavePoint = new WoWPoint();
+                List<WoWPoint> mobLocations = AllEnemyMobLocationsToCheck(Enemy);
+                float arcIncrement = ((float)Math.PI * 2) / TraceStep;
+                float _PIx2 = ((float)new Random().Next(1, 80) * (1.248349f + (float)new Random().NextDouble()));
+                double minSafeDistSqr = 15 * 15;
+
+                float baseDestinationFacing = Enemy == null ?
+                                                Me.RenderFacing + (float)Math.PI
+                                                : Styx.Helpers.WoWMathHelper.CalculateNeededFacing(Enemy.Location, Me.Location);
+
+                Logging.Write(Colors.MediumPurple, "Rarekiller RayCast: search near {0:F0}d @ {1:F1} yds for Unit free area", WoWMathHelper.RadiansToDegrees(baseDestinationFacing), minDist);
+                for (int arcIndex = 0; arcIndex < TraceStep; arcIndex++)
+                {
+                    float checkFacing = WoWMathHelper.DegreesToRadians((float)new Random().Next(1, 360));
+                    if (Enemy.Entry == 50821 || Enemy.Entry == 50817 || Enemy.Entry == 50822 || Enemy.Entry == 50816 ||
+                            Enemy.Entry == 50811 || Enemy.Entry == 50808 || Enemy.Entry == 50820)
+                    {
+                        checkFacing = baseDestinationFacing;
+                        if ((arcIndex & 1) == 0)
+                            checkFacing += arcIncrement * (arcIndex >> 1);
+                        else
+                            checkFacing -= arcIncrement * ((arcIndex >> 1) + 1);
+                    }
+
+                    for (float distFromOrigin = minDist; distFromOrigin <= maxDist; distFromOrigin += ScanDistance)
+                    {
+                        countPointsChecked++;
+                        if (Rarekiller.ToonInvalid) return Me.Location;
+                        if ((SpellID != 0 && (!Enemy.IsCasting || Enemy.CastingSpellId != SpellID)) || ((Enemy == Yaungol) && SpellID == 0 && !Enemy.HasAura("Bellowing Rage")))
+                        {
+                            Logging.Write(Colors.MediumPurple, "Rarekiller: {0} don't cast any more", Enemy.Name);
+                            WoWMovement.MoveStop();
+                            return Me.Location;
+                        }
+
+                        pSavePoint = pEnemy.RayCast(checkFacing, distFromOrigin);
+                        pSavePoint.Z = Rarekiller.getGroundZ(pSavePoint);
+
+                        if (pSavePoint.Z == float.MinValue)
+                        {
+                            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller RayCast: Location failed getGroundZ for degrees={0:F1} dist={1:F1}", WoWMathHelper.RadiansToDegrees(checkFacing), distFromOrigin);
+                            countFailToPointNav++;
+                            continue;
+                        }
+
+                        if (Navigator.GeneratePath(StyxWoW.Me.Location, pSavePoint).Length == 0 || StyxWoW.Me.Location.Distance2D(pSavePoint) < 1 || !Navigator.CanNavigateFully(Me.Location, pSavePoint))
+                        {
+                            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller RayCast: Location failed navigation check for degrees={0:F1} dist={1:F1}", WoWMathHelper.RadiansToDegrees(checkFacing), distFromOrigin);
+                            countFailToPointNav++;
+                            continue;
+                        }
+
+                        // Check Line of Sight
+                        if (CheckLineOfSight && !Styx.WoWInternals.World.GameWorld.IsInLineOfSight(Me.GetTraceLinePos(), pSavePoint))
+                        {
+                            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller RayCast: Failed line of sight check for degrees={0:F1} dist={1:F1}", WoWMathHelper.RadiansToDegrees(checkFacing), distFromOrigin);
+                            countFailToPointLoS++;
+                            continue;
+                        }
+
+                        if (CheckLineOfSightEnemy && !Styx.WoWInternals.World.GameWorld.IsInLineOfSpellSight(pSavePoint, Enemy.GetTraceLinePos()))
+                        {
+                            if (!Styx.WoWInternals.World.GameWorld.IsInLineOfSight(pSavePoint, Enemy.GetTraceLinePos()))
+                            {
+                                Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller RayCast: Failed Unit line of sight check for degrees={0:F1} dist={1:F1}", WoWMathHelper.RadiansToDegrees(checkFacing), distFromOrigin);
+                                countFailToMobLoS++;
+                                continue;
+                            }
+                        }
+
+                        if (checkForEnemysAround)
+                        {
+                            WoWPoint ptNearest = NearestMobLoc(pSavePoint, mobLocations);
+                            if (ptNearest == WoWPoint.Empty)
+                            {
+                                if (furthestNearMobDistSqr < minSafeDistSqr)
+                                {
+                                    furthestNearMobDistSqr = minSafeDistSqr;
+                                    pFurthest = pSavePoint;     // set best available if others fail
+                                }
+                            }
+                            else
+                            {
+                                double mobDistSqr = pSavePoint.Distance2DSqr(ptNearest);
+                                if (furthestNearMobDistSqr < mobDistSqr)
+                                {
+                                    furthestNearMobDistSqr = mobDistSqr;
+                                    pFurthest = pSavePoint;     // set best available if others fail
+                                }
+                                if (mobDistSqr <= minSafeDistSqr)
+                                {
+                                    Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller RayCast: Safe Location failed, Hostile Mobs around degrees={0:F1} dist={1:F1}", WoWMathHelper.RadiansToDegrees(checkFacing), distFromOrigin);
+                                    countFailSafe++;
+                                    continue;
+                                }
+                            }
+                        }
+
+                        Logging.Write(Colors.MediumPurple, "Rarekiller RayCast: Found Unit-free location ({0:F1} yd radius) at degrees={1:F1} dist={2:F1} on point check# {3} at {4}, {5}, {6}", 15, WoWMathHelper.RadiansToDegrees(checkFacing), distFromOrigin, countPointsChecked, pSavePoint.X, pSavePoint.Y, pSavePoint.Z);
+                        Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller RayCast: processing took {0:F0} ms", (DateTime.Now - startFind).TotalMilliseconds);
+                        return pSavePoint;
+                    }
+                }
+
+                Logging.Write(Colors.MediumPurple, "Rarekiller RayCast: No Unit-free location ({0:F1} yd radius) found within {1:F1} yds ({2} checked, {3} nav, {4} not safe, LoS {5}, Enemy LoS {6})", 15, maxDist, countPointsChecked, countFailToPointNav, countFailSafe, countFailToPointLoS, countFailToMobLoS);
+                if (ChooseSafestAvailable && pFurthest != WoWPoint.Empty)
+                {
+                    Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller RayCast: choosing best available spot in {0:F1} yd radius where closest Unit is {1:F1} yds", 15, Math.Sqrt(furthestNearMobDistSqr));
+                    Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller RayCast: processing took {0:F0} ms", (DateTime.Now - startFind).TotalMilliseconds);
+                    return ChooseSafestAvailable ? pFurthest : WoWPoint.Empty;
+                }
+
+                Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller RayCast: processing took {0:F0} ms", (DateTime.Now - startFind).TotalMilliseconds);
+                return WoWPoint.Empty;
+            }
+            catch (Exception ex)
+            { Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller RayCast: {0}", ex.Message); }
+
+
+            Logging.Write(Colors.MediumPurple, "Rarekiller RayCast: No valid points returned by RayCast ...");
+            return WoWPoint.Empty;
+
+        }
+	}
+		
+		
