@@ -24,3 +24,7 @@ So all other please gimme feedback !!! I need it.
 === Rare Mob Killer - Plugin - Version 4.9 und 4.9 BETA ===
   * BETA and Normal Versions are the same for the Moment.
   * fixed a Bug with AntiAFK which get broken and fit the times of movements
+
+=== Rare Mob Killer - Plugin - Version 4.10 und 4.10 BETA ===
+  * BETA and Normal Versions are the same for the Moment.
+  * Adding Onyx Eggs as seperate Point in Collector, like Dark Soil
