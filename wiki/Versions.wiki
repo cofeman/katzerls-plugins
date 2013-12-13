@@ -30,6 +30,6 @@ So all other please gimme feedback !!! I need it.
   * Adding Onyx Eggs as seperate Point in Collector, like Dark Soil
 
 === Rare Mob Killer - Plugin - Version  4.11 BETA ===
-  * Changed the usage of the ObjectManager in Rarekiller
+  * Changed the usage of the Objectmanager of HB in Rarekiller
   * Adding Aeonaxx
   * Change the Tamer Part and therefore the GUI
