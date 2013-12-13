@@ -30,134 +30,161 @@ namespace katzerle
         private static Stopwatch BlacklistTimer = new Stopwatch();
         private static Stopwatch Alerttimer = new Stopwatch();
 
+        #region tameable Pets in Reach
+        /// <summary>
+        /// returns the WoWUnit to tame as Pet
+        /// </summary>
+        public WoWUnit tameablePet
+        {
+            get
+            {
+                return ObjectManager.GetObjectsOfType<WoWUnit>()
+                .Where(o => (!Blacklist.Contains(o.Guid, Rarekiller.Settings.Flags) && ((
+                (Rarekiller.Settings.TameList && Rarekiller.TameableMobsList.ContainsKey(Convert.ToInt32(o.Entry)))
+                || (Rarekiller.Settings.Jadefang && (o.Entry == 49822)) //Jadefang
+                || (Rarekiller.Settings.Ghostcrawler && (o.Entry == 50051)) // Ghostcrawler
+                || (Rarekiller.Settings.Karoma && (o.Entry == 50138)) // Karoma
+                || (Rarekiller.Settings.MadexxRed && (o.Entry == 51401)) // Madexx red
+                || (Rarekiller.Settings.MadexxGreen && (o.Entry == 51402)) // Madexx green
+                || (Rarekiller.Settings.MadexxBlack && (o.Entry == 51403)) // Madexx black
+                || (Rarekiller.Settings.MadexxBlue && (o.Entry == 51404)) // Madex blue
+                || (Rarekiller.Settings.MadexxBrown && (o.Entry == 50154)) // Madexx brown
+                || (Rarekiller.Settings.Terrorpene && (o.Entry == 50058)) // Terrorpene
+                || (Rarekiller.Settings.Loquenahak && (o.Entry == 32517)) // Loque'nahak
+                || (Rarekiller.Settings.Aotona && (o.Entry == 32481)) // Aotona
+                || (Rarekiller.Settings.Skoll && (o.Entry == 35189)) // Skoll
+                || (Rarekiller.Settings.Gondoria && (o.Entry == 33776)) // Gondoria
+                || (Rarekiller.Settings.Arcturias && (o.Entry == 38543)) // Arcturias
+                || (Rarekiller.Settings.KingKrush && (o.Entry == 32485)) // King Krush
+                || (Rarekiller.Settings.Nuramoc && (o.Entry == 20932)) // Nuramoc
+                || (Rarekiller.Settings.Goretooth && (o.Entry == 17144)) // Goretooth 
+                || (Rarekiller.Settings.Sambas && (o.Entry == 50159)) // Sambas
+                || (Rarekiller.Settings.TameByID && (o.Entry == Convert.ToInt64(Rarekiller.Settings.TameMobID)))
+                ) && !o.IsPet && o.IsTameable)))
+                .OrderBy(o => o.Distance).FirstOrDefault();
+            }
+        }
+        #endregion
+
         /// <summary>
         /// Function to Find and Tame Mobs
         /// </summary>
-        public void findAndTameMob()
+        public void findAndTameMob(WoWUnit tamePet)
         {
             if (Me.Class != WoWClass.Hunter && !Rarekiller.Settings.TestcaseTamer)
                 return;		
-            ObjectManager.Update();
-            List<WoWUnit> objList = ObjectManager.GetObjectsOfType<WoWUnit>()
-                .Where(o => (!Blacklist.Contains(o.Guid, Rarekiller.Settings.Flags) && (
-                ((Rarekiller.Settings.TameDefault && Rarekiller.TameableMobsList.ContainsKey(Convert.ToInt32(o.Entry)))
-                || (Rarekiller.Settings.TameByID && (o.Entry == Convert.ToInt64(Rarekiller.Settings.TameMobID))))
-                && !o.IsPet && o.IsTameable)))
-                .OrderBy(o => o.Distance).ToList();
-            foreach (WoWUnit o in objList)
+
+            if (!tamePet.IsDead)
             {
-                if (!o.IsDead)
+                Logging.WriteQuiet(Colors.MediumPurple, "Rarekiller: Found a new Pet {0} ID {1}", tamePet.Name, tamePet.Entry);
+				Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Unit Location: {0} / {1} / {2}", Convert.ToString(tamePet.X), Convert.ToString(tamePet.Y), Convert.ToString(tamePet.Z));
+                if (Rarekiller.Settings.LUAoutput)
+                    Lua.DoString("print('NPCScan: Find {0} ID {1}')", tamePet.Name, tamePet.Entry);
+
+                #region don't tame if
+                // Don't tame the Rare if ...
+                if (Me.IsFlying && Me.IsOutdoors && tamePet.IsIndoors)
                 {
-                    Logging.WriteQuiet(Colors.MediumPurple, "Rarekiller: Found a new Pet {0} ID {1}", o.Name, o.Entry);
-					Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Unit Location: {0} / {1} / {2}", Convert.ToString(o.X), Convert.ToString(o.Y), Convert.ToString(o.Z));
+                    Logging.Write(Colors.MediumPurple, "Rarekiller: Unit is Indoors and I fly Outdoors, so blacklist him to prevent Problems");
+                    Logging.Write(Colors.MediumPurple, "Rarekiller: You have to place me next to the Spawnpoint, if you want me to hunt this Unit.");
+                    Blacklist.Add(tamePet.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
+                    Logging.WriteDiagnostic(Colors.MediumPurple, " Part TamerRarekiller: Blacklist Unit for 5 Minutes.");
                     if (Rarekiller.Settings.LUAoutput)
-                        Lua.DoString("print('NPCScan: Find {0} ID {1}')", o.Name, o.Entry);
-
-                    #region don't tame if
-                    // Don't tame the Rare if ...
-                    if (Me.IsFlying && Me.IsOutdoors && o.IsIndoors)
-                    {
-                        Logging.Write(Colors.MediumPurple, "Rarekiller: Unit is Indoors and I fly Outdoors, so blacklist him to prevent Problems");
-                        Logging.Write(Colors.MediumPurple, "Rarekiller: You have to place me next to the Spawnpoint, if you want me to hunt this Unit.");
-                        Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
-                        Logging.WriteDiagnostic(Colors.MediumPurple, " Part TamerRarekiller: Blacklist Unit for 5 Minutes.");
-                        if (Rarekiller.Settings.LUAoutput)
-                            Lua.DoString("print('NPCScan: NPC is Indoors')", o.Name);
-                        return;
-                    }
-                    if (Me.Level < o.Level)
-                    {
-                        Logging.Write(Colors.MediumPurple, "Rarekiller: Unit Level is higher then mine, can't tame the Unit.");
-                        Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist60));
-                        Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Blacklist Unit for 60 Minutes.");
-                        if (Rarekiller.Settings.LUAoutput)
-                            Lua.DoString("print('NPCScan: NPC Level is to high to tame')", o.Name);
-                        return;
-                    }
-                    if (Rarekiller.BlacklistMobsList.ContainsKey(Convert.ToInt32(o.Entry)))
-                    {
-                        Logging.Write(Colors.MediumPurple, "Rarekiller: {0} is Member of the BlacklistedMobs.xml", o.Name);
-                        Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist15));
-                        Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Blacklist Unit for 15 Minutes.");
-                        return;
-                    }
-                    if (Rarekiller.DontInteract) return;
-                    #endregion
-
-                    //Dismiss Pet
-                    if (Me.Class == WoWClass.Hunter && Me.Pet != null)
-                    {
-                        RarekillerSpells.CastSafe("Dismiss Pet", Me, false);
-                        //SpellManager.Cast("Dismiss Pet");
-                        Thread.Sleep(3000);
-                    }
-
-                    if (Rarekiller.Settings.Alert)
-                        Rarekiller.Alert();
-
-                    #region Move to tameable Unit
-                    if(!Rarekiller.MoveTo(o, 20, false)) return;
-                    if (Me.IsFlying)
-                        if (!Rarekiller.DescendToLand(o)) return;
-                    Rarekiller.Dismount();
-                    #endregion
-
-                    o.Target();
-                    if (Me.Class == WoWClass.Hunter)
-                    {
-                        #region Tame
-                        while (!o.IsPet)
-                        {
-                            if (o.IsDead)
-                            {
-                                Logging.Write(Colors.MediumPurple, "Rarekiller: Oh no, I accidently killed him !!! ");
-                                return;
-                            }
-                            if (Me.HealthPercent < 10)
-                            {
-                                Logging.Write(Colors.MediumPurple, "Rarekiller: Health < 10% , Use Feign Death !!! ");
-                                if (SpellManager.CanCast("Feign Death"))
-                                    RarekillerSpells.CastSafe("Feign Death", Me, false);
-                                //SpellManager.Cast("Feign Death");
-                                return;
-                            }
-
-                            if (!(Me.CastingSpellId == 1515))
-                            {
-                                WoWMovement.MoveStop();
-                                RarekillerSpells.CastSafe("Tame Beast", o, true);
-                                //SpellManager.Cast(1515);
-                                Logging.Write(Colors.MediumPurple, "Rarekiller: Try to tame Beast {0}", o.Name);
-                                Thread.Sleep(500);
-                            }
-                        }
-                        Logging.Write(Colors.MediumPurple, "Rarekiller: Sucessfully tamed Beast {0}", o.Name);
-                        #endregion
-                    }
-                     
-                   else
-                    {
-                        #region Testcase for my Shammi
-                        while (!o.IsDead)
-                        {
-                            Logging.Write(Colors.MediumPurple, "Rarekiller Test: Try to tame Beast", o.Name);
-                            Thread.Sleep(1500);
-                        }
-                        #endregion
-                    }
-                    
+                        Lua.DoString("print('NPCScan: NPC is Indoors')", tamePet.Name);
+                    return;
                 }
-                else if (o.IsPet)
+                if (Me.Level < tamePet.Level)
+                {
+                    Logging.Write(Colors.MediumPurple, "Rarekiller: Unit Level is higher then mine, can't tame the Unit.");
+                    Blacklist.Add(tamePet.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist60));
+                    Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Blacklist Unit for 60 Minutes.");
+                    if (Rarekiller.Settings.LUAoutput)
+                        Lua.DoString("print('NPCScan: NPC Level is to high to tame')", tamePet.Name);
                     return;
-                else if (Blacklist.Contains(o.Guid, Rarekiller.Settings.Flags))
+                }
+                if (Rarekiller.BlacklistMobsList.ContainsKey(Convert.ToInt32(tamePet.Entry)))
+                {
+                    Logging.Write(Colors.MediumPurple, "Rarekiller: {0} is Member of the BlacklistedMobs.xml", tamePet.Name);
+                    Blacklist.Add(tamePet.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist15));
+                    Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: Blacklist Unit for 15 Minutes.");
                     return;
+                }
+                if (Rarekiller.DontInteract) return;
+                #endregion
+
+                //Dismiss Pet
+                if (Me.Class == WoWClass.Hunter && Me.Pet != null)
+                {
+                    RarekillerSpells.CastSafe("Dismiss Pet", Me, false);
+                    //SpellManager.Cast("Dismiss Pet");
+                    Thread.Sleep(3000);
+                }
+
+                if (Rarekiller.Settings.Alert)
+                    Rarekiller.Alert();
+
+                #region Move to tameable Unit
+                if(!Rarekiller.MoveTo(tamePet, 20, false)) return;
+                if (Me.IsFlying)
+                    if (!Rarekiller.DescendToLand(tamePet)) return;
+                Rarekiller.Dismount();
+                #endregion
+
+                tamePet.Target();
+                if (Me.Class == WoWClass.Hunter)
+                {
+                    #region Tame
+                    while (!tamePet.IsPet)
+                    {
+                        if (tamePet.IsDead)
+                        {
+                            Logging.Write(Colors.MediumPurple, "Rarekiller: Oh no, I accidently killed him !!! ");
+                            return;
+                        }
+                        if (Me.HealthPercent < 10)
+                        {
+                            Logging.Write(Colors.MediumPurple, "Rarekiller: Health < 10% , Use Feign Death !!! ");
+                            if (SpellManager.CanCast("Feign Death"))
+                                RarekillerSpells.CastSafe("Feign Death", Me, false);
+                            //SpellManager.Cast("Feign Death");
+                            return;
+                        }
+
+                        if (!(Me.CastingSpellId == 1515))
+                        {
+                            WoWMovement.MoveStop();
+                            RarekillerSpells.CastSafe("Tame Beast", tamePet, true);
+                            //SpellManager.Cast(1515);
+                            Logging.Write(Colors.MediumPurple, "Rarekiller: Try to tame Beast {0}", tamePet.Name);
+                            Thread.Sleep(500);
+                        }
+                    }
+                    Logging.Write(Colors.MediumPurple, "Rarekiller: Sucessfully tamed Beast {0}", tamePet.Name);
+                    #endregion
+                }
+                     
                 else
                 {
-                    Logging.Write(Colors.MediumPurple, "Rarekiller: Find a Unit, but sadly he's dead or not tameable: {0}", o.Name);
-                    Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
-                    Logging.Write(Colors.MediumPurple, "Rarekiller: Blacklist Unit for 5 Minutes.");
-                    return;
+                    #region Testcase for my Shammi
+                    while (!tamePet.IsDead)
+                    {
+                        Logging.Write(Colors.MediumPurple, "Rarekiller Test: Try to tame Beast", tamePet.Name);
+                        Thread.Sleep(1500);
+                    }
+                    #endregion
                 }
+                    
+            }
+            else if (tamePet.IsPet)
+                return;
+            else if (Blacklist.Contains(tamePet.Guid, Rarekiller.Settings.Flags))
+                return;
+            else
+            {
+                Logging.Write(Colors.MediumPurple, "Rarekiller: Find a Unit, but sadly he's dead or not tameable: {0}", tamePet.Name);
+                Blacklist.Add(tamePet.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
+                Logging.Write(Colors.MediumPurple, "Rarekiller: Blacklist Unit for 5 Minutes.");
+                return;
             }
         }
 
@@ -171,7 +198,6 @@ namespace katzerle
 
             #region create a List with Objects in Reach
             // ----------------- Generate a List with all wanted Nests found in Object Manager ---------------------		
-            ObjectManager.Update();
             WoWGameObject Footprint = ObjectManager.GetObjectsOfType<WoWGameObject>()
                 .Where(o => (!Blacklist.Contains(o.Guid, Rarekiller.Settings.Flags) && (
                     (o.Entry == 214430) //patrannache footprint
@@ -240,7 +266,6 @@ namespace katzerle
 
                 #region create a List with Objects in Reach
                 // ----------------- Generate a List with all wanted Nests found in Object Manager ---------------------		
-                ObjectManager.Update();
                 Footprint = ObjectManager.GetObjectsOfType<WoWGameObject>()
                     .Where(o => (!Blacklist.Contains(o.Guid, Rarekiller.Settings.Flags) && (
                         (o.Entry == 214430) //patrannache footprint

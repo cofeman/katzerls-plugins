@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- Rarekiller will kill these mobs if tagged-->
 <TaggedMobs>
-	<Mob Entry="99999999" Name="DefaultMob" />
+	<Mob Entry="99999999" Name="Dummy Mob" />
 </TaggedMobs>

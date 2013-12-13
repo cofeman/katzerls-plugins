@@ -30,7 +30,6 @@ namespace katzerle
             InitializeComponent();
 
             // Addons
-            CBMOP.Checked = Rarekiller.Settings.MOP;
             CBKillList.Checked = Rarekiller.Settings.KillList;
             CBCata.Checked = Rarekiller.Settings.CATA;
             CBWotlk.Checked = Rarekiller.Settings.WOTLK;
@@ -64,11 +63,47 @@ namespace katzerle
             TBSoundfileGuild.Text = Rarekiller.Settings.SoundfileGuild;
             TBSoundfileFoundRare.Text = Rarekiller.Settings.SoundfileFoundRare;
             //Tamer
-            CBTameDefault.Checked = Rarekiller.Settings.TameDefault;
+            CBTameList.Checked = Rarekiller.Settings.TameList;
+            CBJadefang.Checked = Rarekiller.Settings.Jadefang;
+            CBGhostcrawler.Checked = Rarekiller.Settings.Ghostcrawler;
+            CBKaroma.Checked = Rarekiller.Settings.Karoma;
+            CBMadexxRed.Checked = Rarekiller.Settings.MadexxRed;
+            CBMadexxGreen.Checked = Rarekiller.Settings.MadexxGreen;
+            CBMadexxBlack.Checked = Rarekiller.Settings.MadexxBlack;
+            CBMadexxBlue.Checked = Rarekiller.Settings.MadexxBlue;
+            CBMadexxBrown.Checked = Rarekiller.Settings.MadexxBrown;
+            CBTerrorpene.Checked = Rarekiller.Settings.Terrorpene;
+            CBLoquenahak.Checked = Rarekiller.Settings.Loquenahak;
+            CBAotona.Checked = Rarekiller.Settings.Aotona;
+            CBSkoll.Checked = Rarekiller.Settings.Skoll;
+            CBGondoria.Checked = Rarekiller.Settings.Gondoria;
+            CBArcturias.Checked = Rarekiller.Settings.Arcturias;
+            CBKingKrush.Checked = Rarekiller.Settings.KingKrush;
+            CBNuramoc.Checked = Rarekiller.Settings.Nuramoc;
+            CBGoretooth.Checked = Rarekiller.Settings.Goretooth;
+            CBSambas.Checked = Rarekiller.Settings.Sambas;
             CBTameByID.Checked = Rarekiller.Settings.TameByID;
             CBNotKillTameable.Checked = Rarekiller.Settings.NotKillTameable;
             TBTameID.Text = Rarekiller.Settings.TameMobID;
-            CBTameDefault.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBTameList.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBJadefang.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBGhostcrawler.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBKaroma.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBMadexxRed.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBMadexxGreen.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBMadexxBlack.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBMadexxBlue.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBMadexxBrown.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBTerrorpene.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBLoquenahak.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBAotona.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBSkoll.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBGondoria.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBArcturias.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBKingKrush.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBNuramoc.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBGoretooth.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBSambas.Enabled = Rarekiller.Settings.Hunteractivated;
             CBTameByID.Enabled = Rarekiller.Settings.Hunteractivated;
             TBTameID.Enabled = Rarekiller.Settings.Hunteractivated;
             CBFootprints.Enabled = Rarekiller.Settings.Hunteractivated;
@@ -154,8 +189,7 @@ namespace katzerle
             CBYorik50336.Checked = Rarekiller.Settings.Yorik50336;
 
             CBBlingtron.Checked = Rarekiller.Settings.Blingtron;
-            CBFootprints.Checked = Rarekiller.Settings.Footprints && Rarekiller.Settings.BETA;
-            CBFootprints.Enabled = Rarekiller.Settings.BETA;
+            CBFootprints.Checked = Rarekiller.Settings.Footprints;
         }
 		
         private void RBItem_CheckedChanged(object sender, EventArgs e)
@@ -260,113 +294,8 @@ namespace katzerle
             XmlText text;
             XmlComment xmlComment;
 
-// ---------- Check Plausibility of the Config ----------------------------
-
-//Mists of Pandaria
-            if (Me.Level < 90)
-            {
-                Logging.Write(Colors.MediumPurple, "Rarekiller: Don't kill Pandaria Rares under Level 90");
-                CBMOP.Checked = false;
-            }
-
-
-//Pull Spell
-            if (!CBPull.Checked && !(SpellManager.HasSpell(TBPull.Text)))
-            {
-                Logging.Write(Colors.MediumPurple, "Rarekiller: Don't have your configured Pull Spell - setting to Default");
-                CBPull.Checked = true;
-                CBPull2.Checked = false;
-                TBPull.Text = "";
-            }
-            if (!CBPull.Checked && (TBPull.Text == ""))
-            {
-                Logging.Write(Colors.MediumPurple, "Rarekiller: You must insert Pullspell");
-                CBPull.Checked = true;
-                CBPull2.Checked = false;
-            }
-
-// Spellrange Test Customized Pull Spell
-            if (!CBPull.Checked && (Convert.ToInt64(TBRange.Text) > Convert.ToInt64(Rarekiller.Spells.RangeCheck(TBPull.Text))))
-            {
-                TBRange.Text = Rarekiller.Spells.RangeCheck(TBPull.Text);
-                Logging.Write(Colors.MediumPurple, "Set Range to {0} because of Low-Ranged Customized Spell", Rarekiller.Spells.RangeCheck(TBPull.Text));
-            }
-
-// Spellrange Test Default Pull Spell
-            if (!CBPull.Checked && (Convert.ToInt64(TBRange.Text) > Convert.ToInt64(Rarekiller.Spells.RangeCheck(Rarekiller.Spells.FastPullspell))))
-            {
-                TBRange.Text = Rarekiller.Spells.RangeCheck(TBPull.Text);
-                Logging.Write(Colors.MediumPurple, "Set Range to {0} because of Low-Ranged Default Spell", Rarekiller.Spells.RangeCheck(TBPull.Text));
-            }
-
-            if ((CBMOP.Checked || CBWotlk.Checked || CBBC.Checked || CBCata.Checked || CBLowRAR.Checked || CBHuntByID.Checked)
-                && CBPull.Checked && !(SpellManager.HasSpell(Rarekiller.Spells.FastPullspell)))
-            {
-                Logging.Write(Colors.MediumPurple, "Rarekiller: Don't have your Pull Spell - please config one");
-                CBKillList.Checked = false;
-                CBWotlk.Checked = false;
-                CBBC.Checked = false;
-                CBCata.Checked = false;
-                CBMOP.Checked = false;
-                CBHuntByID.Checked = false;
-                CBLowRAR.Checked = false;
-            }
-            if (CBTLPD.Checked && CBPull.Checked
-                && !(SpellManager.HasSpell(Rarekiller.Spells.FastPullspell)))
-            {
-                Logging.Write(Colors.MediumPurple, "Rarekiller: Don't have a valid Pull Spell for TLPD - please check your Config");
-                CBTLPD.Checked = false;
-            }
-
-//Hunt and Tame by ID
-            if (CBHuntByID.Checked && (TBHuntByID.Text == ""))
-            {
-                Logging.Write(Colors.MediumPurple, "Rarekiller: You must insert the ID of the Unit you want to hunt");
-                CBHuntByID.Checked = false;
-            }
-            if (CBTameByID.Checked && (TBTameID.Text == ""))
-            {
-                Logging.Write(Colors.MediumPurple, "Rarekiller: You must insert the ID of the Unit you want to tame");
-                CBTameByID.Checked = false;
-            }
-
-
-            //Slowfall
-            if (CBItem.Checked && (TBSlowfallItem.Text == ""))
-            {
-                Logging.Write(Colors.MediumPurple, "Rarekiller: You must insert a Slowfall Item");
-                CBItem.Checked = false;
-            }
-            if (CBSpell.Checked && (TBSlowfallSpell.Text == ""))
-            {
-                Logging.Write(Colors.MediumPurple, "Rarekiller: You must insert a Slowfall Spell");
-                CBSpell.Checked = false;
-            }
-            if (CBUseSlowfall.Checked && CBSpell.Checked && !(SpellManager.HasSpell(TBSlowfallSpell.Text)))
-            {
-                Logging.Write(Colors.MediumPurple, "Rarekiller: Don't have your Slowfall Spell - please check your Config");
-                CBSpell.Checked = false;
-                TBSlowfallSpell.Text = "";
-            }
-            if (CBTLPD.Checked && !CBUseSlowfall.Checked)
-                Logging.Write(Colors.MediumPurple, "Rarekiller Warning: You will probably die, hunting the TLPD without Slowfall.");
-            if (CBNallak50364.Checked && !CBUseSlowfall.Checked)
-                Logging.Write(Colors.MediumPurple, "Rarekiller Warning: You will probably die, hunting the Nal'lak without Slowfall.");
-            if (CBWotlk.Checked && CBVyragosa.Checked && !CBUseSlowfall.Checked)
-                Logging.Write(Colors.MediumPurple, "Rarekiller Warning: You will probably die, hunting Vyragosa without Slowfall. Please Check - don't kill Vyragosa");
-            if (TBFalltimer.Text == "")
-                TBFalltimer.Text = "10";
-//Diverses
-         if (CBBlacklistCheck.Checked && (TBBlacklistTime.Text == ""))
-            {
-                TBBlacklistTime.Text = "180";
-                Logging.Write(Colors.MediumPurple, "Rarekiller: Set Blacklist Time to Default");
-            }
-
-
 // Variablen nach Settings übernehmen
             // Addons
-            Rarekiller.Settings.MOP = CBMOP.Checked;
             Rarekiller.Settings.KillList = CBKillList.Checked;
             Rarekiller.Settings.CATA = CBCata.Checked;
             Rarekiller.Settings.WOTLK = CBWotlk.Checked;
@@ -390,7 +319,25 @@ namespace katzerle
             Rarekiller.Settings.BlacklistTime = TBBlacklistTime.Text;
             Rarekiller.Settings.Footprints = CBFootprints.Checked;
             //Tamer
-            Rarekiller.Settings.TameDefault = CBTameDefault.Checked;
+            Rarekiller.Settings.TameList = CBTameList.Checked;
+            Rarekiller.Settings.Jadefang = CBJadefang.Checked;
+            Rarekiller.Settings.Ghostcrawler = CBGhostcrawler.Checked;
+            Rarekiller.Settings.Karoma = CBKaroma.Checked;
+            Rarekiller.Settings.MadexxRed = CBMadexxRed.Checked;
+            Rarekiller.Settings.MadexxGreen = CBMadexxGreen.Checked;
+            Rarekiller.Settings.MadexxBlack = CBMadexxBlack.Checked;
+            Rarekiller.Settings.MadexxBlue = CBMadexxBlue.Checked;
+            Rarekiller.Settings.MadexxBrown = CBMadexxBrown.Checked;
+            Rarekiller.Settings.Terrorpene = CBTerrorpene.Checked;
+            Rarekiller.Settings.Loquenahak = CBLoquenahak.Checked;
+            Rarekiller.Settings.Aotona = CBAotona.Checked;
+            Rarekiller.Settings.Skoll = CBSkoll.Checked;
+            Rarekiller.Settings.Gondoria = CBGondoria.Checked;
+            Rarekiller.Settings.Arcturias = CBArcturias.Checked;
+            Rarekiller.Settings.KingKrush = CBKingKrush.Checked;
+            Rarekiller.Settings.Nuramoc = CBNuramoc.Checked;
+            Rarekiller.Settings.Goretooth = CBGoretooth.Checked;
+            Rarekiller.Settings.Sambas = CBSambas.Checked;
             Rarekiller.Settings.TameByID = CBTameByID.Checked;
             Rarekiller.Settings.NotKillTameable = CBNotKillTameable.Checked;
             Rarekiller.Settings.TameMobID = TBTameID.Text;
@@ -494,7 +441,7 @@ namespace katzerle
 			// Mount Rares
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: TLPD = {0}", CBTLPD.Checked.ToString());
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Poseidus = {0}", CBPoseidus.Checked.ToString());
-            //Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Aeonaxx = {0}", CBAeonaxx.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Aeonaxx = {0}", CBAeonaxx.Checked.ToString());
             // Collector
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Camel = {0}", CBCamel.Checked.ToString());
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: RaptorNest = {0}", CBRaptorNest.Checked.ToString());
@@ -511,7 +458,25 @@ namespace katzerle
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: HuntByID = {0}", CBHuntByID.Checked.ToString());
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: MobID = {0}", TBHuntByID.Text.ToString());
             // Tamer
-            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: TameDefault = {0}", CBTameDefault.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: TameList = {0}", CBTameList.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Jadefang = {0}", CBJadefang.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Ghostcrawler = {0}", CBGhostcrawler.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Karoma = {0}", CBKaroma.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: MadexxRed = {0}", CBMadexxRed.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: MadexxGreen = {0}", CBMadexxGreen.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: MadexxBlack = {0}", CBMadexxBlack.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: MadexBlue = {0}", CBMadexxBlue.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: MadexxBrown = {0}", CBMadexxBrown.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Terrorpene = {0}", CBTerrorpene.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Loquenahak = {0}", CBLoquenahak.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Aotona = {0}", CBAotona.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Skoll = {0}", CBSkoll.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Gondoria = {0}", CBGondoria.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Arcturias = {0}", CBArcturias.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: KingKrush = {0}", CBKingKrush.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Nuramoc = {0}", CBNuramoc.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Goretooth = {0}", CBGoretooth.Checked.ToString());
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Sambas = {0}", CBSambas.Checked.ToString());
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: TameByID = {0}", CBTameByID.Checked.ToString());
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: NotKillTameable = {0}", CBNotKillTameable.Checked.ToString());
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: TameID = {0}", TBTameID.Text.ToString());
@@ -547,7 +512,6 @@ namespace katzerle
             //Mists of Pandaria
 
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Mists of Pandaria:");
-            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: MOP = {0}", CBMOP.Checked.ToString());
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Bonobos50828 = {0}", CBBonobos50828.Checked.ToString());
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: IkIk50836 = {0}", CBIkIk50836.Checked.ToString());
             Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller Save: Nanners50840 = {0}", CBNanners50840.Checked.ToString());
@@ -642,11 +606,6 @@ namespace katzerle
             element.AppendChild(text);
             root.AppendChild(element);
             //let's add another element (child of the root)
-            element = xml.CreateElement("MOP");
-            text = xml.CreateTextNode(CBMOP.Checked.ToString());
-            element.AppendChild(text);
-            root.AppendChild(element);
-            //let's add another element (child of the root)
             element = xml.CreateElement("CATA");
             text = xml.CreateTextNode(CBCata.Checked.ToString());
             element.AppendChild(text);
@@ -684,10 +643,10 @@ namespace katzerle
             element.AppendChild(text);
             root.AppendChild(element);
             //let's add another element (child of the root)
-            //element = xml.CreateElement("Aeonaxx");
-            //text = xml.CreateTextNode(CBAeonaxx.Checked.ToString());
-            //element.AppendChild(text);
-            //root.AppendChild(element);
+            element = xml.CreateElement("Aeonaxx");
+            text = xml.CreateTextNode(CBAeonaxx.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
 
 			//Collector
             //let's add another element (child of the root)
@@ -761,9 +720,101 @@ namespace katzerle
             text = xml.CreateTextNode(CBNotKillTameable.Checked.ToString());
             element.AppendChild(text);
             root.AppendChild(element);
+
             //let's add another element (child of the root)
-            element = xml.CreateElement("TameDefault");
-            text = xml.CreateTextNode(CBTameDefault.Checked.ToString());
+            element = xml.CreateElement("Jadefang");
+            text = xml.CreateTextNode(CBJadefang.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("Ghostcrawler");
+            text = xml.CreateTextNode(CBGhostcrawler.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("Karoma");
+            text = xml.CreateTextNode(CBKaroma.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("MadexxRed");
+            text = xml.CreateTextNode(CBMadexxRed.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("MadexxGreen");
+            text = xml.CreateTextNode(CBMadexxGreen.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("MadexxBlack");
+            text = xml.CreateTextNode(CBMadexxBlack.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("MadexBlue");
+            text = xml.CreateTextNode(CBMadexxBlue.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("MadexxBrown");
+            text = xml.CreateTextNode(CBMadexxBrown.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("Terrorpene");
+            text = xml.CreateTextNode(CBTerrorpene.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("Loquenahak");
+            text = xml.CreateTextNode(CBLoquenahak.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("Aotona");
+            text = xml.CreateTextNode(CBAotona.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("Skoll");
+            text = xml.CreateTextNode(CBSkoll.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("Gondoria");
+            text = xml.CreateTextNode(CBGondoria.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("Arcturias");
+            text = xml.CreateTextNode(CBArcturias.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("KingKrush");
+            text = xml.CreateTextNode(CBKingKrush.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("Nuramoc");
+            text = xml.CreateTextNode(CBNuramoc.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("Goretooth");
+            text = xml.CreateTextNode(CBGoretooth.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+            //let's add another element (child of the root)
+            element = xml.CreateElement("Sambas");
+            text = xml.CreateTextNode(CBSambas.Checked.ToString());
+            element.AppendChild(text);
+            root.AppendChild(element);
+
+            //let's add another element (child of the root)
+            element = xml.CreateElement("TameList");
+            text = xml.CreateTextNode(CBTameList.Checked.ToString());
             element.AppendChild(text);
             root.AppendChild(element);
             //let's add another element (child of the root)
@@ -1278,8 +1329,7 @@ namespace katzerle
         private void button1_Click(object sender, EventArgs e)
         {
             // Addons
-            CBMOP.Checked = false;
-            CBKillList.Checked = false;
+            CBKillList.Checked = true;
             CBCata.Checked = true;
             CBWotlk.Checked = true;
             CBBC.Checked = true;
@@ -1292,7 +1342,7 @@ namespace katzerle
             CBOnyxEgg.Checked = false;
             CBAnotherMansTreasure.Checked = false;
             CBBlingtron.Checked = false;
-            CBInteractNPC.Checked = false;
+            CBInteractNPC.Checked = true;
             CBObjects.Checked = true;
             // Hunt by ID
             CBHuntByID.Checked = false;
@@ -1313,13 +1363,48 @@ namespace katzerle
             TBSoundfileGuild.Text = Rarekiller.Soundfile2;
             TBSoundfileFoundRare.Text = Rarekiller.Soundfile;
             //Tamer
-            CBTameDefault.Checked = false;
+            CBTameList.Checked = false;
+            CBJadefang.Checked = false;
+            CBGhostcrawler.Checked = false;
+            CBKaroma.Checked = false;
+            CBMadexxRed.Checked = false;
+            CBMadexxGreen.Checked = false;
+            CBMadexxBlack.Checked = false;
+            CBMadexxBlue.Checked = false;
+            CBMadexxBrown.Checked = false;
+            CBTerrorpene.Checked = false;
+            CBLoquenahak.Checked = false;
+            CBAotona.Checked = false;
+            CBSkoll.Checked = false;
+            CBGondoria.Checked = false;
+            CBArcturias.Checked = false;
+            CBKingKrush.Checked = false;
+            CBNuramoc.Checked = false;
+            CBGoretooth.Checked = false;
+            CBSambas.Checked = false;
             CBTameByID.Checked = false;
             CBNotKillTameable.Checked = false;
             TBTameID.Text = "";
             CBFootprints.Checked = false;
-            CBFootprints.Enabled = Rarekiller.Settings.BETA;
-            CBTameDefault.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBTameList.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBJadefang.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBGhostcrawler.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBKaroma.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBMadexxRed.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBMadexxGreen.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBMadexxBlack.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBMadexxBlue.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBMadexxBrown.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBTerrorpene.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBLoquenahak.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBAotona.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBSkoll.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBGondoria.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBArcturias.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBKingKrush.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBNuramoc.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBGoretooth.Enabled = Rarekiller.Settings.Hunteractivated;
+            CBSambas.Enabled = Rarekiller.Settings.Hunteractivated;
             CBTameByID.Enabled = Rarekiller.Settings.Hunteractivated;
             TBTameID.Enabled = Rarekiller.Settings.Hunteractivated;
             CBFootprints.Enabled = Rarekiller.Settings.Hunteractivated;
@@ -1407,7 +1492,6 @@ namespace katzerle
 
 			// Variablen nach Settings übernehmen
             // Addons
-            Rarekiller.Settings.MOP = CBMOP.Checked;
             Rarekiller.Settings.KillList = CBKillList.Checked;
             Rarekiller.Settings.CATA = CBCata.Checked;
             Rarekiller.Settings.WOTLK = CBWotlk.Checked;
@@ -1429,7 +1513,25 @@ namespace katzerle
             Rarekiller.Settings.BlacklistCheck = CBBlacklistCheck.Checked;
             Rarekiller.Settings.BlacklistTime = TBBlacklistTime.Text;
             //Tamer
-            Rarekiller.Settings.TameDefault = CBTameDefault.Checked;
+            Rarekiller.Settings.TameList = CBTameList.Checked;
+            Rarekiller.Settings.Jadefang = CBJadefang.Checked;
+            Rarekiller.Settings.Ghostcrawler = CBGhostcrawler.Checked;
+            Rarekiller.Settings.Karoma = CBKaroma.Checked;
+            Rarekiller.Settings.MadexxRed = CBMadexxRed.Checked;
+            Rarekiller.Settings.MadexxGreen = CBMadexxGreen.Checked;
+            Rarekiller.Settings.MadexxBlack = CBMadexxBlack.Checked;
+            Rarekiller.Settings.MadexxBlue = CBMadexxBlue.Checked;
+            Rarekiller.Settings.MadexxBrown = CBMadexxBrown.Checked;
+            Rarekiller.Settings.Terrorpene = CBTerrorpene.Checked;
+            Rarekiller.Settings.Loquenahak = CBLoquenahak.Checked;
+            Rarekiller.Settings.Aotona = CBAotona.Checked;
+            Rarekiller.Settings.Skoll = CBSkoll.Checked;
+            Rarekiller.Settings.Gondoria = CBGondoria.Checked;
+            Rarekiller.Settings.Arcturias = CBArcturias.Checked;
+            Rarekiller.Settings.KingKrush = CBKingKrush.Checked;
+            Rarekiller.Settings.Nuramoc = CBNuramoc.Checked;
+            Rarekiller.Settings.Goretooth = CBGoretooth.Checked;
+            Rarekiller.Settings.Sambas = CBSambas.Checked;
             Rarekiller.Settings.TameByID = CBTameByID.Checked;
             Rarekiller.Settings.NotKillTameable = CBNotKillTameable.Checked;
             Rarekiller.Settings.TameMobID = TBTameID.Text;

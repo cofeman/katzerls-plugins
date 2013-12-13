@@ -54,7 +54,6 @@ namespace katzerle
         {
             get
             {
-                ObjectManager.Update();
                 return (from lp in ObjectManager.GetObjectsOfType<WoWDynamicObject>()
                         orderby lp.Distance2D ascending
                         where lp.Entry == 94967
@@ -69,140 +68,147 @@ namespace katzerle
         private bool wlog(WoWDynamicObject obj)
         { Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: add spit pool - dis2D: {0}", obj.Distance2D); return true; }
 
-		
         #endregion
 
+        #region interactable NPCs in Reach
         /// <summary>
-        /// Function to Find and Interact with NPCs
+        /// returns the WoWUnit to interact with
         /// </summary>
-        public void findAndInteractNPC()
+        public WoWUnit InteractableNPC
         {
-            #region create a List with NPCs in reach
-            ObjectManager.Update();
-            List<WoWUnit> objList = ObjectManager.GetObjectsOfType<WoWUnit>()
+            get
+            {
+                //return ObjectManager.GetObjectsOfType<WoWUnit>().Where(u => (u.Entry == 50245) && !u.IsDead).OrderBy(u => u.Distance).FirstOrDefault();
+                return ObjectManager.GetObjectsOfType<WoWUnit>()
                 .Where(o => (!Blacklist.Contains(o.Guid, Rarekiller.Settings.Flags) && (
-                    ((o.Entry == 50409) && Rarekiller.Settings.Camel) || ((o.Entry == 50410) && Rarekiller.Settings.Camel) // 50409 might be the porting Camel Figurine
+                    ((o.Entry == 50409) && Rarekiller.Settings.Camel)
+                    || ((o.Entry == 50410) && Rarekiller.Settings.Camel) // 50409 might be the porting Camel Figurine
                     || (Rarekiller.AnotherMansTreasureList.ContainsKey(Convert.ToInt32(o.Entry)) && Rarekiller.Settings.AnotherMansTreasure && o.Entry < 200000)
                     || (Rarekiller.InteractNPCList.ContainsKey(Convert.ToInt32(o.Entry)) && Rarekiller.Settings.InteractNPC)
                     || (o.Entry == 43929 && Rarekiller.Settings.Blingtron && o.QuestGiverStatus == QuestGiverStatus.AvailableRepeatable) //ToDo - Is Quest completed 31752
                     || ((o.Entry == 48959) && Rarekiller.Settings.TestFigurineInteract) //Testcase rostiger Amboss - Schnotzz Landing
                 )))
-                .OrderBy(o => o.Distance).ToList();
+                .OrderBy(o => o.Distance).FirstOrDefault();
+            }
+        }
+        #endregion
+
+        /// <summary>
+        /// Function to Find and Interact with NPCs
+        /// </summary>
+        public void findAndInteractNPC(WoWUnit InteractNPC)
+        {
             List<WoWUnit> RareList = ObjectManager.GetObjectsOfType<WoWUnit>()
                 .Where(r => ((r.CreatureRank == Styx.WoWUnitClassificationType.Rare) && r.Level > 85 && !r.IsDead)).OrderBy(r => r.Distance).ToList();
-            #endregion
 
             bool Forceground = false;
 
-            foreach (WoWUnit o in objList)
+            Logging.WriteQuiet(Colors.MediumPurple, "Rarekiller: Find NPC {0} ID {1}", InteractNPC.Name, InteractNPC.Entry);
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: NPC Location: {0} / {1} / {2}", Convert.ToString(InteractNPC.X), Convert.ToString(InteractNPC.Y), Convert.ToString(InteractNPC.Z));
+            if (Rarekiller.Settings.LUAoutput)
+                Lua.DoString("print('NPCScan: Find {0} ID {1}')", InteractNPC.Name, InteractNPC.Entry);
+
+            if (Rarekiller.Settings.Alert)
+                Rarekiller.Alert();
+
+            #region don't collect if ...
+            // ----------------- Underground ----------
+            //if not ID of Underground NPCs of Another Mans Treasure --> don't collect
+            if (!(InteractNPC.Entry == 64227))
             {
-                Logging.WriteQuiet(Colors.MediumPurple, "Rarekiller: Find NPC {0} ID {1}", o.Name, o.Entry);
-                Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: NPC Location: {0} / {1} / {2}", Convert.ToString(o.X), Convert.ToString(o.Y), Convert.ToString(o.Z));
-                if (Rarekiller.Settings.LUAoutput)
-                    Lua.DoString("print('NPCScan: Find {0} ID {1}')", o.Name, o.Entry);
-
-                if (Rarekiller.Settings.Alert)
-                    Rarekiller.Alert();
-
-                #region don't collect if ...
-                // ----------------- Underground ----------
-                //if not ID of Underground NPCs of Another Mans Treasure --> don't collect
-                if (!(o.Entry == 64227))
+                if (InteractNPC.IsIndoors && Me.IsFlying && Me.IsOutdoors && (InteractNPC.Location.Distance(Me.Location) > 30))
                 {
-                    if (o.IsIndoors && Me.IsFlying && Me.IsOutdoors && (o.Location.Distance(Me.Location) > 30))
+                    Logging.Write(Colors.MediumPurple, "Rarekiller: Can't reach NPC because it is Indoors and I fly Outdoors {0}, Blacklist and Move on", InteractNPC.Name);
+                    if (Rarekiller.Settings.LUAoutput)
+                        Lua.DoString("print('NPCScan: NPC is Indoors')", InteractNPC.Name);
+                    Blacklist.Add(InteractNPC.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
+                    return;
+                }
+            }
+// -----------------  don't collect if Rare Pandaria Elite Around
+            if (RareList != null)
+            {
+                foreach (WoWUnit r in RareList)
+                {
+                    if (r.Location.Distance(InteractNPC.Location) < 30)
                     {
-                        Logging.Write(Colors.MediumPurple, "Rarekiller: Can't reach NPC because it is Indoors and I fly Outdoors {0}, Blacklist and Move on", o.Name);
+                        Logging.Write(Colors.MediumPurple, "Rarekiller: Can't reach NPC because there's a Rare Elite around, Blacklist and move on", InteractNPC.Name);
                         if (Rarekiller.Settings.LUAoutput)
-                            Lua.DoString("print('NPCScan: NPC is Indoors')", o.Name);
-                        Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
+                            Lua.DoString("print('NPCScan: NPC Elite Rare around')", InteractNPC.Name);
+                        Blacklist.Add(InteractNPC.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
                         return;
                     }
                 }
-// -----------------  don't collect if Rare Pandaria Elite Around
-                if (RareList != null)
-                {
-                    foreach (WoWUnit r in RareList)
-                    {
-                        if (r.Location.Distance(o.Location) < 30)
-                        {
-                            Logging.Write(Colors.MediumPurple, "Rarekiller: Can't reach NPC because there's a Rare Elite around, Blacklist and move on", o.Name);
-                            if (Rarekiller.Settings.LUAoutput)
-                                Lua.DoString("print('NPCScan: NPC Elite Rare around')", o.Name);
-                            Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
-                            return;
-                        }
-                    }
-                }
-                if (Rarekiller.Settings.PlayerScan && RarekillerSecurity.PlayerAround(o))
-                {
-                    Logging.Write(Colors.MediumPurple, "Rarekiller: There are other Players around, so move on");
-                    if (Rarekiller.Settings.LUAoutput)
-                        Lua.DoString("print('NPCScan: Other Players around')");
-                    Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
-                    return;
-                }
-                if (Rarekiller.DontInteract) return;
-                #endregion
+            }
+            if (Rarekiller.Settings.PlayerScan && RarekillerSecurity.PlayerAround(InteractNPC))
+            {
+                Logging.Write(Colors.MediumPurple, "Rarekiller: There are other Players around, so move on");
+                if (Rarekiller.Settings.LUAoutput)
+                    Lua.DoString("print('NPCScan: Other Players around')");
+                Blacklist.Add(InteractNPC.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist5));
+                return;
+            }
+            if (Rarekiller.DontInteract) return;
+            #endregion
 
-                #region Move to Helperpoint if found known Figurine under a Tent
-                if (Me.IsFlying && ((o.Location.Distance(ProblemCamel1) < 10) || (o.Location.Distance(ProblemCamel2) < 10) ||
-                        (o.Location.Distance(ProblemCamel3) < 10) || (o.Location.Distance(ProblemCamel4) < 20)))
-                {
-                    WoWPoint HelperPointCamel = o.Location;
-                    HelperPointCamel.X = HelperPointCamel.X + 20;
-                    HelperPointCamel.Z = HelperPointCamel.Z + 5;
-                    Logging.Write(Colors.MediumPurple, "Rarekiller: Found a Problem Figurine {0} so dismount and walk", o.Entry);
-                    if (!Rarekiller.MoveTo(HelperPointCamel, 3, false)) return;
-                    //if (!Rarekiller.DescendToLand(o)) return;
-                    Rarekiller.Dismount();
-                    Forceground = true;
-                }
-                #endregion
-
-                #region Move to Helperpoint if known Underground NPC
-                if (Me.IsFlying && o.Entry == 64227)
-                {
-                    if(!Rarekiller.MoveTo(LandingPoint64227, 5, false)) return;
-                    Rarekiller.Dismount();
-                    Forceground = true;
-                }
-                #endregion
-
-                #region Move to NPC
-                if (Me.IsFlying && Forceground)
-                {
-                    Logging.Write(Colors.MediumPurple, "Rarekiller: Failure in Programming. Fly again to Helperpoint and Dismount", o.Entry);
-                    return;
-                }
-                if(!Rarekiller.MoveTo(o, 4, Forceground)) return;
-                Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: NPC Location: {0} / {1} / {2}", Convert.ToString(o.X), Convert.ToString(o.Y), Convert.ToString(o.Z));
-                Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: My Location: {0} / {1} / {2}", Convert.ToString(Me.X), Convert.ToString(Me.Y), Convert.ToString(Me.Z));
+            #region Move to Helperpoint if found known Figurine under a Tent
+            if (Me.IsFlying && ((InteractNPC.Location.Distance(ProblemCamel1) < 10) || (InteractNPC.Location.Distance(ProblemCamel2) < 10) ||
+                    (InteractNPC.Location.Distance(ProblemCamel3) < 10) || (InteractNPC.Location.Distance(ProblemCamel4) < 20)))
+            {
+                WoWPoint HelperPointCamel = InteractNPC.Location;
+                HelperPointCamel.X = HelperPointCamel.X + 20;
+                HelperPointCamel.Z = HelperPointCamel.Z + 5;
+                Logging.Write(Colors.MediumPurple, "Rarekiller: Found a Problem Figurine {0} so dismount and walk", InteractNPC.Entry);
+                if (!Rarekiller.MoveTo(HelperPointCamel, 3, false)) return;
+                //if (!Rarekiller.DescendToLand(o)) return;
                 Rarekiller.Dismount();
-                #endregion
+                Forceground = true;
+            }
+            #endregion
 
-                o.Interact();
-                o.Interact();
-                o.Interact();
-                Logging.Write(Colors.MediumPurple, "Rarekiller: Interact with NPC - ID {0}", o.Entry);
-                Thread.Sleep(300);
+            #region Move to Helperpoint if known Underground NPC
+            if (Me.IsFlying && InteractNPC.Entry == 64227)
+            {
+                if(!Rarekiller.MoveTo(LandingPoint64227, 5, false)) return;
+                Rarekiller.Dismount();
+                Forceground = true;
+            }
+            #endregion
+
+            #region Move to NPC
+            if (Me.IsFlying && Forceground)
+            {
+                Logging.Write(Colors.MediumPurple, "Rarekiller: Failure in Programming. Fly again to Helperpoint and Dismount", InteractNPC.Entry);
+                return;
+            }
+            if(!Rarekiller.MoveTo(InteractNPC, 4, Forceground)) return;
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: NPC Location: {0} / {1} / {2}", Convert.ToString(InteractNPC.X), Convert.ToString(InteractNPC.Y), Convert.ToString(InteractNPC.Z));
+            Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller: My Location: {0} / {1} / {2}", Convert.ToString(Me.X), Convert.ToString(Me.Y), Convert.ToString(Me.Z));
+            Rarekiller.Dismount();
+            #endregion
+
+            InteractNPC.Interact();
+            InteractNPC.Interact();
+            InteractNPC.Interact();
+            Logging.Write(Colors.MediumPurple, "Rarekiller: Interact with NPC - ID {0}", InteractNPC.Entry);
+            Thread.Sleep(300);
 				
-                //Another Mans Treasure NPCs
-				if (o.Entry == 65552 || o.Entry == 64272 || o.Entry == 64004 || o.Entry == 64191 || o.Entry == 64227)
-				{
-                    Thread.Sleep(1000);
-                    Lua.DoString("RunMacroText(\"/click GossipTitleButton1\");");
-					Thread.Sleep(1000);
-				}
-                //Blingtron
-                if (o.Entry == 43929)
-                {
-                    Thread.Sleep(1000);
-                    Lua.DoString("SelectGossipAvailableQuest(GetNumGossipAvailableQuests())");
-                    Thread.Sleep(1000);
-                    Lua.DoString("RunMacroText(\"/click QuestFrameCompleteQuestButton\")");
-                    Thread.Sleep(1000);
-                    Blacklist.Add(o.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist60));
-                }
+            //Another Mans Treasure NPCs
+			if (InteractNPC.Entry == 65552 || InteractNPC.Entry == 64272 || InteractNPC.Entry == 64004 || InteractNPC.Entry == 64191 || InteractNPC.Entry == 64227)
+			{
+                Thread.Sleep(1000);
+                Lua.DoString("RunMacroText(\"/click GossipTitleButton1\");");
+				Thread.Sleep(1000);
+			}
+            //Blingtron
+            if (InteractNPC.Entry == 43929)
+            {
+                Thread.Sleep(1000);
+                Lua.DoString("SelectGossipAvailableQuest(GetNumGossipAvailableQuests())");
+                Thread.Sleep(1000);
+                Lua.DoString("RunMacroText(\"/click QuestFrameCompleteQuestButton\")");
+                Thread.Sleep(1000);
+                Blacklist.Add(InteractNPC.Guid, Rarekiller.Settings.Flags, TimeSpan.FromSeconds(Rarekiller.Settings.Blacklist60));
             }
         }
 

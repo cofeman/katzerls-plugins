@@ -7,7 +7,15 @@
 //
 //==================================================================
 
-// -- ToDo --
+// -- ToDo Prio 1 --
+// Extra GUI für Tamer
+// Aeonaxx Catcher testen
+// Liste vom ObjectGatherer übernehmen mit GUI
+// -- ToDo Prio 2 --
+// Huolon (Timeless Isles) wegen Mount
+// Neue Rare von Vale of Eternal Blossom
+// Hunter Pets Pandaria (Footprints)
+// Erfolgspunkte abchecken
 
 using System;
 using System.Collections.Generic;
@@ -42,7 +50,7 @@ namespace katzerle
 		public static string name { get { return "Rarekiller"; } }
 		public override string Name { get { return name; } }
 		public override string Author { get { return "katzerle"; } }
-		private readonly static Version _version = new Version(4, 10);
+		private readonly static Version _version = new Version(4, 11);
 		public override Version Version { get { return _version; } }
 		public override string ButtonText { get { return "Settings"; } }
 		public override bool WantButton { get { return true; } }
@@ -57,10 +65,11 @@ namespace katzerle
         public static RarekillerSecurity Security = new RarekillerSecurity();
 		public static RarekillerSpells Spells = new RarekillerSpells();
         public static RarekillerMoPRares MoPRares = new RarekillerMoPRares();
+        public static RarekillerAeonaxx AeonaxxCatcher = new RarekillerAeonaxx();
 
         private static Stopwatch Checktimer = new Stopwatch();
         private static Stopwatch Shadowmeldtimer = new Stopwatch();
-        // Developer Thing (ToDo Remove)
+        // for Developer Things
         private static Stopwatch DumpAuraTimer = new Stopwatch();
         private static Stopwatch FallTimer = new Stopwatch();
 
@@ -83,18 +92,34 @@ namespace katzerle
         {
 			UpdatePlugin();
             //Settings.Load();
-            Logging.WriteQuiet(Colors.MediumPurple, "Rarekiller 4.10 loaded");
+            Logging.WriteQuiet(Colors.MediumPurple, "Rarekiller 4.11 BETA loaded");
             if (Me.Class != WoWClass.Hunter)
             {
                 Logging.Write(Colors.MediumPurple, "Rarekiller: I'm no Hunter. Deactivate the Tamer Part");
                 Settings.TameByID = false;
-                Settings.TameDefault = false;
+                Settings.TameList = false;
+
+                Settings.Jadefang = false;
+                Settings.Ghostcrawler = false;
+                Settings.Karoma = false;
+                Settings.MadexxRed = false;
+                Settings.MadexxGreen = false;
+                Settings.MadexxBlack = false;
+                Settings.MadexxBlue = false;
+                Settings.MadexxBrown = false;
+                Settings.Terrorpene = false;
+                Settings.Loquenahak = false;
+                Settings.Aotona = false;
+                Settings.Skoll = false;
+                Settings.Gondoria = false;
+                Settings.Arcturias = false;
+                Settings.KingKrush = false;
+                Settings.Nuramoc = false;
+                Settings.Goretooth = false;
+                Settings.Sambas = false;
+
                 Settings.TameMobID = "";
                 Settings.Hunteractivated = false;
-                Settings.Footprints = false;
-            }
-            if (!Settings.BETA)
-            {
                 Settings.Footprints = false;
             }
             if (Me.Race != WoWRace.NightElf)
@@ -213,6 +238,8 @@ namespace katzerle
 		{
 			try
             {
+                ObjectManager.Update();
+
                 #region Plugin deactivated if ...
                 if (Rarekiller.ToonInvalid) return;
                 if (Battlegrounds.IsInsideBattleground || Me.IsInInstance)
@@ -266,27 +293,35 @@ namespace katzerle
                 //}
                 #endregion
 
+                #region Aeonaxx Function
+                if (Settings.Aeonaxx && (AeonaxxCatcher.AeonaxxFriendly != null || AeonaxxCatcher.AeonaxxHostile != null || AeonaxxCatcher.youngStoneDrake != null))
+                {
+                    AeonaxxCatcher.catchAeonaxx();
+                    return;
+                }
+                #endregion
+
                 if (!Me.Combat)
                 {
 
                     #region Pulse Camel Figurine and NPC Interactor
-                    if (Settings.Camel || Settings.TestFigurineInteract || Settings.AnotherMansTreasure || Settings.InteractNPC)
-                        Camel.findAndInteractNPC();
+                    if (Camel.InteractableNPC != null)
+                        Camel.findAndInteractNPC(Camel.InteractableNPC);
                     // --> Dormus' Rage = 93269
-                    if (Me.HasAura(93269) || Settings.Camel)
+                    if (Me.HasAura(93269) || Camel.Dormus != null)
                         Camel.findAndKillDormus();
                     #endregion
 
                     #region Pulse Object Interactor
-                    if (Settings.RaptorNest || Settings.TestRaptorNest || Settings.ObjectsCollector || Settings.AnotherMansTreasure ||Settings.OnyxEgg)
-                        Collector.findAndPickupObject();
+                    if (Collector.InteractableObject != null)
+                        Collector.findAndPickupObject(Collector.InteractableObject);
                     #endregion
 
                     #region Pulse Tamer
-                    if (((Me.Class == WoWClass.Hunter) && (Rarekiller.Settings.TameDefault || Rarekiller.Settings.TameByID)) || Rarekiller.Settings.TestcaseTamer)
+                    if ((Me.Class == WoWClass.Hunter || Rarekiller.Settings.TestcaseTamer) && Tamer.tameablePet != null)
                     {
                         if (Me.HealthPercent > 30)
-                            Tamer.findAndTameMob();
+                            Tamer.findAndTameMob(Tamer.tameablePet);
                     }
 
                     if ((Me.Class == WoWClass.Hunter && Rarekiller.Settings.Footprints) || Rarekiller.Settings.TestcaseTamer)
@@ -294,8 +329,8 @@ namespace katzerle
                     #endregion
 
                     #region Pulse Rarekiller
-                    if (Settings.KillList || Settings.MOP || Settings.WOTLK || Settings.BC || Settings.CATA || Settings.TLPD || Settings.LowRAR || Settings.HUNTbyID || Settings.Poseidus)
-                        Killer.findAndKillMob();
+                    if (Killer.killableEnemy != null)
+                        Killer.findAndKillMob(Killer.killableEnemy);
                     #endregion
 
                     #region Pulse Security

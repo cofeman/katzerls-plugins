@@ -36,22 +36,21 @@ namespace katzerle
         }
 
 
-        //Default Einstellungen GUI
+        #region Default Einstellungen GUI
         // Addons
-        public bool MOP = false;
         public bool CATA = true;
         public bool WOTLK = true;
         public bool BC = true;
         public bool LowRAR = false;
         public bool TLPD = true;
-        public bool KillList = false;
+        public bool KillList = true;
         public bool RaptorNest = true;
         public bool DarkSoil = false;
         public bool OnyxEgg = false;
         public bool ObjectsCollector = true;
         public bool Blingtron = false;
         public bool AnotherMansTreasure = false;
-        public bool InteractNPC = false;
+        public bool InteractNPC = true;
 		public bool Poseidus = true;
         public bool Camel = true;
         public bool Aeonaxx = false;
@@ -119,7 +118,25 @@ namespace katzerle
         //Tamer
 		public bool Hunteractivated = true;
         public bool NotKillTameable = false;
-        public bool TameDefault = false;
+        public bool TameList = false;
+        public bool Jadefang = false;
+		public bool Ghostcrawler = false;
+		public bool Karoma = false;
+		public bool MadexxRed = false;
+		public bool MadexxGreen = false;
+		public bool MadexxBlack = false;
+		public bool MadexxBlue = false;
+		public bool MadexxBrown = false;
+		public bool Terrorpene = false;
+		public bool Loquenahak = false;
+		public bool Aotona = false;
+		public bool Skoll = false;
+		public bool Gondoria = false;
+		public bool Arcturias = false;
+		public bool KingKrush = false;
+		public bool Nuramoc = false;
+		public bool Goretooth = false;
+		public bool Sambas = false;
         public bool TameByID = false;
         public string TameMobID = "";
         public Int32 Tamedistance = 12;
@@ -168,13 +185,14 @@ namespace katzerle
 //Developer Things
         public bool DeveloperBoxActive = false;
         public bool MoPRaresDeveloper = true;
-        public bool BETA = true;
 //Developer Testcases
         public bool TestCaseDormus = false;
         public bool TestRaptorNest = false;
         public bool TestFigurineInteract = false;
         public bool TestcaseTamer = false;
         public bool ReachedDormusHelperpoint = false;
+
+        #endregion
 
         // -------------- Load ConfigFile ---------------
 
@@ -229,12 +247,6 @@ namespace katzerle
                 {
                     KillList = Convert.ToBoolean(xvar.InnerText);
                     Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + KillList.ToString());
-                }
-                xvar = xml.SelectSingleNode("//Rarekiller/MOP");
-                if (xvar != null)
-                {
-                    MOP = Convert.ToBoolean(xvar.InnerText);
-                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + MOP.ToString());
                 }
                 xvar = xml.SelectSingleNode("//Rarekiller/CATA");
                 if (xvar != null)
@@ -341,12 +353,122 @@ namespace katzerle
                     NotKillTameable = Convert.ToBoolean(xvar.InnerText);
                     Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + NotKillTameable.ToString());
                 }
-                xvar = xml.SelectSingleNode("//Rarekiller/TameDefault");
+                xvar = xml.SelectSingleNode("//Rarekiller/TameList");
                 if (xvar != null)
                 {
-                    TameDefault = Convert.ToBoolean(xvar.InnerText);
-                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + TameDefault.ToString());
+                    TameList = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + TameList.ToString());
                 }
+
+                xvar = xml.SelectSingleNode("//Rarekiller/Jadefang");
+                if (xvar != null)
+                {
+                    Jadefang = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Jadefang.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Ghostcrawler");
+                if (xvar != null)
+                {
+                    Ghostcrawler = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Ghostcrawler.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Karoma");
+                if (xvar != null)
+                {
+                    Karoma = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Karoma.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/MadexxRed");
+                if (xvar != null)
+                {
+                    MadexxRed = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + MadexxRed.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/MadexxGreen");
+                if (xvar != null)
+                {
+                    MadexxGreen = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + MadexxGreen.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/MadexxBlack");
+                if (xvar != null)
+                {
+                    MadexxBlack = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + MadexxBlack.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/MadexBlue");
+                if (xvar != null)
+                {
+                    MadexxBlue = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + MadexxBlue.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/MadexxBrown");
+                if (xvar != null)
+                {
+                    MadexxBrown = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + MadexxBrown.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Terrorpene");
+                if (xvar != null)
+                {
+                    Terrorpene = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Terrorpene.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Loquenahak");
+                if (xvar != null)
+                {
+                    Loquenahak = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Loquenahak.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Aotona");
+                if (xvar != null)
+                {
+                    Aotona = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Aotona.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Skoll");
+                if (xvar != null)
+                {
+                    Skoll = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Skoll.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Gondoria");
+                if (xvar != null)
+                {
+                    Gondoria = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Gondoria.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Arcturias");
+                if (xvar != null)
+                {
+                    Arcturias = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Arcturias.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/KingKrush");
+                if (xvar != null)
+                {
+                    KingKrush = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + KingKrush.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Nuramoc");
+                if (xvar != null)
+                {
+                    Nuramoc = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Nuramoc.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Goretooth");
+                if (xvar != null)
+                {
+                    Goretooth = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Goretooth.ToString());
+                }
+                xvar = xml.SelectSingleNode("//Rarekiller/Sambas");
+                if (xvar != null)
+                {
+                    Sambas = Convert.ToBoolean(xvar.InnerText);
+                    Logging.WriteDiagnostic("Rarekiller Load: " + xvar.Name + "=" + Sambas.ToString());
+                }
+
                 xvar = xml.SelectSingleNode("//Rarekiller/TameByID");
                 if (xvar != null)
                 {

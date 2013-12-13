@@ -139,3 +139,5 @@ D:\Helferleins\Honorbuddy Test\Plugins\Rarekiller\obj\x86\Debug\RareKiller.pdb
 \\Eiskatzerle\d\Helferleins\Honorbuddy Test\Plugins\Rarekiller\obj\x86\Debug\RareKiller.pdb
 G:\HBPluginsNew\Rarekiller BETA\obj\x86\Debug\RareKiller.exe
 G:\HBPluginsNew\Rarekiller BETA\obj\x86\Debug\RareKiller.pdb
+D:\Helferleins\HonorbuddyDE 2.5.8845.708\Plugins\Rarekiller\obj\x86\Debug\RareKiller.exe
+D:\Helferleins\HonorbuddyDE 2.5.8845.708\Plugins\Rarekiller\obj\x86\Debug\RareKiller.pdb
