@@ -28,3 +28,8 @@ So all other please gimme feedback !!! I need it.
 === Rare Mob Killer - Plugin - Version 4.10 und 4.10 BETA ===
   * BETA and Normal Versions are the same for the Moment.
   * Adding Onyx Eggs as seperate Point in Collector, like Dark Soil
+
+=== Rare Mob Killer - Plugin - Version  4.11 BETA ===
+  * Changed the usage of the ObjectManager in Rarekiller
+  * Adding Aeonaxx
+  * Change the Tamer Part and therefore the GUI
