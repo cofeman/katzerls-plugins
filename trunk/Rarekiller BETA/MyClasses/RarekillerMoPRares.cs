@@ -114,7 +114,6 @@ namespace katzerle
         /// </summary>
         public void DumpAOEEffect()
         {
-            ObjectManager.Update();
             List<WoWDynamicObject> AOEList = ObjectManager.GetObjectsOfType<WoWDynamicObject>()
                 .Where(o => o.Distance < 10)
                 .OrderBy(o => o.Distance).ToList();
@@ -129,8 +128,6 @@ namespace katzerle
         /// </summary>
         public void DumpJinyuMissiles()
         {
-            ObjectManager.Update();
-
             foreach (WoWMissile o in WoWMissile.AllMissiles)
             {
                 Logging.WriteDiagnostic(Colors.MediumPurple, "Rarekiller - Developer AOE Dump: Unit {0}, Missile ID {1}, SpellVisualID {2}, Impact Location {3}", StyxWoW.Me.CurrentTarget.Name, o.SpellId, o.SpellVisualId, o.ImpactPosition);
@@ -331,7 +328,6 @@ namespace katzerle
         {
             get
             {
-                ObjectManager.Update();
                 return (from lp in ObjectManager.GetObjectsOfType<WoWDynamicObject>()
                         orderby lp.Distance2D ascending
                         where lp.Entry == 125241
@@ -348,7 +344,6 @@ namespace katzerle
         {
             get
             {
-                ObjectManager.Update();
                 List<WoWUnit> Tornados = ObjectManager.GetObjectsOfType<WoWUnit>().Where(u => (u.Entry == 64267) && u.Distance < 40 && !u.IsDead).OrderBy(o => o.Distance).ToList();
                 return Tornados;
             }
