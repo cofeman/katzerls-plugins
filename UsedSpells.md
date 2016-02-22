@@ -1,0 +1,70 @@
+# Used Spells from Rarekiller: #
+If I should use other Spells, please inform me. I only know Shaman and Priest Abilities.
+You can also config them in the Folder Rarekiller/Config/...
+
+DefaultPull.xml - Per Default the Rarekiller will use this Spells to Pull the Mobs:
+  * Class = "Priest" Name="Shadow Word: Pain"
+  * Class = "Mage" Name="Fire Blast"
+  * Class = "Warrior" Name="Heroic Throw"
+  * Class = "Hunter" Name="Arcane Shot"
+  * Class = "Rogue" Name="Sinister Strike"
+  * Class = "Death Knight" Name="Icy Touch"
+  * Class = "Paladin" Name="Crusader Strike"
+  * Class = "Shaman" Name="Earth Shock"
+  * Class = "Warlock" Name="Corruption"
+  * Class = "Druid" Name="Moonfire"
+  * Class = "Monk" Name="Jab"
+
+DefaultRangedPull.xml - For Ranged Pull he will use
+  * Class = "Priest" Name="Shadow Word: Pain"
+  * Class = "Mage" Name="Frostfire Bolt"
+  * Class = "Warrior" Name="Taunt"
+  * Class = "Hunter" Name="Arcane Shot"
+  * Class = "Rogue" Name="Throw"
+  * Class = "Death Knight" Name="Icy Touch"
+  * Class = "Paladin" Name="Reckoning"
+  * Class = "Shaman" Name="Lightning Bolt"
+  * Class = "Warlock" Name="Corruption"
+  * Class = "Druid" Name="Moonfire"
+  * Class = "Monk" Name="Chi Burst"
+
+DefaultInterruptPull.xml - To Interrupt Healing Mists of Pandaren and Torrent of Jinyu:
+  * Class = "Priest" Name="Silence"
+  * Class = "Mage" Name="Counterspell"
+  * Class = "Warrior" Name="Disrupting Shout"
+  * Class = "Hunter" Name="Silencing Shot"
+  * Class = "Rogue" Name="Kick"
+  * Class = "Death Knight" Name="Mind Freeze"
+  * Class = "Paladin" Name="Rebuke"
+  * Class = "Shaman" Name="Wind Shear"
+  * Class = "Warlock" Name="Shadowfury"
+  * Class = "Druid" Name="Mighty Bash"
+  * Class = "Monk" Name="Spear Hand Strike"
+
+DefaultStunPull.xml - To Stun Spinning Crane Kick of Pandaren or Rain Dance of Jinyu (not necessary because he will flee also):
+  * Class = "Priest" Name="Psychic Horror"
+  * Class = "Mage" Name="no Spell available"
+  * Class = "Warrior" Name="Intimidating Shout"
+  * Class = "Hunter" Name="Scatter Shot"
+  * Class = "Rogue" Name="Kidney Shot"
+  * Class = "Death Knight" Name="Asphyxiate"
+  * Class = "Death Knight" Name="Strangulate"
+  * Class = "Paladin" Name="Hammer of Justice"
+  * Class = "Shaman" Name="Capacitor Totem"
+  * Class = "Warlock" Name="no Spell available"
+  * Class = "Druid" Name="no Spell available"
+  * Class = "Monk" Name="Paralysis"
+
+RunFastSpells.xml - To run away faster (also not necessary but makes things easier):
+  * Class = "Worgen" Name="Darkflight"
+  * Class = "Priest" Name="Power Word: Shield"
+  * Class = "Mage" Name="Blink"
+  * Class = "Warrior" Name="no Spell available"
+  * Class = "Hunter" Name="no Spell available"
+  * Class = "Rogue" Name="Sprint"
+  * Class = "Death Knight" Name="no Spell available"
+  * Class = "Paladin" Name="Speed of Light"
+  * Class = "Shaman" Name="Ghost Wolf"
+  * Class = "Warlock" Name="no Spell available"
+  * Class = "Druid" Name="Feline Swiftness"
+  * Class = "Monk" Name="Roll"
